@@ -9,6 +9,7 @@ class MyChessDevice : public ChessDevice
   };
   void askDeviceMakeMove() {
     std::cout << "please move:" << std::endl;
+    // deviceMove("a1a2");
   };
   void askDeviceStopMove() {
     std::cout << "stop move: " << std::endl;
