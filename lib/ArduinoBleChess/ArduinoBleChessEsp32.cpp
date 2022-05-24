@@ -1,4 +1,5 @@
-#include "ArduinoBleChess.h"
+#if defined(ESP32)
+#include "ArduinoBleChessEsp32.h"
 #include "CecpProtocol.h"
 
 namespace
@@ -57,3 +58,4 @@ void ArduinoBleChessClass::send(const std::string& str)
 }
 
 ArduinoBleChessClass ArduinoBleChess{};
+#endif

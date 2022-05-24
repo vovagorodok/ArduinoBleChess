@@ -1,18 +1,7 @@
 #pragma once
-#include <NimBLEDevice.h>
-#include "ChessDevice.h"
 
-class ArduinoBleChessClass: public BLECharacteristicCallbacks
-{
-public:
-    void begin(const std::string &deviceName, ChessDevice& device);
-    void begin(NimBLEServer* server, ChessDevice& device);
-
-    void onWrite(BLECharacteristic* characteristic) override;
-    void send(const std::string& str);
-
-private:
-    BLECharacteristic* txCharacteristic;
-};
-
-extern ArduinoBleChessClass ArduinoBleChess;
+#if defined(ESP32)
+#include "ArduinoBleChessEsp32.h"
+#else
+#include "ArduinoBleChessAvr.h"
+#endif
