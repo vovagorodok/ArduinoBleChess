@@ -22,7 +22,7 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 }
 }
 
-void ArduinoBleChessClass::begin(const StringDecl& deviceName, ChessDevice& device)
+void ArduinoBleChessClass::begin(const BleString& deviceName, ChessDevice& device)
 {
     if (!BLE.begin())
         while (true);
@@ -44,7 +44,7 @@ void ArduinoBleChessClass::begin(ChessDevice& device)
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
 }
 
-void ArduinoBleChessClass::send(const StringDecl& str)
+void ArduinoBleChessClass::send(const BleString& str)
 {
     txCharacteristic.setValue(str);
 }

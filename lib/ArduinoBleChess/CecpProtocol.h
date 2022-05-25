@@ -1,5 +1,5 @@
 #pragma once
-#include "StringDecl.h"
+#include "BleString.h"
 
 class ChessDevice;
 
@@ -7,13 +7,13 @@ class CecpProtocol
 {
 public:
     void begin(ChessDevice&);
-    void onDeviceMove(const StringDecl& mv);
-    void onMessage(const StringDecl& str);
+    void onDeviceMove(const BleString& mv);
+    void onMessage(const BleString& str);
 
 private:
-    void send(StringDecl str);
-    static StringDecl getCmdParams(const StringDecl& cmd);
-    static StringDecl getIllegalMove(const StringDecl& cmd);
+    void send(BleString str);
+    static BleString getCmdParams(const BleString& cmd);
+    static BleString getIllegalMove(const BleString& cmd);
 
     bool isForceMode;
     bool isForcedPromotion;

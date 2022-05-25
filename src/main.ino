@@ -3,7 +3,7 @@
 
 class MyChessDevice : public ChessDevice
 {
-  void onNewGame(const StringDecl& fen) {
+  void onNewGame(const BleString& fen) {
     Serial.print("new game: ");
     Serial.println(fen.c_str());
   }
@@ -14,11 +14,11 @@ class MyChessDevice : public ChessDevice
   void askDeviceStopMove() {
     Serial.println("stop move: ");
   }
-  void onMove(const StringDecl& mv) {
+  void onMove(const BleString& mv) {
     Serial.print("moved from phone: ");
     Serial.println(mv.c_str());
   }
-  void onDeviceMoveRejected(const StringDecl& mv) {
+  void onDeviceMoveRejected(const BleString& mv) {
     Serial.print("move rejected: ");
     Serial.println(mv.c_str());
   }

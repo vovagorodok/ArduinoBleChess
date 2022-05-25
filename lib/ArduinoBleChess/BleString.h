@@ -7,16 +7,16 @@
 #endif
 
 #if defined(ESP32)
-using StringDecl = std::string;
+using BleString = std::string;
 #else
-using StringDecl = String;
+using BleString = String;
 #endif
 
 #if __cpp_lib_starts_ends_with
 #error "std::string::starts_with() already implemented"
 #endif
 
-inline bool startsWith(const StringDecl& str, const StringDecl& start)
+inline bool startsWith(const BleString& str, const BleString& start)
 {
 #if defined(ESP32)
     return str.size() >= start.size() and
@@ -26,7 +26,7 @@ inline bool startsWith(const StringDecl& str, const StringDecl& start)
 #endif
 }
 
-inline StringDecl substring(const StringDecl& str, unsigned int beginIndex)
+inline BleString substring(const BleString& str, unsigned int beginIndex)
 {
 #if defined(ESP32)
     return str.substr(beginIndex);
@@ -35,7 +35,7 @@ inline StringDecl substring(const StringDecl& str, unsigned int beginIndex)
 #endif
 }
 
-inline StringDecl substring(const StringDecl& str, unsigned int beginIndex, unsigned int endIndex)
+inline BleString substring(const BleString& str, unsigned int beginIndex, unsigned int endIndex)
 {
 #if defined(ESP32)
     return str.substr(beginIndex, endIndex);
@@ -44,7 +44,7 @@ inline StringDecl substring(const StringDecl& str, unsigned int beginIndex, unsi
 #endif
 }
 
-inline int indexOf(const StringDecl& str, char match)
+inline int indexOf(const BleString& str, char match)
 {
 #if defined(ESP32)
     return str.find(match);
@@ -53,7 +53,7 @@ inline int indexOf(const StringDecl& str, char match)
 #endif
 }
 
-inline int indexOf(const StringDecl& str, const StringDecl& match)
+inline int indexOf(const BleString& str, const BleString& match)
 {
 #if defined(ESP32)
     return str.find(match);
