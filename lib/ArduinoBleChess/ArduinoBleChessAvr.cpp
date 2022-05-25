@@ -27,6 +27,7 @@ void ArduinoBleChessClass::begin(const StringDecl& deviceName, ChessDevice& devi
     if (!BLE.begin())
         while (true);
     BLE.setLocalName(deviceName.c_str());
+    BLE.setDeviceName(deviceName.c_str());
 
     begin(device);
 
