@@ -1,3 +1,6 @@
+# 1 "/tmp/tmpxeksvhy5"
+#include <Arduino.h>
+# 1 "/home/vova/projects/ArduinoBleChess/src/main.ino"
 #include <Arduino.h>
 #include <ArduinoBleChess.h>
 
@@ -10,7 +13,7 @@ class MyChessDevice : public ChessDevice
   }
   void askDeviceMakeMove() {
     Serial.write("please move: \n");
-    // deviceMove("a1a2");
+
   }
   void askDeviceStopMove() {
     Serial.write("stop move: \n");
@@ -27,7 +30,9 @@ class MyChessDevice : public ChessDevice
   }
 };
 MyChessDevice device{};
-
+void setup();
+void loop();
+#line 31 "/home/vova/projects/ArduinoBleChess/src/main.ino"
 void setup() {
   Serial.begin(19200);
   ArduinoBleChess.begin("ArduinoBleChess", device);

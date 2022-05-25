@@ -5,10 +5,10 @@
 class ArduinoBleChessClass
 {
 public:
-    void begin(const std::string &deviceName, ChessDevice& device);
+    void begin(const String& deviceName, ChessDevice& device);
     void begin(ChessDevice& device);
 
-    void send(const std::string& str);
+    void send(const String& str);
 };
 
 extern ArduinoBleChessClass ArduinoBleChess;

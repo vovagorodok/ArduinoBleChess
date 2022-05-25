@@ -1,16 +1,16 @@
 #pragma once
-#include <string>
+#include "StringDecl.h"
 
 class ChessDevice
 {
 public:
-    virtual void onNewGame(const std::string& fen) {};
-    virtual void askDeviceMakeMove() {};
-    virtual void askDeviceStopMove() {};
-    virtual void onMove(const std::string& mv) {};
-    virtual void onDeviceMoveRejected(const std::string& mv) {};
+    virtual void onNewGame(const StringDecl& fen) {}
+    virtual void askDeviceMakeMove() {}
+    virtual void askDeviceStopMove() {}
+    virtual void onMove(const StringDecl& mv) {}
+    virtual void onDeviceMoveRejected(const StringDecl& mv) {}
     virtual ~ChessDevice() = default;
 
 protected:
-    void deviceMove(const std::string& mv);
+    void deviceMove(const StringDecl& mv);
 };
