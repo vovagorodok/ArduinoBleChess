@@ -3,13 +3,13 @@
 
 class MyBleChessDevice : public BleChessDevice
 {
+public:
   void onNewGame(const BleString& fen) {
     Serial.print("new game: ");
     Serial.println(fen.c_str());
   }
   void askDeviceMakeMove() {
     Serial.println("please move: ");
-    // deviceMove("a1a2");
   }
   void askDeviceStopMove() {
     Serial.println("stop move: ");
@@ -26,16 +26,25 @@ class MyBleChessDevice : public BleChessDevice
     Serial.print("promoted on phone screen: ");
     Serial.println(mv.c_str());
   }
+  void checkDviceMove() {
+    if (Serial.available()) {
+      BleString move;
+      while (Serial.available())
+        move += Serial.read();
+      deviceMove(move);
+    }
+  }
 };
 MyBleChessDevice device{};
 
 void setup() {
-  Serial.begin(19200);
+  Serial.begin(115200);
   while (!Serial);
 
   ArduinoBleChess.begin("Arduino Ble Chess", device);
 }
 
 void loop() {
-  delay(2000);
+  device.checkDviceMove();
+  delay(500);
 }
