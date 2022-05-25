@@ -9,6 +9,7 @@ public:
     virtual void askDeviceStopMove() {}
     virtual void onMove(const BleString& mv) {}
     virtual void onDeviceMoveRejected(const BleString& mv) {}
+    virtual void onDeviceMovePromoted(const BleString& mv) {}
     virtual ~ChessDevice() = default;
 
 protected:

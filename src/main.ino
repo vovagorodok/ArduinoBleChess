@@ -22,6 +22,10 @@ class MyChessDevice : public ChessDevice
     Serial.print("move rejected: ");
     Serial.println(mv.c_str());
   }
+  void onDeviceMovePromoted(const BleString& mv) {
+    Serial.print("promoted on phone screen: ");
+    Serial.println(mv.c_str());
+  }
 };
 MyChessDevice device{};
 

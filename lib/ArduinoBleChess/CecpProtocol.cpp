@@ -58,7 +58,9 @@ void CecpProtocol::onMessage(const BleString& cmd)
     else
 #endif
     {
-        if (not isForcedPromotion)
+        if (isForcedPromotion)
+            device->onDeviceMovePromoted(cmd);
+        else
             device->onMove(cmd);
 
         if (not isForceMode)
