@@ -4,26 +4,23 @@
 class MyChessDevice : public ChessDevice
 {
   void onNewGame(const StringDecl& fen) {
-    Serial.write("new game: ");
-    Serial.write(fen.c_str());
-    Serial.write("\n");
+    Serial.print("new game: ");
+    Serial.println(fen.c_str());
   }
   void askDeviceMakeMove() {
-    Serial.write("please move: \n");
+    Serial.println("please move: ");
     // deviceMove("a1a2");
   }
   void askDeviceStopMove() {
-    Serial.write("stop move: \n");
+    Serial.println("stop move: ");
   }
   void onMove(const StringDecl& mv) {
-    Serial.write("moved from phone: ");
-    Serial.write(mv.c_str());
-    Serial.write("\n");
+    Serial.print("moved from phone: ");
+    Serial.println(mv.c_str());
   }
   void onDeviceMoveRejected(const StringDecl& mv) {
-    Serial.write("move rejected: ");
-    Serial.write(mv.c_str());
-    Serial.write("\n");
+    Serial.print("move rejected: ");
+    Serial.println(mv.c_str());
   }
 };
 MyChessDevice device{};
