@@ -1,12 +1,12 @@
 #pragma once
 #include "BleString.h"
 
-class ChessDevice;
+class BleChessDevice;
 
 class CecpProtocol
 {
 public:
-    void begin(ChessDevice&);
+    void begin(BleChessDevice&);
     void onDeviceMove(const BleString& mv);
     void telluser(const BleString& text);
     void onMessage(const BleString& str);
@@ -18,7 +18,7 @@ private:
 
     bool isForceMode;
     bool isForcedPromotion;
-    ChessDevice* device;
+    BleChessDevice* device;
 };
 
 extern CecpProtocol Protocol;

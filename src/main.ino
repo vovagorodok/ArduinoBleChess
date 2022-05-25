@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <ArduinoBleChess.h>
 
-class MyChessDevice : public ChessDevice
+class MyBleChessDevice : public BleChessDevice
 {
   void onNewGame(const BleString& fen) {
     Serial.print("new game: ");
@@ -27,7 +27,7 @@ class MyChessDevice : public ChessDevice
     Serial.println(mv.c_str());
   }
 };
-MyChessDevice device{};
+MyBleChessDevice device{};
 
 void setup() {
   Serial.begin(19200);

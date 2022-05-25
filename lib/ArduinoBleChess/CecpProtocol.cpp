@@ -1,6 +1,6 @@
 #include "CecpProtocol.h"
 #include "ArduinoBleChess.h"
-#include "ChessDevice.h"
+#include "BleChessDevice.h"
 #if defined(ESP32)
 #include <regex>
 #endif
@@ -12,7 +12,7 @@ static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 #endif
 }
 
-void CecpProtocol::begin(ChessDevice& device)
+void CecpProtocol::begin(BleChessDevice& device)
 {
     this->device = &device;
 }

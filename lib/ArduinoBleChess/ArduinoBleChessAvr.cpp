@@ -22,7 +22,7 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 }
 }
 
-void ArduinoBleChessClass::begin(const BleString& deviceName, ChessDevice& device)
+void ArduinoBleChessClass::begin(const BleString& deviceName, BleChessDevice& device)
 {
     if (!BLE.begin())
         while (true);
@@ -34,7 +34,7 @@ void ArduinoBleChessClass::begin(const BleString& deviceName, ChessDevice& devic
     BLE.advertise();
 }
 
-void ArduinoBleChessClass::begin(ChessDevice& device)
+void ArduinoBleChessClass::begin(BleChessDevice& device)
 {
     Protocol.begin(device);
     BLE.setAdvertisedService(service);
