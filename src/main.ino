@@ -27,6 +27,8 @@ MyChessDevice device{};
 
 void setup() {
   Serial.begin(19200);
+  while (!Serial);
+
   ArduinoBleChess.begin("Arduino Ble Chess", device);
 }
 
