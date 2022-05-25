@@ -5,8 +5,8 @@
 class ArduinoBleChessClass: public BLECharacteristicCallbacks
 {
 public:
-    void begin(const std::string &deviceName, BleChessDevice& device);
-    void begin(NimBLEServer* server, BleChessDevice& device);
+    bool begin(const std::string &deviceName, BleChessDevice& device);
+    bool begin(NimBLEServer* server, BleChessDevice& device);
 
     void onWrite(BLECharacteristic* characteristic) override;
     void send(const std::string& str);

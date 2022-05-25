@@ -22,26 +22,28 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 }
 }
 
-void ArduinoBleChessClass::begin(const BleString& deviceName, BleChessDevice& device)
+bool ArduinoBleChessClass::begin(const BleString& deviceName, BleChessDevice& device)
 {
     if (!BLE.begin())
-        while (true);
+        return false;
+
     BLE.setLocalName(deviceName.c_str());
     BLE.setDeviceName(deviceName.c_str());
 
-    begin(device);
+    if (!begin(device));
+        return false;
 
-    BLE.advertise();
+    return BLE.advertise();
 }
 
-void ArduinoBleChessClass::begin(BleChessDevice& device)
+bool ArduinoBleChessClass::begin(BleChessDevice& device)
 {
     Protocol.begin(device);
-    BLE.setAdvertisedService(service);
     service.addCharacteristic(rxCharacteristic);
     service.addCharacteristic(txCharacteristic);
-    BLE.addService(service);
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
+    BLE.addService(service);
+    return BLE.setAdvertisedService(service);
 }
 
 void ArduinoBleChessClass::send(const BleString& str)

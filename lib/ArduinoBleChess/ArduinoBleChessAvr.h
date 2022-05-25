@@ -5,8 +5,8 @@
 class ArduinoBleChessClass
 {
 public:
-    void begin(const String& deviceName, BleChessDevice& device);
-    void begin(BleChessDevice& device);
+    bool begin(const String& deviceName, BleChessDevice& device);
+    bool begin(BleChessDevice& device);
 
     void send(const String& str);
 };

@@ -9,21 +9,22 @@ namespace
 #define CHARACTERISTIC_UUID_TX "f535147e-b2c9-11ec-a0c2-8bbd706ec4e6"
 }
 
-void ArduinoBleChessClass::begin(const std::string &deviceName, BleChessDevice& device)
+bool ArduinoBleChessClass::begin(const std::string &deviceName, BleChessDevice& device)
 {
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
 
-    begin(server, device);
+    if(!begin(server, device))
+        return false;
 
     auto* advertising = server->getAdvertising();
     advertising->setScanResponse(true);
     advertising->setMinPreferred(0x06); // functions that help with iPhone connections issue
     advertising->setMaxPreferred(0x12);
-    advertising->start();
+    return advertising->start();
 }
 
-void ArduinoBleChessClass::begin(NimBLEServer* server, BleChessDevice& device)
+bool ArduinoBleChessClass::begin(NimBLEServer* server, BleChessDevice& device)
 {
     Protocol.begin(device);
     auto* service = server->createService(SERVICE_UUID);
@@ -40,9 +41,9 @@ void ArduinoBleChessClass::begin(NimBLEServer* server, BleChessDevice& device)
     );
     this->txCharacteristic = txCharacteristic;
 
-    service->start();
     auto* advertising = server->getAdvertising();
     advertising->addServiceUUID(SERVICE_UUID);
+    return service->start();
 }
 
 void ArduinoBleChessClass::onWrite(BLECharacteristic* characteristic)

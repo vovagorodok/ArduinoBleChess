@@ -41,7 +41,8 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
 
-  ArduinoBleChess.begin("Arduino Ble Chess", device);
+  if (!ArduinoBleChess.begin("Arduino Ble Chess", device))
+    Serial.println("ble initialization error");
 }
 
 void loop() {
