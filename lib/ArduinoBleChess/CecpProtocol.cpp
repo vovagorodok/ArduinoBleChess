@@ -75,6 +75,11 @@ void CecpProtocol::onDeviceMove(const BleString& mv)
     send("move " + mv);
 }
 
+void CecpProtocol::telluser(const BleString& text)
+{
+    send("telluser " + text);
+}
+
 void CecpProtocol::send(BleString str)
 {
     ArduinoBleChess.send(str);

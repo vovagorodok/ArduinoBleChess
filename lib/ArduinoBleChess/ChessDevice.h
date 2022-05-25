@@ -14,4 +14,5 @@ public:
 
 protected:
     void deviceMove(const BleString& mv);
+    void telluser(const BleString& text);
 };

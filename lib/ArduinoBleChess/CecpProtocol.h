@@ -8,6 +8,7 @@ class CecpProtocol
 public:
     void begin(ChessDevice&);
     void onDeviceMove(const BleString& mv);
+    void telluser(const BleString& text);
     void onMessage(const BleString& str);
 
 private:
