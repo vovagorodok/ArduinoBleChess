@@ -38,6 +38,7 @@ public:
 MyBleChessDevice device{};
 
 void setup() {
+  Serial.println("setup");
   Serial.begin(115200);
   while (!Serial);
 
@@ -48,4 +49,5 @@ void setup() {
 void loop() {
   device.checkDviceMove();
   delay(500);
+  Serial.println("loop");
 }
