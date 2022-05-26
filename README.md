@@ -1,4 +1,5 @@
 # Arduino BLE Chess
+Library opens posibility to communicate with mobile chess apps via universal CECP protocol
 
 ## Supported mobile apps:
 
