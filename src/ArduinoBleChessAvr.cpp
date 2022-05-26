@@ -17,6 +17,10 @@ BLEStringCharacteristic txCharacteristic(CHARACTERISTIC_UUID_TX, BLERead | BLENo
 
 void onWrite(BLEDevice central, BLECharacteristic characteristic)
 {
+    Serial.print("onWrite: BLE: ");
+    Serial.print((uint32_t)&BLE, HEX);
+    Serial.println();
+
     auto rxValue = rxCharacteristic.value();
     Protocol.onMessage(rxValue);
 }
@@ -24,6 +28,16 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 
 bool ArduinoBleChessClass::begin(const BleString& deviceName, BleChessDevice& device)
 {
+    Serial.print("begin: BLE: ");
+    Serial.print((uint32_t)&BLE, HEX);
+    Serial.println();
+    Serial.print("begin: ArduinoBleChessClass: ");
+    Serial.print((uint32_t)this, HEX);
+    Serial.println();
+    Serial.print("begin: Protocol: ");
+    Serial.print((uint32_t)&Protocol, HEX);
+    Serial.println();
+
     if (!BLE.begin())
         return false;
 
@@ -48,6 +62,15 @@ bool ArduinoBleChessClass::begin(BleChessDevice& device)
 
 void ArduinoBleChessClass::send(const BleString& str)
 {
+    Serial.print("send: BLE: ");
+    Serial.print((uint32_t)&BLE, HEX);
+    Serial.println();
+    Serial.print("send: ArduinoBleChessClass: ");
+    Serial.print((uint32_t)this, HEX);
+    Serial.println();
+    Serial.print("send: Protocol: ");
+    Serial.print((uint32_t)&Protocol, HEX);
+    Serial.println();
     txCharacteristic.setValue(str);
 }
 
