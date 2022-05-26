@@ -12,8 +12,8 @@ namespace
 #define MAX_STR_SIZE 100
 
 BLEService service(SERVICE_UUID);
-BLEStringCharacteristic rxCharacteristic(CHARACTERISTIC_UUID_RX, BLEWrite, MAX_STR_SIZE);
-BLEStringCharacteristic txCharacteristic(CHARACTERISTIC_UUID_TX, BLERead | BLENotify, MAX_STR_SIZE);
+BLEStringCharacteristic rxCharacteristic(CHARACTERISTIC_UUID_RX, BLEWrite | BLERead | BLENotify, MAX_STR_SIZE);
+BLEStringCharacteristic txCharacteristic(CHARACTERISTIC_UUID_TX, BLEWrite | BLERead | BLENotify, MAX_STR_SIZE);
 
 void onWrite(BLEDevice central, BLECharacteristic characteristic)
 {
