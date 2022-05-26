@@ -38,9 +38,9 @@ public:
 MyBleChessDevice device{};
 
 void setup() {
-  Serial.println("setup");
   Serial.begin(115200);
   while (!Serial);
+  Serial.println("setup");
 
   if (!ArduinoBleChess.begin("Arduino Ble Chess", device))
     Serial.println("ble initialization error");
