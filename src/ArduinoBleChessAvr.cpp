@@ -25,13 +25,19 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 bool ArduinoBleChessClass::begin(const BleString& deviceName, BleChessDevice& device)
 {
     if (!BLE.begin())
+    {
+        Serial.println("BLE.begin() error");
         return false;
+    }
 
     BLE.setLocalName(deviceName.c_str());
     BLE.setDeviceName(deviceName.c_str());
 
-    if (!begin(device));
+    if (!begin(device))
+    {
+        Serial.println("Add chess service error");
         return false;
+    }
 
     return BLE.advertise();
 }
