@@ -45,14 +45,13 @@ void setup() {
     Serial.println("ble initialization error");
 
   Serial.print("setup: BLE: ");
-  Serial.print((uint32_t)&BLE, HEX);
-  Serial.println();
+  Serial.println((uint32_t)&BLE, HEX);
   Serial.print("setup: ArduinoBleChessClass: ");
-  Serial.print((uint32_t)&ArduinoBleChess, HEX);
-  Serial.println();
+  Serial.println((uint32_t)&ArduinoBleChess, HEX);
 }
 
 void loop() {
+  ArduinoBleChess.checkIfValueRecived();
   device.checkDviceMove();
   delay(500);
 }

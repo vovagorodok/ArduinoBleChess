@@ -18,31 +18,40 @@ BLEStringCharacteristic txCharacteristic(CHARACTERISTIC_UUID_TX, BLEWrite | BLER
 void onWrite(BLEDevice central, BLECharacteristic characteristic)
 {
     Serial.print("onWrite: BLE: ");
-    Serial.print((uint32_t)&BLE, HEX);
-    Serial.println();
+    Serial.println((uint32_t)&BLE, HEX);
 
     auto rxValue = rxCharacteristic.value();
     Protocol.onMessage(rxValue);
+}
+
+void connected(BLEDevice device) {
+    Serial.println("connected");
+}
+void disconnected(BLEDevice device) {
+    Serial.println("disconnected");
+}
+void discovered(BLEDevice device) {
+    Serial.println("discovered");
 }
 }
 
 bool ArduinoBleChessClass::begin(const BleString& deviceName, BleChessDevice& device)
 {
     Serial.print("begin: BLE: ");
-    Serial.print((uint32_t)&BLE, HEX);
-    Serial.println();
+    Serial.println((uint32_t)&BLE, HEX);
     Serial.print("begin: ArduinoBleChessClass: ");
-    Serial.print((uint32_t)this, HEX);
-    Serial.println();
+    Serial.println((uint32_t)this, HEX);
     Serial.print("begin: Protocol: ");
-    Serial.print((uint32_t)&Protocol, HEX);
-    Serial.println();
+    Serial.println((uint32_t)&Protocol, HEX);
 
     if (!BLE.begin())
         return false;
 
     BLE.setLocalName(deviceName.c_str());
-    BLE.setDeviceName(deviceName.c_str());
+    // BLE.setDeviceName(deviceName.c_str());
+    BLE.setEventHandler(BLEConnected, connected);
+    BLE.setEventHandler(BLEDisconnected, disconnected);
+    BLE.setEventHandler(BLEDiscovered, discovered);
 
     if (!begin(device))
         return false;
@@ -63,15 +72,17 @@ bool ArduinoBleChessClass::begin(BleChessDevice& device)
 void ArduinoBleChessClass::send(const BleString& str)
 {
     Serial.print("send: BLE: ");
-    Serial.print((uint32_t)&BLE, HEX);
-    Serial.println();
+    Serial.println((uint32_t)&BLE, HEX);
     Serial.print("send: ArduinoBleChessClass: ");
-    Serial.print((uint32_t)this, HEX);
-    Serial.println();
+    Serial.println((uint32_t)this, HEX);
     Serial.print("send: Protocol: ");
-    Serial.print((uint32_t)&Protocol, HEX);
-    Serial.println();
+    Serial.println((uint32_t)&Protocol, HEX);
     txCharacteristic.setValue(str);
+}
+void ArduinoBleChessClass::checkIfValueRecived()
+{
+    if (rxCharacteristic.valueUpdated())
+        Serial.println("value available");
 }
 
 ArduinoBleChessClass ArduinoBleChess{};
