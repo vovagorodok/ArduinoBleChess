@@ -51,7 +51,8 @@ void setup() {
 }
 
 void loop() {
-  ArduinoBleChess.checkIfValueRecived();
+  // ArduinoBleChess.checkIfValueRecived();
+  BLE.poll();
   device.checkDviceMove();
-  delay(500);
+  // delay(500);
 }
