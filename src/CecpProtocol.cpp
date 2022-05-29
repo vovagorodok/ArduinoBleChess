@@ -14,17 +14,11 @@ static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 
 void CecpProtocol::begin(BleChessDevice& device)
 {
-    Serial.print("CecpProtocol::begin: Protocol: ");
-    Serial.println((uint32_t)this, HEX);
     this->device = &device;
 }
 
 void CecpProtocol::onMessage(const BleString& cmd)
 {
-    Serial.print("RECIVE: ");
-    Serial.println(cmd);
-    Serial.print("CecpProtocol::onMessage: Protocol: ");
-    Serial.println((uint32_t)this, HEX);
     if (startsWith(cmd, "protover"))
     {
         send("feature setboard=1");
@@ -88,10 +82,6 @@ void CecpProtocol::telluser(const BleString& text)
 
 void CecpProtocol::send(BleString str)
 {
-    Serial.print("SEND: ");
-    Serial.println(str);
-    Serial.print("CecpProtocol::send: Protocol: ");
-    Serial.println((uint32_t)this, HEX);
     ArduinoBleChess.send(str);
 }
 

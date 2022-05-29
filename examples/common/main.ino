@@ -43,16 +43,9 @@ void setup() {
 
   if (!ArduinoBleChess.begin("Arduino Ble Chess", device))
     Serial.println("ble initialization error");
-
-  Serial.print("setup: BLE: ");
-  Serial.println((uint32_t)&BLE, HEX);
-  Serial.print("setup: ArduinoBleChessClass: ");
-  Serial.println((uint32_t)&ArduinoBleChess, HEX);
 }
 
 void loop() {
-  // ArduinoBleChess.checkIfValueRecived();
   BLE.poll();
   device.checkDviceMove();
-  // delay(500);
 }
