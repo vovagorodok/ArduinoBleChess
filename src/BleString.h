@@ -1,12 +1,13 @@
 #pragma once
 
-#if defined(ESP32)
+#include "Defines.h"
+#if defined(NIM_BLE_ARDUINO_LIB)
 #include <string>
 #else
 #include <Arduino.h>
 #endif
 
-#if defined(ESP32)
+#if defined(NIM_BLE_ARDUINO_LIB)
 using BleString = std::string;
 #else
 using BleString = String;
@@ -18,7 +19,7 @@ using BleString = String;
 
 inline bool startsWith(const BleString& str, const BleString& start)
 {
-#if defined(ESP32)
+#if defined(NIM_BLE_ARDUINO_LIB)
     return str.size() >= start.size() and
            str.substr(0, start.size()) == start;
 #else
@@ -28,7 +29,7 @@ inline bool startsWith(const BleString& str, const BleString& start)
 
 inline BleString substring(const BleString& str, unsigned int beginIndex)
 {
-#if defined(ESP32)
+#if defined(NIM_BLE_ARDUINO_LIB)
     return str.substr(beginIndex);
 #else
     return str.substring(beginIndex);
@@ -37,7 +38,7 @@ inline BleString substring(const BleString& str, unsigned int beginIndex)
 
 inline BleString substring(const BleString& str, unsigned int beginIndex, unsigned int endIndex)
 {
-#if defined(ESP32)
+#if defined(NIM_BLE_ARDUINO_LIB)
     return str.substr(beginIndex, endIndex);
 #else
     return str.substring(beginIndex, endIndex);
@@ -46,7 +47,7 @@ inline BleString substring(const BleString& str, unsigned int beginIndex, unsign
 
 inline int indexOf(const BleString& str, char match)
 {
-#if defined(ESP32)
+#if defined(NIM_BLE_ARDUINO_LIB)
     return str.find(match);
 #else
     return str.indexOf(match);
@@ -55,7 +56,7 @@ inline int indexOf(const BleString& str, char match)
 
 inline int indexOf(const BleString& str, const BleString& match)
 {
-#if defined(ESP32)
+#if defined(NIM_BLE_ARDUINO_LIB)
     return str.find(match);
 #else
     return str.indexOf(match);

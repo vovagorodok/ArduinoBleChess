@@ -9,7 +9,6 @@ public:
     bool begin(BleChessDevice& device);
 
     void send(const String& str);
-    void checkIfValueRecived();
 };
 
 extern ArduinoBleChessClass ArduinoBleChess;

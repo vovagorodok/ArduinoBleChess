@@ -1,5 +1,6 @@
-#if !defined(ESP32)
-#include "ArduinoBleChessAvr.h"
+#include "Defines.h"
+#if defined(ARDUINO_BLE_LIB)
+#include "ArduinoBleChessAtmel.h"
 #include "CecpProtocol.h"
 
 namespace
