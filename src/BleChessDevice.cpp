@@ -1,12 +1,12 @@
 #include "BleChessDevice.h"
 #include "CecpProtocol.h"
 
-void BleChessDevice::deviceMove(const BleString& mv)
+void BleChessDevice::deviceMove(const Ble::String& mv)
 {
     Protocol.onDeviceMove(mv);
 }
 
-void BleChessDevice::telluser(const BleString& text)
+void BleChessDevice::telluser(const Ble::String& text)
 {
     Protocol.telluser(text);
 }

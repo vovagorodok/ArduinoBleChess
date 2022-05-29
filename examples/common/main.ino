@@ -4,7 +4,7 @@
 class MyBleChessDevice : public BleChessDevice
 {
 public:
-  void onNewGame(const BleString& fen) {
+  void onNewGame(const Ble::String& fen) {
     Serial.print("new game: ");
     Serial.println(fen.c_str());
   }
@@ -14,21 +14,21 @@ public:
   void askDeviceStopMove() {
     Serial.println("stop move: ");
   }
-  void onMove(const BleString& mv) {
+  void onMove(const Ble::String& mv) {
     Serial.print("moved from phone: ");
     Serial.println(mv.c_str());
   }
-  void onDeviceMoveRejected(const BleString& mv) {
+  void onDeviceMoveRejected(const Ble::String& mv) {
     Serial.print("move rejected: ");
     Serial.println(mv.c_str());
   }
-  void onDeviceMovePromoted(const BleString& mv) {
+  void onDeviceMovePromoted(const Ble::String& mv) {
     Serial.print("promoted on phone screen: ");
     Serial.println(mv.c_str());
   }
   void checkDviceMove() {
     if (Serial.available()) {
-      BleString move;
+      Ble::String move;
       while (Serial.available())
         move += Serial.read();
       deviceMove(move);

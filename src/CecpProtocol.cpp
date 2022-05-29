@@ -17,7 +17,7 @@ void CecpProtocol::begin(BleChessDevice& device)
     this->device = &device;
 }
 
-void CecpProtocol::onMessage(const BleString& cmd)
+void CecpProtocol::onMessage(const Ble::String& cmd)
 {
     if (startsWith(cmd, "protover"))
     {
@@ -70,27 +70,27 @@ void CecpProtocol::onMessage(const BleString& cmd)
     }
 }
 
-void CecpProtocol::onDeviceMove(const BleString& mv)
+void CecpProtocol::onDeviceMove(const Ble::String& mv)
 {
     send("move " + mv);
 }
 
-void CecpProtocol::telluser(const BleString& text)
+void CecpProtocol::telluser(const Ble::String& text)
 {
     send("telluser " + text);
 }
 
-void CecpProtocol::send(BleString str)
+void CecpProtocol::send(Ble::String str)
 {
     ArduinoBleChess.send(str);
 }
 
-BleString CecpProtocol::getCmdParams(const BleString& cmd)
+Ble::String CecpProtocol::getCmdParams(const Ble::String& cmd)
 {
     return substring(cmd, indexOf(cmd, ' ') + 1);
 }
 
-BleString CecpProtocol::getIllegalMove(const BleString& cmd)
+Ble::String CecpProtocol::getIllegalMove(const Ble::String& cmd)
 {
     return substring(cmd, indexOf(cmd, ": ") + 2);
 }

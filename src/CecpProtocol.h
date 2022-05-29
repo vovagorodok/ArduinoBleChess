@@ -7,14 +7,14 @@ class CecpProtocol
 {
 public:
     void begin(BleChessDevice&);
-    void onDeviceMove(const BleString& mv);
-    void telluser(const BleString& text);
-    void onMessage(const BleString& str);
+    void onDeviceMove(const Ble::String& mv);
+    void telluser(const Ble::String& text);
+    void onMessage(const Ble::String& str);
 
 private:
-    void send(BleString str);
-    static BleString getCmdParams(const BleString& cmd);
-    static BleString getIllegalMove(const BleString& cmd);
+    void send(Ble::String str);
+    static Ble::String getCmdParams(const Ble::String& cmd);
+    static Ble::String getIllegalMove(const Ble::String& cmd);
     void askDeviceMakeMove();
     void askDeviceStopMove();
 
