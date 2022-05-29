@@ -15,9 +15,12 @@ private:
     void send(BleString str);
     static BleString getCmdParams(const BleString& cmd);
     static BleString getIllegalMove(const BleString& cmd);
+    void askDeviceMakeMove();
+    void askDeviceStopMove();
 
     bool isForceMode;
     bool isForcedPromotion;
+    bool isDeviceMove;
     BleChessDevice* device;
 };
 

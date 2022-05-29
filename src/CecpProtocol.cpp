@@ -26,7 +26,7 @@ void CecpProtocol::onMessage(const BleString& cmd)
     else if (startsWith(cmd, "new"))
     {
         isForceMode = false;
-        device->askDeviceStopMove();
+        askDeviceStopMove();
     }
     else if (startsWith(cmd, "setboard"))
     {
@@ -36,12 +36,12 @@ void CecpProtocol::onMessage(const BleString& cmd)
     else if (startsWith(cmd, "go"))
     {
         isForceMode = false;
-        device->askDeviceMakeMove();
+        askDeviceMakeMove();
     }
     else if (startsWith(cmd, "force"))
     {
         isForceMode = true;
-        device->askDeviceStopMove();
+        askDeviceStopMove();
     }
     else if (startsWith(cmd, "Illegal move (without promotion)"))
     {
@@ -50,7 +50,7 @@ void CecpProtocol::onMessage(const BleString& cmd)
     else if (startsWith(cmd, "Illegal move"))
     {
         device->onDeviceMoveRejected(getIllegalMove(cmd));
-        device->askDeviceMakeMove();
+        askDeviceMakeMove();
     }
 #if defined(NIM_BLE_ARDUINO_LIB)
     else if (std::regex_match(cmd, uci))
@@ -64,7 +64,7 @@ void CecpProtocol::onMessage(const BleString& cmd)
             device->onMove(cmd);
 
         if (not isForceMode)
-            device->askDeviceMakeMove();
+            askDeviceMakeMove();
 
         isForcedPromotion = false;
     }
@@ -93,6 +93,20 @@ BleString CecpProtocol::getCmdParams(const BleString& cmd)
 BleString CecpProtocol::getIllegalMove(const BleString& cmd)
 {
     return substring(cmd, indexOf(cmd, ": ") + 2);
+}
+
+void CecpProtocol::askDeviceMakeMove()
+{
+    if (!isDeviceMove)
+        device->askDeviceMakeMove();
+    isDeviceMove = true;
+}
+
+void CecpProtocol::askDeviceStopMove()
+{
+    if (isDeviceMove)
+        device->askDeviceStopMove();
+    isDeviceMove = false;
 }
 
 CecpProtocol Protocol{};
