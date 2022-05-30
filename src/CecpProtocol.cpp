@@ -22,7 +22,7 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     if (startsWith(cmd, "xboard"))
     {
     }
-    if (startsWith(cmd, "protover"))
+    else if (startsWith(cmd, "protover"))
     {
         send("feature setboard=1");
     }
