@@ -28,11 +28,9 @@ public:
   }
   void checkDviceMove() {
     if (Serial.available()) {
-      Ble::String move;
-      while (Serial.available())
-        move += Serial.readString();
-      Serial.print("my move input: ");
-      Serial.println(move);
+      Ble::String move(Serial.readString().c_str());
+      Serial.print("device move: ");
+      Serial.println(move.c_str());
       deviceMove(move);
     }
   }
