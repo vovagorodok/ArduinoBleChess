@@ -19,10 +19,7 @@ void CecpProtocol::begin(BleChessDevice& device)
 
 void CecpProtocol::onMessage(const Ble::String& cmd)
 {
-    if (startsWith(cmd, "xboard"))
-    {
-    }
-    else if (startsWith(cmd, "accepted"))
+    if (startsWith(cmd, "xboard") || startsWith(cmd, "accepted"))
     {
     }
     else if (startsWith(cmd, "protover"))
