@@ -10,7 +10,7 @@ namespace
 #define CHARACTERISTIC_UUID_TX "f535147e-b2c9-11ec-a0c2-8bbd706ec4e6"
 }
 
-bool ArduinoBleChessClass::begin(const std::string &deviceName, BleChessDevice& device)
+bool ArduinoBleChessClass::begin(const std::string &deviceName, BleChessPeripheral& device)
 {
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
@@ -25,7 +25,7 @@ bool ArduinoBleChessClass::begin(const std::string &deviceName, BleChessDevice& 
     return advertising->start();
 }
 
-bool ArduinoBleChessClass::begin(NimBLEServer* server, BleChessDevice& device)
+bool ArduinoBleChessClass::begin(NimBLEServer* server, BleChessPeripheral& device)
 {
     Protocol.begin(device);
     auto* service = server->createService(SERVICE_UUID);

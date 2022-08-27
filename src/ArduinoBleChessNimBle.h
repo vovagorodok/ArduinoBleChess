@@ -1,12 +1,12 @@
 #pragma once
-#include "BleChessDevice.h"
+#include "BleChessPeripheral.h"
 #include <NimBLEDevice.h>
 
 class ArduinoBleChessClass: public BLECharacteristicCallbacks
 {
 public:
-    bool begin(const std::string &deviceName, BleChessDevice& device);
-    bool begin(NimBLEServer* server, BleChessDevice& device);
+    bool begin(const std::string &deviceName, BleChessPeripheral& device);
+    bool begin(NimBLEServer* server, BleChessPeripheral& device);
 
     void send(const std::string& str);
 

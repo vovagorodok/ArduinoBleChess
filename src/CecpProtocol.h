@@ -1,13 +1,13 @@
 #pragma once
 #include "BleString.h"
 
-class BleChessDevice;
+class BleChessPeripheral;
 
 class CecpProtocol
 {
 public:
-    void begin(BleChessDevice&);
-    void onDeviceMove(const Ble::String& mv);
+    void begin(BleChessPeripheral&);
+    void onPeripheralMove(const Ble::String& mv);
     void telluser(const Ble::String& text);
     void onMessage(const Ble::String& str);
 
@@ -15,12 +15,12 @@ private:
     void send(Ble::String str);
     static Ble::String getCmdParams(const Ble::String& cmd);
     static Ble::String getIllegalMove(const Ble::String& cmd);
-    void askDeviceMakeMove();
-    void askDeviceStopMove();
+    void askPeripheralMakeMove();
+    void askPeripheralStopMove();
 
     bool isForceMode;
     bool isForcedPromotion;
-    BleChessDevice* device;
+    BleChessPeripheral* device;
 };
 
 extern CecpProtocol Protocol;

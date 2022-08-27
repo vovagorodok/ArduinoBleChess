@@ -1,41 +1,41 @@
 #include <Arduino.h>
 #include <ArduinoBleChess.h>
 
-class MyBleChessDevice : public BleChessDevice
+class MyPeripheral : public BleChessPeripheral
 {
 public:
-  void onNewGame(const Ble::String& fen) {
-    Serial.print("new game: ");
+  void onNewRound(const Ble::String& fen) {
+    Serial.print("new round: ");
     Serial.println(fen.c_str());
   }
-  void askDeviceMakeMove() {
+  void askPeripheralMakeMove() {
     Serial.println("please move: ");
   }
-  void askDeviceStopMove() {
+  void askPeripheralStopMove() {
     Serial.println("stop move: ");
   }
-  void onMove(const Ble::String& mv) {
+  void onCentralMove(const Ble::String& mv) {
     Serial.print("moved from phone: ");
     Serial.println(mv.c_str());
   }
-  void onDeviceMoveRejected(const Ble::String& mv) {
+  void onPeripheralMoveRejected(const Ble::String& mv) {
     Serial.print("move rejected: ");
     Serial.println(mv.c_str());
   }
-  void onDeviceMovePromoted(const Ble::String& mv) {
+  void onPeripheralMovePromoted(const Ble::String& mv) {
     Serial.print("promoted on phone screen: ");
     Serial.println(mv.c_str());
   }
-  void checkDviceMove() {
+  void checkPeripheralMove() {
     if (Serial.available()) {
       Ble::String move(Serial.readString().c_str());
-      Serial.print("device move: ");
+      Serial.print("peripheral move: ");
       Serial.println(move.c_str());
-      deviceMove(move);
+      peripheralMove(move);
     }
   }
 };
-MyBleChessDevice device{};
+MyPeripheral device{};
 
 void setup() {
   Serial.begin(115200);
@@ -49,5 +49,5 @@ void loop() {
 #if defined(BLE_PULL_REQUIRED)
   BLE.poll();
 #endif
-  device.checkDviceMove();
+  device.checkPeripheralMove();
 }

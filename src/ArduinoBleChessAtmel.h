@@ -1,12 +1,12 @@
 #pragma once
-#include "BleChessDevice.h"
+#include "BleChessPeripheral.h"
 #include <ArduinoBLE.h>
 
 class ArduinoBleChessClass
 {
 public:
-    bool begin(const String& deviceName, BleChessDevice& device);
-    bool begin(BleChessDevice& device);
+    bool begin(const String& deviceName, BleChessPeripheral& device);
+    bool begin(BleChessPeripheral& device);
 
     void send(const String& str);
 };

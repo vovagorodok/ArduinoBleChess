@@ -1,6 +1,6 @@
 #include "CecpProtocol.h"
 #include "ArduinoBleChess.h"
-#include "BleChessDevice.h"
+#include "BleChessPeripheral.h"
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include <regex>
 #endif
@@ -12,7 +12,7 @@ static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 #endif
 }
 
-void CecpProtocol::begin(BleChessDevice& device)
+void CecpProtocol::begin(BleChessPeripheral& device)
 {
     this->device = &device;
 }
@@ -29,22 +29,22 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     else if (startsWith(cmd, "new"))
     {
         isForceMode = false;
-        askDeviceStopMove();
+        askPeripheralStopMove();
     }
     else if (startsWith(cmd, "setboard"))
     {
         auto fen = getCmdParams(cmd);
-        device->onNewGame(fen);
+        device->onNewRound(fen);
     }
     else if (startsWith(cmd, "go"))
     {
         isForceMode = false;
-        askDeviceMakeMove();
+        askPeripheralMakeMove();
     }
     else if (startsWith(cmd, "force"))
     {
         isForceMode = true;
-        askDeviceStopMove();
+        askPeripheralStopMove();
     }
     else if (startsWith(cmd, "Illegal move (without promotion)"))
     {
@@ -52,7 +52,7 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     }
     else if (startsWith(cmd, "Illegal move"))
     {
-        device->onDeviceMoveRejected(getIllegalMove(cmd));
+        device->onPeripheralMoveRejected(getIllegalMove(cmd));
     }
 #if defined(NIM_BLE_ARDUINO_LIB)
     else if (std::regex_match(cmd, uci))
@@ -61,18 +61,18 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
 #endif
     {
         if (isForcedPromotion)
-            device->onDeviceMovePromoted(cmd);
+            device->onPeripheralMovePromoted(cmd);
         else
-            device->onMove(cmd);
+            device->onCentralMove(cmd);
 
         if (not isForceMode)
-            askDeviceMakeMove();
+            askPeripheralMakeMove();
 
         isForcedPromotion = false;
     }
 }
 
-void CecpProtocol::onDeviceMove(const Ble::String& mv)
+void CecpProtocol::onPeripheralMove(const Ble::String& mv)
 {
     send("move " + mv);
 }
@@ -97,14 +97,14 @@ Ble::String CecpProtocol::getIllegalMove(const Ble::String& cmd)
     return substring(cmd, indexOf(cmd, ": ") + 2);
 }
 
-void CecpProtocol::askDeviceMakeMove()
+void CecpProtocol::askPeripheralMakeMove()
 {
-    device->askDeviceMakeMove();
+    device->askPeripheralMakeMove();
 }
 
-void CecpProtocol::askDeviceStopMove()
+void CecpProtocol::askPeripheralStopMove()
 {
-    device->askDeviceStopMove();
+    device->askPeripheralStopMove();
 }
 
 CecpProtocol Protocol{};

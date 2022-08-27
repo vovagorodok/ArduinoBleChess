@@ -23,7 +23,7 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 }
 }
 
-bool ArduinoBleChessClass::begin(const String& deviceName, BleChessDevice& device)
+bool ArduinoBleChessClass::begin(const String& deviceName, BleChessPeripheral& device)
 {
     if (!BLE.begin())
         return false;
@@ -37,7 +37,7 @@ bool ArduinoBleChessClass::begin(const String& deviceName, BleChessDevice& devic
     return BLE.advertise();
 }
 
-bool ArduinoBleChessClass::begin(BleChessDevice& device)
+bool ArduinoBleChessClass::begin(BleChessPeripheral& device)
 {
     Protocol.begin(device);
     service.addCharacteristic(rxCharacteristic);
