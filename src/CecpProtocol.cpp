@@ -53,7 +53,6 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     else if (startsWith(cmd, "Illegal move"))
     {
         device->onDeviceMoveRejected(getIllegalMove(cmd));
-        askDeviceMakeMove();
     }
 #if defined(NIM_BLE_ARDUINO_LIB)
     else if (std::regex_match(cmd, uci))
@@ -100,16 +99,12 @@ Ble::String CecpProtocol::getIllegalMove(const Ble::String& cmd)
 
 void CecpProtocol::askDeviceMakeMove()
 {
-    if (!isDeviceMove)
-        device->askDeviceMakeMove();
-    isDeviceMove = true;
+    device->askDeviceMakeMove();
 }
 
 void CecpProtocol::askDeviceStopMove()
 {
-    if (isDeviceMove)
-        device->askDeviceStopMove();
-    isDeviceMove = false;
+    device->askDeviceStopMove();
 }
 
 CecpProtocol Protocol{};

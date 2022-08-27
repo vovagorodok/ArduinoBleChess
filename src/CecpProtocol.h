@@ -20,7 +20,6 @@ private:
 
     bool isForceMode;
     bool isForcedPromotion;
-    bool isDeviceMove;
     BleChessDevice* device;
 };
 
