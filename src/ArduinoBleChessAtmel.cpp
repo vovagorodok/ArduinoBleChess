@@ -2,6 +2,7 @@
 #if defined(ARDUINO_BLE_LIB)
 #include "ArduinoBleChessAtmel.h"
 #include "CecpProtocol.h"
+#include "BleConnection.h"
 
 namespace
 {
@@ -21,9 +22,20 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
     auto rxValue = rxCharacteristic.value();
     Protocol.onMessage(rxValue);
 }
+
+void onConnected(BLEDevice central)
+{
+    bleConnection.onConnected();
 }
 
-bool ArduinoBleChessClass::begin(const String& deviceName, BleChessPeripheral& device)
+void onDisconnected(BLEDevice central)
+{
+    bleConnection.onDisconnected();
+}
+}
+
+bool ArduinoBleChessClass::begin(const String& deviceName,
+                                 BleChessPeripheral& device)
 {
     if (!BLE.begin())
         return false;
@@ -39,12 +51,29 @@ bool ArduinoBleChessClass::begin(const String& deviceName, BleChessPeripheral& d
 
 bool ArduinoBleChessClass::begin(BleChessPeripheral& device)
 {
-    Protocol.begin(device);
+    bleConnection.registerPeripheral(device);
     service.addCharacteristic(rxCharacteristic);
     service.addCharacteristic(txCharacteristic);
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
+    BLE.setEventHandler(BLEConnected, onConnected);
+    BLE.setEventHandler(BLEDisconnected, onDisconnected);
     BLE.addService(service);
     return BLE.setAdvertisedService(service);
+}
+
+bool ArduinoBleChessClass::begin(const String& deviceName,
+                                 BleChessPeripheral& device,
+                                 BleChessOfflineCentral& offlineCentral)
+{
+    bleConnection.registerOfflineCentral(offlineCentral);
+    begin(deviceName, device);
+}
+
+bool ArduinoBleChessClass::begin(BleChessPeripheral& device,
+                                 BleChessOfflineCentral& offlineCentral)
+{
+    bleConnection.registerOfflineCentral(offlineCentral);
+    begin(device);
 }
 
 void ArduinoBleChessClass::send(const String& str)

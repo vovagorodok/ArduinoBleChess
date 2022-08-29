@@ -1,6 +1,7 @@
 #include "CecpProtocol.h"
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
+#include "BleConnection.h"
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include <regex>
 #endif
@@ -10,11 +11,6 @@ namespace
 #if defined(NIM_BLE_ARDUINO_LIB)
 static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 #endif
-}
-
-void CecpProtocol::begin(BleChessPeripheral& device)
-{
-    this->device = &device;
 }
 
 void CecpProtocol::onMessage(const Ble::String& cmd)
@@ -34,7 +30,7 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     else if (startsWith(cmd, "setboard"))
     {
         auto fen = getCmdParams(cmd);
-        device->onNewRound(fen);
+        bleConnection.peripheralForOnline().onNewRound(fen);
     }
     else if (startsWith(cmd, "go"))
     {
@@ -52,7 +48,7 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     }
     else if (startsWith(cmd, "Illegal move"))
     {
-        device->onPeripheralMoveRejected(getIllegalMove(cmd));
+        bleConnection.peripheralForOnline().onPeripheralMoveRejected(getIllegalMove(cmd));
     }
 #if defined(NIM_BLE_ARDUINO_LIB)
     else if (std::regex_match(cmd, uci))
@@ -61,9 +57,9 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
 #endif
     {
         if (isForcedPromotion)
-            device->onPeripheralMovePromoted(cmd);
+            bleConnection.peripheralForOnline().onPeripheralMovePromoted(cmd);
         else
-            device->onCentralMove(cmd);
+            bleConnection.peripheralForOnline().onCentralMove(cmd);
 
         if (not isForceMode)
             askPeripheralMakeMove();
@@ -99,12 +95,12 @@ Ble::String CecpProtocol::getIllegalMove(const Ble::String& cmd)
 
 void CecpProtocol::askPeripheralMakeMove()
 {
-    device->askPeripheralMakeMove();
+    bleConnection.peripheralForOnline().askPeripheralMakeMove();
 }
 
 void CecpProtocol::askPeripheralStopMove()
 {
-    device->askPeripheralStopMove();
+    bleConnection.peripheralForOnline().askPeripheralStopMove();
 }
 
 CecpProtocol Protocol{};

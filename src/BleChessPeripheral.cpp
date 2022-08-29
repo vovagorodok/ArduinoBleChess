@@ -1,12 +1,13 @@
 #include "BleChessPeripheral.h"
-#include "CecpProtocol.h"
+#include "BleConnection.h"
 
 void BleChessPeripheral::peripheralMove(const Ble::String& mv)
 {
-    Protocol.onPeripheralMove(mv);
+
+    bleConnection.peripheralMove(mv);
 }
 
 void BleChessPeripheral::telluser(const Ble::String& text)
 {
-    Protocol.telluser(text);
+    bleConnection.telluser(text);
 }

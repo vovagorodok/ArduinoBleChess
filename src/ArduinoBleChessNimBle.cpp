@@ -2,6 +2,7 @@
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include "ArduinoBleChessNimBle.h"
 #include "CecpProtocol.h"
+#include "BleConnection.h"
 
 namespace
 {
@@ -10,12 +11,13 @@ namespace
 #define CHARACTERISTIC_UUID_TX "f535147e-b2c9-11ec-a0c2-8bbd706ec4e6"
 }
 
-bool ArduinoBleChessClass::begin(const std::string &deviceName, BleChessPeripheral& device)
+bool ArduinoBleChessClass::begin(const std::string &deviceName,
+                                 BleChessPeripheral& peripheral)
 {
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
 
-    if(!begin(server, device))
+    if(!begin(server, peripheral))
         return false;
 
     auto* advertising = server->getAdvertising();
@@ -25,9 +27,11 @@ bool ArduinoBleChessClass::begin(const std::string &deviceName, BleChessPeripher
     return advertising->start();
 }
 
-bool ArduinoBleChessClass::begin(NimBLEServer* server, BleChessPeripheral& device)
+bool ArduinoBleChessClass::begin(NimBLEServer* server,
+                                 BleChessPeripheral& peripheral)
 {
-    Protocol.begin(device);
+    bleConnection.registerPeripheral(peripheral);
+    server->setCallbacks(this);
     auto* service = server->createService(SERVICE_UUID);
 
     auto* rxCharacteristic = service->createCharacteristic(
@@ -45,6 +49,32 @@ bool ArduinoBleChessClass::begin(NimBLEServer* server, BleChessPeripheral& devic
     auto* advertising = server->getAdvertising();
     advertising->addServiceUUID(SERVICE_UUID);
     return service->start();
+}
+
+bool ArduinoBleChessClass::begin(const std::string &deviceName,
+                                 BleChessPeripheral& peripheral,
+                                 BleChessOfflineCentral& offlineCentral)
+{
+    bleConnection.registerOfflineCentral(offlineCentral);
+    return begin(deviceName, peripheral);
+}
+
+bool ArduinoBleChessClass::begin(NimBLEServer* server,
+                                 BleChessPeripheral& peripheral,
+                                 BleChessOfflineCentral& offlineCentral)
+{
+    bleConnection.registerOfflineCentral(offlineCentral);
+    return begin(server, peripheral);
+}
+
+void ArduinoBleChessClass::onConnect(NimBLEServer* srv)
+{
+    bleConnection.onConnected();
+}
+
+void ArduinoBleChessClass::onDisconnect(NimBLEServer* srv)
+{
+    bleConnection.onDisconnected();
 }
 
 void ArduinoBleChessClass::onWrite(BLECharacteristic* characteristic)

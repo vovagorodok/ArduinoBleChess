@@ -1,12 +1,9 @@
 #pragma once
 #include "BleString.h"
 
-class BleChessPeripheral;
-
 class CecpProtocol
 {
 public:
-    void begin(BleChessPeripheral&);
     void onPeripheralMove(const Ble::String& mv);
     void telluser(const Ble::String& text);
     void onMessage(const Ble::String& str);
@@ -20,7 +17,6 @@ private:
 
     bool isForceMode;
     bool isForcedPromotion;
-    BleChessPeripheral* device;
 };
 
 extern CecpProtocol Protocol;
