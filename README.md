@@ -5,7 +5,7 @@ Library opens posibility to communicate with mobile chess apps via universal CEC
 
 ## Work in progress
 Liches: https://lichess.org/mobile \
-WhitePawn: https://khadimfall.com/p/white-pawn
+WhitePawn: https://khadimfall.com/p/white-pawn \
 Chess.com: https://www.chess.com/play/apps
 
 ## Candidats
