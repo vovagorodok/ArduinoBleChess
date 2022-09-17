@@ -9,13 +9,11 @@ class ArduinoBleChessClass: public BLECharacteristicCallbacks,
 public:
     bool begin(const std::string &deviceName,
                BleChessPeripheral& peripheral);
-    bool begin(NimBLEServer* server,
-               BleChessPeripheral& peripheral);
+    bool begin(BleChessPeripheral& peripheral);
     bool begin(const std::string &deviceName,
                BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
-    bool begin(NimBLEServer* server,
-               BleChessPeripheral& peripheral,
+    bool begin(BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
 
     void send(const std::string& str);

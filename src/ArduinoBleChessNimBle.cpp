@@ -17,7 +17,7 @@ bool ArduinoBleChessClass::begin(const std::string &deviceName,
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
 
-    if(!begin(server, peripheral))
+    if(!begin(peripheral))
         return false;
 
     auto* advertising = server->getAdvertising();
@@ -27,9 +27,9 @@ bool ArduinoBleChessClass::begin(const std::string &deviceName,
     return advertising->start();
 }
 
-bool ArduinoBleChessClass::begin(NimBLEServer* server,
-                                 BleChessPeripheral& peripheral)
+bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
 {
+    auto* server = BLEDevice::createServer();
     bleConnection.registerPeripheral(peripheral);
     server->setCallbacks(this);
     auto* service = server->createService(SERVICE_UUID);
@@ -59,12 +59,11 @@ bool ArduinoBleChessClass::begin(const std::string &deviceName,
     return begin(deviceName, peripheral);
 }
 
-bool ArduinoBleChessClass::begin(NimBLEServer* server,
-                                 BleChessPeripheral& peripheral,
+bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
     bleConnection.registerOfflineCentral(offlineCentral);
-    return begin(server, peripheral);
+    return begin(peripheral);
 }
 
 void ArduinoBleChessClass::onConnect(NimBLEServer* srv)
