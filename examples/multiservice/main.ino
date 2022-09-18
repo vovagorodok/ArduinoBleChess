@@ -2,7 +2,7 @@
 #include <ArduinoBleChess.h>
 #include "../MyPeripheral.h"
 
-MyPeripheral device{};
+MyPeripheral peripheral{};
 
 void setup() {
   Serial.begin(115200);
@@ -13,11 +13,11 @@ void setup() {
 
   // add your ble services here
 
-  if (!ArduinoBleChess.begin("Arduino Ble Chess", device))
+  if (!ArduinoBleChess.begin(peripheral))
     Serial.println("ble initialization error");
   server->startAdvertising();
 }
 
 void loop() {
-  device.checkPeripheralMove();
+  peripheral.checkPeripheralMove();
 }
