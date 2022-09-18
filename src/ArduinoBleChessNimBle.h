@@ -3,6 +3,8 @@
 #include "BleChessOfflineCentral.h"
 #include <NimBLEDevice.h>
 
+class CecpProtocol;
+
 class ArduinoBleChessClass: public BLECharacteristicCallbacks,
                             public BLEServerCallbacks
 {
@@ -16,9 +18,9 @@ public:
     bool begin(BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
 
-    void send(const std::string& str);
-
 private:
+    friend CecpProtocol;
+    void send(const std::string& str);
     void onConnect(NimBLEServer* srv) override;
     void onDisconnect(NimBLEServer* srv) override;
     void onWrite(BLECharacteristic* characteristic) override;

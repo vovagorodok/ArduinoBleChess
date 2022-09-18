@@ -3,6 +3,8 @@
 #include "BleChessOfflineCentral.h"
 #include <ArduinoBLE.h>
 
+class CecpProtocol;
+
 class ArduinoBleChessClass
 {
 public:
@@ -15,6 +17,8 @@ public:
     bool begin(BleChessPeripheral& device,
                BleChessOfflineCentral& offlineCentral);
 
+private:
+    friend CecpProtocol;
     void send(const String& str);
 };
 

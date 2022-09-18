@@ -66,14 +66,14 @@ bool ArduinoBleChessClass::begin(const String& deviceName,
                                  BleChessOfflineCentral& offlineCentral)
 {
     bleConnection.registerOfflineCentral(offlineCentral);
-    begin(deviceName, device);
+    return begin(deviceName, device);
 }
 
 bool ArduinoBleChessClass::begin(BleChessPeripheral& device,
                                  BleChessOfflineCentral& offlineCentral)
 {
     bleConnection.registerOfflineCentral(offlineCentral);
-    begin(device);
+    return begin(device);
 }
 
 void ArduinoBleChessClass::send(const String& str)
