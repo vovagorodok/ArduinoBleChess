@@ -8,13 +8,16 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
 
+  BLEDevice::init("Arduino Ble Chess");
+  auto* server = BLEDevice::createServer();
+
+  // add your ble services here
+
   if (!ArduinoBleChess.begin("Arduino Ble Chess", device))
     Serial.println("ble initialization error");
+  server->startAdvertising();
 }
 
 void loop() {
-#if defined(BLE_PULL_REQUIRED)
-  BLE.poll();
-#endif
   device.checkPeripheralMove();
 }
