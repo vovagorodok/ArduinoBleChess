@@ -35,7 +35,7 @@ void onDisconnected(BLEDevice central)
 }
 
 bool ArduinoBleChessClass::begin(const String& deviceName,
-                                 BleChessPeripheral& device)
+                                 BleChessPeripheral& peripheral)
 {
     if (!BLE.begin())
         return false;
@@ -43,15 +43,15 @@ bool ArduinoBleChessClass::begin(const String& deviceName,
     BLE.setLocalName(deviceName.c_str());
     BLE.setDeviceName(deviceName.c_str());
 
-    if (!begin(device))
+    if (!begin(peripheral))
         return false;
 
     return BLE.advertise();
 }
 
-bool ArduinoBleChessClass::begin(BleChessPeripheral& device)
+bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
 {
-    bleConnection.registerPeripheral(device);
+    bleConnection.registerPeripheral(peripheral);
     service.addCharacteristic(rxCharacteristic);
     service.addCharacteristic(txCharacteristic);
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
@@ -62,18 +62,18 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& device)
 }
 
 bool ArduinoBleChessClass::begin(const String& deviceName,
-                                 BleChessPeripheral& device,
+                                 BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
     bleConnection.registerOfflineCentral(offlineCentral);
-    return begin(deviceName, device);
+    return begin(deviceName, peripheral);
 }
 
-bool ArduinoBleChessClass::begin(BleChessPeripheral& device,
+bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
     bleConnection.registerOfflineCentral(offlineCentral);
-    return begin(device);
+    return begin(peripheral);
 }
 
 void ArduinoBleChessClass::send(const String& str)

@@ -9,12 +9,12 @@ class ArduinoBleChessClass
 {
 public:
     bool begin(const String& deviceName,
-               BleChessPeripheral& device);
-    bool begin(BleChessPeripheral& device);
+               BleChessPeripheral& peripheral);
+    bool begin(BleChessPeripheral& peripheral);
     bool begin(const String& deviceName,
-               BleChessPeripheral& device,
+               BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
-    bool begin(BleChessPeripheral& device,
+    bool begin(BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
 
 private:
