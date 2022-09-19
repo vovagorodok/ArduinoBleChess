@@ -11,18 +11,18 @@ public:
     peripheral().onNewRound(STARTING_FEN);
   }
   void onOnlineCentralConnected() {
-    Serial.print("online central connected, disconnect offline central");
+    Serial.println("online central connected, disconnect offline central");
     disconnect();
   }
   void onOnlineCentralDisconnected() {
-    Serial.print("online central disconnected, connect offline central");
+    Serial.println("online central disconnected, connect offline central");
     connect();
   }
   void onPeripheralMove(const Ble::String& mv) {
-    Serial.print("peripheral move accepted, asking for next move");
+    Serial.println("peripheral move accepted, asking for next move");
     peripheral().askPeripheralMakeMove();
   }
   void onTelluser(const Ble::String& text) {
-    Serial.print(text);
+    Serial.println(text);
   }
 };
