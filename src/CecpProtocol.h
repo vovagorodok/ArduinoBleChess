@@ -19,4 +19,4 @@ private:
     bool isForcedPromotion;
 };
 
-extern CecpProtocol Protocol;
+extern CecpProtocol chessProtocol;

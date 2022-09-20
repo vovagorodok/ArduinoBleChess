@@ -103,4 +103,4 @@ void CecpProtocol::askPeripheralStopMove()
     bleChessConnection.peripheralForOnline().askPeripheralStopMove();
 }
 
-CecpProtocol Protocol{};
+CecpProtocol chessProtocol{};

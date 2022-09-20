@@ -28,13 +28,13 @@ void BleChessConnection::onDisconnected()
 
 void BleChessConnection::peripheralMove(const BleChess::String& mv)
 {
-    Protocol.onPeripheralMove(mv);
+    chessProtocol.onPeripheralMove(mv);
     offlineCentral->onPeripheralMove(mv);
 }
 
 void BleChessConnection::telluser(const BleChess::String& text)
 {
-    Protocol.telluser(text);
+    chessProtocol.telluser(text);
     offlineCentral->onTelluser(text);
 }
 
