@@ -1,7 +1,7 @@
 #include "CecpProtocol.h"
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
-#include "BleConnection.h"
+#include "BleChessConnection.h"
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include <regex>
 #endif
@@ -30,7 +30,7 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     else if (startsWith(cmd, "setboard"))
     {
         auto fen = getCmdParams(cmd);
-        bleConnection.peripheralForOnline().onNewRound(fen);
+        bleChessConnection.peripheralForOnline().onNewRound(fen);
     }
     else if (startsWith(cmd, "go"))
     {
@@ -48,7 +48,7 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
     }
     else if (startsWith(cmd, "Illegal move"))
     {
-        bleConnection.peripheralForOnline().onPeripheralMoveRejected(getIllegalMove(cmd));
+        bleChessConnection.peripheralForOnline().onPeripheralMoveRejected(getIllegalMove(cmd));
     }
 #if defined(NIM_BLE_ARDUINO_LIB)
     else if (std::regex_match(cmd, uci))
@@ -57,9 +57,9 @@ void CecpProtocol::onMessage(const Ble::String& cmd)
 #endif
     {
         if (isForcedPromotion)
-            bleConnection.peripheralForOnline().onPeripheralMovePromoted(cmd);
+            bleChessConnection.peripheralForOnline().onPeripheralMovePromoted(cmd);
         else
-            bleConnection.peripheralForOnline().onCentralMove(cmd);
+            bleChessConnection.peripheralForOnline().onCentralMove(cmd);
 
         if (not isForceMode)
             askPeripheralMakeMove();
@@ -95,12 +95,12 @@ Ble::String CecpProtocol::getIllegalMove(const Ble::String& cmd)
 
 void CecpProtocol::askPeripheralMakeMove()
 {
-    bleConnection.peripheralForOnline().askPeripheralMakeMove();
+    bleChessConnection.peripheralForOnline().askPeripheralMakeMove();
 }
 
 void CecpProtocol::askPeripheralStopMove()
 {
-    bleConnection.peripheralForOnline().askPeripheralStopMove();
+    bleChessConnection.peripheralForOnline().askPeripheralStopMove();
 }
 
 CecpProtocol Protocol{};

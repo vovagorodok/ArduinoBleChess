@@ -1,18 +1,18 @@
 #include "BleChessOfflineCentral.h"
 #include "BleChessPeripheral.h"
-#include "BleConnection.h"
+#include "BleChessConnection.h"
 
 void BleChessOfflineCentral::connect()
 {
-    bleConnection.connectOfflineCentral();
+    bleChessConnection.connectOfflineCentral();
 }
 
 void BleChessOfflineCentral::disconnect()
 {
-    bleConnection.disconnectOfflineCentral();
+    bleChessConnection.disconnectOfflineCentral();
 }
 
 BleChessPeripheral& BleChessOfflineCentral::peripheral()
 {
-    return bleConnection.peripheralForOffline();;
+    return bleChessConnection.peripheralForOffline();;
 }

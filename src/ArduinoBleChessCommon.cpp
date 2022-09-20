@@ -3,7 +3,7 @@
 #include "ArduinoBleChessCommon.h"
 #include "BleChessCharacteristics.h"
 #include "CecpProtocol.h"
-#include "BleConnection.h"
+#include "BleChessConnection.h"
 
 namespace
 {
@@ -22,12 +22,12 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
 
 void onConnected(BLEDevice central)
 {
-    bleConnection.onConnected();
+    bleChessConnection.onConnected();
 }
 
 void onDisconnected(BLEDevice central)
 {
-    bleConnection.onDisconnected();
+    bleChessConnection.onDisconnected();
 }
 }
 
@@ -48,7 +48,7 @@ bool ArduinoBleChessClass::begin(const String& deviceName,
 
 bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
 {
-    bleConnection.registerPeripheral(peripheral);
+    bleChessConnection.registerPeripheral(peripheral);
     service.addCharacteristic(rxCharacteristic);
     service.addCharacteristic(txCharacteristic);
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
@@ -62,14 +62,14 @@ bool ArduinoBleChessClass::begin(const String& deviceName,
                                  BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
-    bleConnection.registerOfflineCentral(offlineCentral);
+    bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(deviceName, peripheral);
 }
 
 bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
-    bleConnection.registerOfflineCentral(offlineCentral);
+    bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(peripheral);
 }
 

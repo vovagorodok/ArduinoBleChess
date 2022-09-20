@@ -1,13 +1,12 @@
 #include "BleChessPeripheral.h"
-#include "BleConnection.h"
+#include "BleChessConnection.h"
 
 void BleChessPeripheral::peripheralMove(const Ble::String& mv)
 {
-
-    bleConnection.peripheralMove(mv);
+    bleChessConnection.peripheralMove(mv);
 }
 
 void BleChessPeripheral::telluser(const Ble::String& text)
 {
-    bleConnection.telluser(text);
+    bleChessConnection.telluser(text);
 }

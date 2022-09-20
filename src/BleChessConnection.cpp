@@ -1,4 +1,4 @@
-#include "BleConnection.h"
+#include "BleChessConnection.h"
 #include "BleChessPeripheral.h"
 #include "BleChessOfflineCentral.h"
 #include "CecpProtocol.h"
@@ -9,65 +9,65 @@ static BleChessPeripheral dummyPeripheral{};
 static BleChessOfflineCentral dummyOfflineCentral{};
 }
 
-BleConnection::BleConnection() :
+BleChessConnection::BleChessConnection() :
     registeredPeripheral(&dummyPeripheral),
     registeredCentral(&dummyOfflineCentral),
     offlinePeripheral(&dummyPeripheral),
     offlineCentral(&dummyOfflineCentral)
 {}
 
-void BleConnection::onConnected()
+void BleChessConnection::onConnected()
 {
     registeredCentral->onOnlineCentralConnected();
 }
 
-void BleConnection::onDisconnected()
+void BleChessConnection::onDisconnected()
 {
     registeredCentral->onOnlineCentralDisconnected();
 }
 
-void BleConnection::peripheralMove(const Ble::String& mv)
+void BleChessConnection::peripheralMove(const Ble::String& mv)
 {
     Protocol.onPeripheralMove(mv);
     offlineCentral->onPeripheralMove(mv);
 }
 
-void BleConnection::telluser(const Ble::String& text)
+void BleChessConnection::telluser(const Ble::String& text)
 {
     Protocol.telluser(text);
     offlineCentral->onTelluser(text);
 }
 
-void BleConnection::connectOfflineCentral()
+void BleChessConnection::connectOfflineCentral()
 {
     offlineCentral = registeredCentral;
     offlinePeripheral = registeredPeripheral;
 }
 
-void BleConnection::disconnectOfflineCentral()
+void BleChessConnection::disconnectOfflineCentral()
 {
     offlineCentral = &dummyOfflineCentral;
     offlinePeripheral = &dummyPeripheral;
 }
 
-BleChessPeripheral& BleConnection::peripheralForOffline()
+BleChessPeripheral& BleChessConnection::peripheralForOffline()
 {
     return *offlinePeripheral;
 }
 
-BleChessPeripheral& BleConnection::peripheralForOnline()
+BleChessPeripheral& BleChessConnection::peripheralForOnline()
 {
     return *registeredPeripheral;
 }
 
-void BleConnection::registerPeripheral(BleChessPeripheral& peripheral)
+void BleChessConnection::registerPeripheral(BleChessPeripheral& peripheral)
 {
     registeredPeripheral = &peripheral;
 }
 
-void BleConnection::registerOfflineCentral(BleChessOfflineCentral& central)
+void BleChessConnection::registerOfflineCentral(BleChessOfflineCentral& central)
 {
     registeredCentral = &central;
 }
 
-BleConnection bleConnection{};
+BleChessConnection bleChessConnection{};

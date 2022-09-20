@@ -3,7 +3,7 @@
 #include "ArduinoBleChessNimBle.h"
 #include "BleChessCharacteristics.h"
 #include "CecpProtocol.h"
-#include "BleConnection.h"
+#include "BleChessConnection.h"
 
 bool ArduinoBleChessClass::begin(const std::string& deviceName,
                                  BleChessPeripheral& peripheral)
@@ -24,7 +24,7 @@ bool ArduinoBleChessClass::begin(const std::string& deviceName,
 bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
 {
     auto* server = BLEDevice::createServer();
-    bleConnection.registerPeripheral(peripheral);
+    bleChessConnection.registerPeripheral(peripheral);
     server->setCallbacks(this);
     auto* service = server->createService(CHESS_SERVICE_UUID);
 
@@ -49,25 +49,25 @@ bool ArduinoBleChessClass::begin(const std::string& deviceName,
                                  BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
-    bleConnection.registerOfflineCentral(offlineCentral);
+    bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(deviceName, peripheral);
 }
 
 bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {
-    bleConnection.registerOfflineCentral(offlineCentral);
+    bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(peripheral);
 }
 
 void ArduinoBleChessClass::onConnect(NimBLEServer* srv)
 {
-    bleConnection.onConnected();
+    bleChessConnection.onConnected();
 }
 
 void ArduinoBleChessClass::onDisconnect(NimBLEServer* srv)
 {
-    bleConnection.onDisconnected();
+    bleChessConnection.onDisconnected();
 }
 
 void ArduinoBleChessClass::onWrite(BLECharacteristic* characteristic)

@@ -4,10 +4,10 @@
 class BleChessPeripheral;
 class BleChessOfflineCentral;
 
-class BleConnection
+class BleChessConnection
 {
 public:
-    BleConnection();
+    BleChessConnection();
 
     void onConnected();
     void onDisconnected();
@@ -30,4 +30,4 @@ private:
     BleChessOfflineCentral* offlineCentral;
 };
 
-extern BleConnection bleConnection;
+extern BleChessConnection bleChessConnection;
