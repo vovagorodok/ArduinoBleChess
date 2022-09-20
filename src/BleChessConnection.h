@@ -1,5 +1,5 @@
 #pragma once
-#include "BleString.h"
+#include "BleChessString.h"
 
 class BleChessPeripheral;
 class BleChessOfflineCentral;
@@ -12,8 +12,8 @@ public:
     void onConnected();
     void onDisconnected();
 
-    void peripheralMove(const Ble::String& mv);
-    void telluser(const Ble::String& text);
+    void peripheralMove(const BleChess::String& mv);
+    void telluser(const BleChess::String& text);
 
     void connectOfflineCentral();
     void disconnectOfflineCentral();

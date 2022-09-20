@@ -1,5 +1,5 @@
 #pragma once
-#include "BleString.h"
+#include "BleChessString.h"
 #include "BleChessPeripheral.h"
 
 class BleChessOfflineCentral
@@ -7,8 +7,8 @@ class BleChessOfflineCentral
 public:
     virtual void onOnlineCentralConnected() {}
     virtual void onOnlineCentralDisconnected() {}
-    virtual void onPeripheralMove(const Ble::String& mv) {}
-    virtual void onTelluser(const Ble::String& text) {}
+    virtual void onPeripheralMove(const BleChess::String& mv) {}
+    virtual void onTelluser(const BleChess::String& text) {}
     virtual ~BleChessOfflineCentral() = default;
 
 protected:
