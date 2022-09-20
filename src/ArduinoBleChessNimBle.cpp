@@ -1,17 +1,11 @@
-#include "Defines.h"
+#include "BleChessDefines.h"
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include "ArduinoBleChessNimBle.h"
+#include "BleChessCharacteristics.h"
 #include "CecpProtocol.h"
 #include "BleConnection.h"
 
-namespace
-{
-#define SERVICE_UUID           "f5351050-b2c9-11ec-a0c0-b3bc53b08d33"
-#define CHARACTERISTIC_UUID_RX "f53513ca-b2c9-11ec-a0c1-639b8957db99"
-#define CHARACTERISTIC_UUID_TX "f535147e-b2c9-11ec-a0c2-8bbd706ec4e6"
-}
-
-bool ArduinoBleChessClass::begin(const std::string &deviceName,
+bool ArduinoBleChessClass::begin(const std::string& deviceName,
                                  BleChessPeripheral& peripheral)
 {
     BLEDevice::init(deviceName);
@@ -32,26 +26,26 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
     auto* server = BLEDevice::createServer();
     bleConnection.registerPeripheral(peripheral);
     server->setCallbacks(this);
-    auto* service = server->createService(SERVICE_UUID);
+    auto* service = server->createService(CHESS_SERVICE_UUID);
 
     auto* rxCharacteristic = service->createCharacteristic(
-        CHARACTERISTIC_UUID_RX,
+        CHESS_CHARACTERISTIC_UUID_RX,
         NIMBLE_PROPERTY::WRITE
     );
     rxCharacteristic->setCallbacks(this);
 
     auto* txCharacteristic = service->createCharacteristic(
-        CHARACTERISTIC_UUID_TX,
+        CHESS_CHARACTERISTIC_UUID_TX,
         NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
     );
     this->txCharacteristic = txCharacteristic;
 
     auto* advertising = server->getAdvertising();
-    advertising->addServiceUUID(SERVICE_UUID);
+    advertising->addServiceUUID(CHESS_SERVICE_UUID);
     return service->start();
 }
 
-bool ArduinoBleChessClass::begin(const std::string &deviceName,
+bool ArduinoBleChessClass::begin(const std::string& deviceName,
                                  BleChessPeripheral& peripheral,
                                  BleChessOfflineCentral& offlineCentral)
 {

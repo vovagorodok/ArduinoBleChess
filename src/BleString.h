@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Defines.h"
+#include "BleChessDefines.h"
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include <string>
 #else
