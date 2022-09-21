@@ -4,14 +4,14 @@
 class CecpProtocol
 {
 public:
-    void onPeripheralMove(const BleChess::String& mv);
-    void telluser(const BleChess::String& text);
-    void onMessage(const BleChess::String& str);
+    void onPeripheralMove(const BleChessString& mv);
+    void telluser(const BleChessString& text);
+    void onMessage(const BleChessString& str);
 
 private:
-    void send(BleChess::String str);
-    static BleChess::String getCmdParams(const BleChess::String& cmd);
-    static BleChess::String getIllegalMove(const BleChess::String& cmd);
+    void send(BleChessString str);
+    static BleChessString getCmdParams(const BleChessString& cmd);
+    static BleChessString getIllegalMove(const BleChessString& cmd);
     void askPeripheralMakeMove();
     void askPeripheralStopMove();
 

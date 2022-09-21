@@ -13,7 +13,7 @@ static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 #endif
 }
 
-void CecpProtocol::onMessage(const BleChess::String& cmd)
+void CecpProtocol::onMessage(const BleChessString& cmd)
 {
     if (startsWith(cmd, "xboard") || startsWith(cmd, "accepted"))
     {
@@ -68,27 +68,27 @@ void CecpProtocol::onMessage(const BleChess::String& cmd)
     }
 }
 
-void CecpProtocol::onPeripheralMove(const BleChess::String& mv)
+void CecpProtocol::onPeripheralMove(const BleChessString& mv)
 {
     send("move " + mv);
 }
 
-void CecpProtocol::telluser(const BleChess::String& text)
+void CecpProtocol::telluser(const BleChessString& text)
 {
     send("telluser " + text);
 }
 
-void CecpProtocol::send(BleChess::String str)
+void CecpProtocol::send(BleChessString str)
 {
     ArduinoBleChess.send(str);
 }
 
-BleChess::String CecpProtocol::getCmdParams(const BleChess::String& cmd)
+BleChessString CecpProtocol::getCmdParams(const BleChessString& cmd)
 {
     return substring(cmd, indexOf(cmd, ' ') + 1);
 }
 
-BleChess::String CecpProtocol::getIllegalMove(const BleChess::String& cmd)
+BleChessString CecpProtocol::getIllegalMove(const BleChessString& cmd)
 {
     return substring(cmd, indexOf(cmd, ": ") + 2);
 }

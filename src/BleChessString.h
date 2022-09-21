@@ -7,20 +7,17 @@
 #include <Arduino.h>
 #endif
 
-namespace BleChess
-{
 #if defined(NIM_BLE_ARDUINO_LIB)
-using String = std::string;
+using BleChessString = std::string;
 #else
-using String = String;
+using BleChessString = String;
 #endif
-}
 
 #if __cpp_lib_starts_ends_with
 #error "std::string::starts_with() already implemented"
 #endif
 
-inline bool startsWith(const BleChess::String& str, const BleChess::String& start)
+inline bool startsWith(const BleChessString& str, const BleChessString& start)
 {
 #if defined(NIM_BLE_ARDUINO_LIB)
     return str.size() >= start.size() and
@@ -30,7 +27,7 @@ inline bool startsWith(const BleChess::String& str, const BleChess::String& star
 #endif
 }
 
-inline BleChess::String substring(const BleChess::String& str, unsigned int beginIndex)
+inline BleChessString substring(const BleChessString& str, unsigned int beginIndex)
 {
 #if defined(NIM_BLE_ARDUINO_LIB)
     return str.substr(beginIndex);
@@ -39,7 +36,7 @@ inline BleChess::String substring(const BleChess::String& str, unsigned int begi
 #endif
 }
 
-inline BleChess::String substring(const BleChess::String& str, unsigned int beginIndex, unsigned int endIndex)
+inline BleChessString substring(const BleChessString& str, unsigned int beginIndex, unsigned int endIndex)
 {
 #if defined(NIM_BLE_ARDUINO_LIB)
     return str.substr(beginIndex, endIndex);
@@ -48,7 +45,7 @@ inline BleChess::String substring(const BleChess::String& str, unsigned int begi
 #endif
 }
 
-inline int indexOf(const BleChess::String& str, char match)
+inline int indexOf(const BleChessString& str, char match)
 {
 #if defined(NIM_BLE_ARDUINO_LIB)
     return str.find(match);
@@ -57,7 +54,7 @@ inline int indexOf(const BleChess::String& str, char match)
 #endif
 }
 
-inline int indexOf(const BleChess::String& str, const BleChess::String& match)
+inline int indexOf(const BleChessString& str, const BleChessString& match)
 {
 #if defined(NIM_BLE_ARDUINO_LIB)
     return str.find(match);

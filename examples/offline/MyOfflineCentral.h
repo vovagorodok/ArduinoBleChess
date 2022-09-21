@@ -18,11 +18,11 @@ public:
     Serial.println("online central disconnected, connect offline central");
     connect();
   }
-  void onPeripheralMove(const BleChess::String& mv) {
+  void onPeripheralMove(const BleChessString& mv) {
     Serial.println("peripheral move accepted, asking for next move");
     peripheral().askPeripheralMakeMove();
   }
-  void onTelluser(const BleChess::String& text) {
+  void onTelluser(const BleChessString& text) {
     Serial.println(text.c_str());
   }
 };

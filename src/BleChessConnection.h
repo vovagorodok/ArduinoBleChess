@@ -12,8 +12,8 @@ public:
     void onConnected();
     void onDisconnected();
 
-    void peripheralMove(const BleChess::String& mv);
-    void telluser(const BleChess::String& text);
+    void peripheralMove(const BleChessString& mv);
+    void telluser(const BleChessString& text);
 
     void connectOfflineCentral();
     void disconnectOfflineCentral();
