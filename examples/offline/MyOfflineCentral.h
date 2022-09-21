@@ -23,6 +23,6 @@ public:
     peripheral().askPeripheralMakeMove();
   }
   void onTelluser(const BleChess::String& text) {
-    Serial.println(text);
+    Serial.println(text.c_str());
   }
 };
