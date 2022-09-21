@@ -19,7 +19,7 @@ void setup() {
 
   if (!ArduinoBleChess.begin(peripheral))
     Serial.println("ble initialization error");
-  advertizeBle(NAME, MY_SECOND_SERVICE_UUID);
+  advertiseBle(NAME, MY_SECOND_SERVICE_UUID);
 }
 
 void loop() {
