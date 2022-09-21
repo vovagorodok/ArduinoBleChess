@@ -1,7 +1,7 @@
 #include "BleChessDefines.h"
 #if defined(ARDUINO_BLE_LIB)
 #include "ArduinoBleChessCommon.h"
-#include "BleChessCharacteristics.h"
+#include "BleChessUuids.h"
 #include "CecpProtocol.h"
 #include "BleChessConnection.h"
 
@@ -10,9 +10,9 @@ namespace
 // https://chess.stackexchange.com/questions/30004/longest-possible-fen
 #define MAX_STR_SIZE 100
 
-BLEService service(CHESS_SERVICE_UUID);
-BLEStringCharacteristic rxCharacteristic(CHESS_CHARACTERISTIC_UUID_RX, BLEWrite, MAX_STR_SIZE);
-BLEStringCharacteristic txCharacteristic(CHESS_CHARACTERISTIC_UUID_TX, BLERead | BLENotify, MAX_STR_SIZE);
+BLEService service(BLE_CHESS_SERVICE_UUID);
+BLEStringCharacteristic rxCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_RX, BLEWrite, MAX_STR_SIZE);
+BLEStringCharacteristic txCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_TX, BLERead | BLENotify, MAX_STR_SIZE);
 
 void onWrite(BLEDevice central, BLECharacteristic characteristic)
 {

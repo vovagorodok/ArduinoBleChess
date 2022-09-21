@@ -1,7 +1,7 @@
 #include "BleChessDefines.h"
 #if defined(NIM_BLE_ARDUINO_LIB)
 #include "ArduinoBleChessNimBle.h"
-#include "BleChessCharacteristics.h"
+#include "BleChessUuids.h"
 #include "CecpProtocol.h"
 #include "BleChessConnection.h"
 
@@ -26,22 +26,22 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
     auto* server = BLEDevice::createServer();
     bleChessConnection.registerPeripheral(peripheral);
     server->setCallbacks(this);
-    auto* service = server->createService(CHESS_SERVICE_UUID);
+    auto* service = server->createService(BLE_CHESS_SERVICE_UUID);
 
     auto* rxCharacteristic = service->createCharacteristic(
-        CHESS_CHARACTERISTIC_UUID_RX,
+        BLE_CHESS_CHARACTERISTIC_UUID_RX,
         NIMBLE_PROPERTY::WRITE
     );
     rxCharacteristic->setCallbacks(this);
 
     auto* txCharacteristic = service->createCharacteristic(
-        CHESS_CHARACTERISTIC_UUID_TX,
+        BLE_CHESS_CHARACTERISTIC_UUID_TX,
         NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
     );
     this->txCharacteristic = txCharacteristic;
 
     auto* advertising = server->getAdvertising();
-    advertising->addServiceUUID(CHESS_SERVICE_UUID);
+    advertising->addServiceUUID(BLE_CHESS_SERVICE_UUID);
     return service->start();
 }
 
