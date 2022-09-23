@@ -12,7 +12,11 @@ public:
     virtual ~BleChessOfflineCentral() = default;
 
 protected:
-    BleChessPeripheral& peripheral();
     void connect();
     void disconnect();
+    bool isConnected() const;
+    BleChessPeripheral& peripheral();
+
+private:
+    bool connected = false;
 };
