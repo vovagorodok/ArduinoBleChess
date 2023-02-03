@@ -2,7 +2,7 @@
 #include <ArduinoBleChess.h>
 #include "BleChessUuids.h"
 
-#ifdef NIM_BLE_ARDUINO_LIB
+#ifdef USE_NIM_BLE_ARDUINO_LIB
 inline void initBle(const std::string& deviceName)
 {
     BLEDevice::init(deviceName);

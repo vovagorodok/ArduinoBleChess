@@ -1,5 +1,4 @@
-#include "BleChessDefines.h"
-#if defined(ARDUINO_BLE_LIB)
+#if !defined(USE_NIM_BLE_ARDUINO_LIB)
 #include "ArduinoBleChessCommon.h"
 #include "BleChessUuids.h"
 #include "CecpProtocol.h"
