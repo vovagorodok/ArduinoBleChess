@@ -17,6 +17,9 @@ public:
     bool begin(BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
 
+    void onConnect();
+    void onDisconnect();
+
 private:
     friend CecpProtocol;
     void send(const String& str);

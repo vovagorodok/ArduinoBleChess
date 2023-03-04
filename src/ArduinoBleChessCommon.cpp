@@ -19,14 +19,14 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic)
     chessProtocol.onMessage(rxValue);
 }
 
-void onConnected(BLEDevice central)
+void onConnectCallback(BLEDevice central)
 {
-    bleChessConnection.onConnected();
+    ArduinoBleChess.onConnect();
 }
 
-void onDisconnected(BLEDevice central)
+void onDisconnectCallback(BLEDevice central)
 {
-    bleChessConnection.onDisconnected();
+    ArduinoBleChess.onDisconnect();
 }
 }
 
@@ -51,8 +51,8 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral)
     service.addCharacteristic(rxCharacteristic);
     service.addCharacteristic(txCharacteristic);
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
-    BLE.setEventHandler(BLEConnected, onConnected);
-    BLE.setEventHandler(BLEDisconnected, onDisconnected);
+    BLE.setEventHandler(BLEConnected, onConnectCallback);
+    BLE.setEventHandler(BLEDisconnected, onDisconnectCallback);
     BLE.addService(service);
     return BLE.setAdvertisedService(service);
 }
@@ -75,6 +75,16 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
 void ArduinoBleChessClass::send(const String& str)
 {
     txCharacteristic.setValue(str);
+}
+
+void ArduinoBleChessClass::onConnect()
+{
+    bleChessConnection.onConnected();
+}
+
+void ArduinoBleChessClass::onDisconnect()
+{
+    bleChessConnection.onDisconnected();
 }
 
 ArduinoBleChessClass ArduinoBleChess{};

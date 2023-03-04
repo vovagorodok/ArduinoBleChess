@@ -18,11 +18,14 @@ public:
     bool begin(BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
 
+    void onConnect();
+    void onDisconnect();
+
 private:
     friend CecpProtocol;
-    void send(const std::string& str);
     void onConnect(NimBLEServer* srv) override;
     void onDisconnect(NimBLEServer* srv) override;
+    void send(const std::string& str);
     void onWrite(BLECharacteristic* characteristic) override;
     BLECharacteristic* txCharacteristic;
 };

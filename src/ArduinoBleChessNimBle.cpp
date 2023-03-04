@@ -59,14 +59,24 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
     return begin(peripheral);
 }
 
-void ArduinoBleChessClass::onConnect(NimBLEServer* srv)
+void ArduinoBleChessClass::onConnect()
 {
     bleChessConnection.onConnected();
 }
 
-void ArduinoBleChessClass::onDisconnect(NimBLEServer* srv)
+void ArduinoBleChessClass::onDisconnect()
 {
     bleChessConnection.onDisconnected();
+}
+
+void ArduinoBleChessClass::onConnect(NimBLEServer* srv)
+{
+    onConnect();
+}
+
+void ArduinoBleChessClass::onDisconnect(NimBLEServer* srv)
+{
+    onDisconnect();
 }
 
 void ArduinoBleChessClass::onWrite(BLECharacteristic* characteristic)
