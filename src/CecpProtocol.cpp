@@ -2,13 +2,13 @@
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
-#if defined(USE_NIM_BLE_ARDUINO_LIB)
+#ifdef USE_NIM_BLE_ARDUINO_LIB
 #include <regex>
 #endif
 
 namespace
 {
-#if defined(USE_NIM_BLE_ARDUINO_LIB)
+#ifdef USE_NIM_BLE_ARDUINO_LIB
 static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 #endif
 }
@@ -50,7 +50,7 @@ void CecpProtocol::onMessage(const BleChessString& cmd)
     {
         bleChessConnection.peripheralForOnline().onPeripheralMoveRejected(getIllegalMove(cmd));
     }
-#if defined(USE_NIM_BLE_ARDUINO_LIB)
+#ifdef USE_NIM_BLE_ARDUINO_LIB
     else if (std::regex_match(cmd, uci))
 #else
     else
