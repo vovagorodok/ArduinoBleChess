@@ -23,8 +23,8 @@ public:
 
 private:
     friend CecpProtocol;
-    void onConnect(NimBLEServer* srv) override;
-    void onDisconnect(NimBLEServer* srv) override;
+    void onConnect(BLEServer* srv) override;
+    void onDisconnect(BLEServer* srv) override;
     void send(const std::string& str);
     void onWrite(BLECharacteristic* characteristic) override;
     BLECharacteristic* txCharacteristic;

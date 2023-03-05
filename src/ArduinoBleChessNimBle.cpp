@@ -69,12 +69,12 @@ void ArduinoBleChessClass::onDisconnect()
     bleChessConnection.onDisconnected();
 }
 
-void ArduinoBleChessClass::onConnect(NimBLEServer* srv)
+void ArduinoBleChessClass::onConnect(BLEServer* srv)
 {
     onConnect();
 }
 
-void ArduinoBleChessClass::onDisconnect(NimBLEServer* srv)
+void ArduinoBleChessClass::onDisconnect(BLEServer* srv)
 {
     onDisconnect();
 }
