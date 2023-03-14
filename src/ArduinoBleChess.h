@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef USE_NIM_BLE_ARDUINO_LIB
-#include "ArduinoBleChessNimBle.h"
+#include "ArduinoBleChessClassNimBle.h"
 #else
-#include "ArduinoBleChessCommon.h"
+#include "ArduinoBleChessClass.h"
 #endif
