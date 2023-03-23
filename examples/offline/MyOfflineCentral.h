@@ -10,19 +10,19 @@ public:
     connect();
     peripheral().onNewRound(STARTING_FEN);
   }
-  void onOnlineCentralConnected() {
+  void onOnlineCentralConnected() override {
     Serial.println("online central connected, disconnect offline central");
     disconnect();
   }
-  void onOnlineCentralDisconnected() {
+  void onOnlineCentralDisconnected() override {
     Serial.println("online central disconnected, connect offline central");
     connect();
   }
-  void onPeripheralMove(const BleChessString& mv) {
+  void onPeripheralMove(const BleChessString& mv) override {
     Serial.println("peripheral move accepted, asking for next move");
     peripheral().askPeripheralMakeMove();
   }
-  void onTelluser(const BleChessString& text) {
+  void onTelluser(const BleChessString& text) override {
     Serial.println(text.c_str());
   }
 };
