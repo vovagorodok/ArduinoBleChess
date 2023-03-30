@@ -3,6 +3,7 @@
 #include "BleChessUuids.h"
 
 #ifdef USE_NIM_BLE_ARDUINO_LIB
+
 inline void initBle(const std::string& deviceName)
 {
     BLEDevice::init(deviceName);
@@ -37,7 +38,9 @@ inline bool advertiseBle(const std::string& deviceName,
 {
     return advertiseBle(deviceName, BLE_CHESS_SERVICE_UUID, secondaryUUID);
 }
+
 #else
+
 inline bool initBle(const char* deviceName)
 {
     if (!BLE.begin())
@@ -70,4 +73,5 @@ inline bool advertiseBle(const char* deviceName,
 {
     return advertiseBle(deviceName, BLE_CHESS_SERVICE_UUID, secondaryUUID);
 }
+
 #endif
