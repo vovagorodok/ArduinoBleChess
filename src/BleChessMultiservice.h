@@ -16,10 +16,6 @@ inline bool advertiseBle(const std::string& deviceName,
     auto* server = BLEDevice::createServer();
     auto* advertising = server->getAdvertising();
 
-    advertising->setScanResponse(true);
-    advertising->setMinPreferred(0x06); // functions that help with iPhone connections issue
-    advertising->setMaxPreferred(0x12);
-
     NimBLEAdvertisementData primaryAdvertisementData{};
     primaryAdvertisementData.setFlags(BLE_HS_ADV_F_DISC_GEN | BLE_HS_ADV_F_BREDR_UNSUP);
     primaryAdvertisementData.setCompleteServices(NimBLEUUID(primaryUUID));
