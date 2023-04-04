@@ -12,8 +12,10 @@ using BleChessString = std::string;
 using BleChessString = String;
 #endif
 
+#ifdef USE_NIM_BLE_ARDUINO_LIB
 #if __cpp_lib_starts_ends_with
 #error "std::string::starts_with() already implemented"
+#endif
 #endif
 
 inline bool startsWith(const BleChessString& str, const BleChessString& start)
@@ -22,7 +24,13 @@ inline bool startsWith(const BleChessString& str, const BleChessString& start)
     return str.size() >= start.size() and
            str.substr(0, start.size()) == start;
 #else
+#ifdef ESP32
     return str.startsWith(start);
+#else
+    // workaround for startsWith() always return false
+    return str.length() >= start.length() and
+           str.substring(0) == start;
+#endif
 #endif
 }
 
