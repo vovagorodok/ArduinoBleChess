@@ -15,10 +15,7 @@ static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
 
 void CecpProtocol::onMessage(const BleChessString& cmd)
 {
-    if (startsWith(cmd, "xboard") || startsWith(cmd, "accepted"))
-    {
-    }
-    else if (startsWith(cmd, "protover"))
+    if (startsWith(cmd, "protover"))
     {
         send("feature setboard=1");
     }
@@ -51,9 +48,12 @@ void CecpProtocol::onMessage(const BleChessString& cmd)
         bleChessConnection.peripheralForOnline().onPeripheralMoveRejected(getIllegalMove(cmd));
     }
 #ifdef USE_NIM_BLE_ARDUINO_LIB
+    else if (startsWith(cmd, "xboard") || startsWith(cmd, "accepted"))
+    {
+    }
     else if (std::regex_match(cmd, uci))
 #else
-    else
+    else if (!startsWith(cmd, "xboard") && !startsWith(cmd, "accepted"))
 #endif
     {
         if (isForcedPromotion)
