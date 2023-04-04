@@ -29,7 +29,7 @@ inline bool startsWith(const BleChessString& str, const BleChessString& start)
 #else
     // workaround for startsWith() always return false
     return str.length() >= start.length() and
-           str.substring(0) == start;
+           str.substring(0, start.length() - 1) == start;
 #endif
 #endif
 }
