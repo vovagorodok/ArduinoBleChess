@@ -15,7 +15,13 @@ void setup() {
 
   initBle(NAME);
 
-  // add your ble services here
+#ifndef USE_NIM_BLE_ARDUINO_LIB
+  static BLEService service(MY_SECOND_SERVICE_UUID);
+  BLE.addService(service);
+#else
+  auto* server = BLEDevice::createServer();
+  auto* service = server->createService(MY_SECOND_SERVICE_UUID);
+#endif
 
   if (!ArduinoBleChess.begin(peripheral))
     Serial.println("ble initialization error");
