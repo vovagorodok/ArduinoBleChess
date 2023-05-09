@@ -1,7 +1,7 @@
 # Arduino BLE Chess
 Library opens posibility to communicate with mobile chess apps via universal CECP protocol
 
-By default `ArduinoBLE` is used. If `NimBLE-Arduino` is used, add to platformio.ini:
+By default `ArduinoBLE` is used. If `NimBLE-Arduino` is used in your project, add to platformio.ini:
 ```
 build_flags = 
 	-D USE_NIM_BLE_ARDUINO_LIB
