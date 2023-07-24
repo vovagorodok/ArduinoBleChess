@@ -1,0 +1,35 @@
+{
+    "name": "ArduinoBleChess",
+    "version": "0.1.0",
+    "description": "Bluetooth low energy (BLE) library for communication via CECP chess protocol",
+    "keywords": "BLE, chess, bluetooth",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/vovagorodok/ArduinoBleChess"
+    },
+    "authors":
+    [
+      {
+        "name": "vovagorodok",
+        "email": "vovagorodok2@gmail.com",
+        "url": "https://github.com/vovagorodok",
+        "maintainer": true
+      },
+      {
+        "name": "dkwach",
+        "email": "dawid.kwach@gmail.com",
+        "url": "https://github.com/dkwach",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/vovagorodok/ArduinoBleChess",
+    "dependencies":
+    {
+      "arduino-libraries/ArduinoBLE":"^1.3.2"
+    },
+    "headers": ["ArduinoBleChess.h"],
+    "frameworks": "arduino",
+    "platforms": ["*"]
+  }
