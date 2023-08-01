@@ -27,7 +27,7 @@
     "homepage": "https://github.com/vovagorodok/ArduinoBleChess",
     "dependencies":
     {
-      "arduino-libraries/ArduinoBLE":"^1.3.2"
+      "arduino-libraries/ArduinoBLE":"^1.3.5"
     },
     "headers": ["ArduinoBleChess.h"],
     "frameworks": "arduino",
