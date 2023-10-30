@@ -21,5 +21,5 @@ bool BleChessOfflineCentral::isConnected() const
 
 BleChessPeripheral& BleChessOfflineCentral::peripheral()
 {
-    return bleChessConnection.peripheralForOffline();;
+    return bleChessConnection.peripheralForOffline();
 }
