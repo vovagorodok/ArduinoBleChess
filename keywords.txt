@@ -6,10 +6,10 @@ BleChessOfflineCentral	KEYWORD1
 # Methods and Functions (KEYWORD2)
 begin	KEYWORD2
 poll	KEYWORD2
-onConnect    KEYWORD2
-onDisconnect   KEYWORD2
-initBle KEYWORD2
-advertiseBle    KEYWORD2
+onConnect	KEYWORD2
+onDisconnect	KEYWORD2
+initBle	KEYWORD2
+advertiseBle	KEYWORD2
 
 # Instances (KEYWORD2)
 
