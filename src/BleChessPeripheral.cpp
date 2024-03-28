@@ -8,7 +8,7 @@ void BleChessPeripheral::onFeature(const BleChessString& feature)
 
 void BleChessPeripheral::onVariant(const BleChessString& variant)
 {
-    sendAck(startsWith(variant, "standard"));
+    sendAck(variant == "standard");
 }
 
 void BleChessPeripheral::onFen(const BleChessString& fen)
