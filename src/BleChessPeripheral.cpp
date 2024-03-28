@@ -35,6 +35,11 @@ void BleChessPeripheral::onPromote(const BleChessString& prom)
 void BleChessPeripheral::onAck(bool ack)
 {}
 
+void BleChessPeripheral::onLastMove(const BleChessString& mv)
+{
+    sendAck(false);
+}
+
 void BleChessPeripheral::sendFen(const BleChessString& fen)
 {
     bleChessConnection.sendFen(fen);

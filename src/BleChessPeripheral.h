@@ -14,6 +14,7 @@ public:
     virtual void onPromote(const BleChessString& prom);
 
     virtual void onAck(bool ack);
+    virtual void onLastMove(const BleChessString& mv);
 
     virtual ~BleChessPeripheral() = default;
 

@@ -50,6 +50,11 @@ void BleChessProtocol::onCommand(const BleChessString& cmd)
         auto variant = getCmdParams(cmd);
         bleChessConnection.peripheralForOnline().onVariant(variant);
     }
+    else if (startsWith(cmd, "last_move"))
+    {
+        auto lastMove = getCmdParams(cmd);
+        bleChessConnection.peripheralForOnline().onLastMove(lastMove);
+    }
     else
     {
         sendAck(false);
