@@ -3,6 +3,14 @@
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
 
+namespace
+{
+BleChessString getCmdParams(const BleChessString& cmd)
+{
+    return substring(cmd, indexOf(cmd, ' ') + 1);
+}
+}
+
 BleChessProtocol::BleChessProtocol() :
     onAckMethod(&BleChessPeripheral::onFenAck)
 {}
@@ -73,11 +81,6 @@ void BleChessProtocol::sendMsg(const BleChessString& msg)
 void BleChessProtocol::send(BleChessString str)
 {
     ArduinoBleChess.send(str);
-}
-
-BleChessString BleChessProtocol::getCmdParams(const BleChessString& cmd)
-{
-    return substring(cmd, indexOf(cmd, ' ') + 1);
 }
 
 BleChessProtocol chessProtocol{};

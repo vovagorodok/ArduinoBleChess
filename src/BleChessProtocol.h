@@ -16,7 +16,6 @@ public:
 
 private:
     void send(BleChessString str);
-    static BleChessString getCmdParams(const BleChessString& cmd);
 
     typedef void(BleChessPeripheral::*AckMethod)(bool);
     AckMethod onAckMethod;
