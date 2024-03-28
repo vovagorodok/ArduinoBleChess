@@ -3,10 +3,10 @@
 
 class BleChessPeripheral;
 
-class CecpProtocol
+class BleChessProtocol
 {
 public:
-    CecpProtocol();
+    BleChessProtocol();
 
     void sendFen(const BleChessString& fen);
     void sendMove(const BleChessString& mv);
@@ -22,4 +22,4 @@ private:
     AckMethod onAckMethod;
 };
 
-extern CecpProtocol chessProtocol;
+extern BleChessProtocol chessProtocol;

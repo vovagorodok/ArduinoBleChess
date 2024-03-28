@@ -2,7 +2,7 @@
 #ifdef USE_ARDUINO_BLE_LIB
 #include "ArduinoBleChessClass.h"
 #include "BleChessUuids.h"
-#include "CecpProtocol.h"
+#include "BleChessProtocol.h"
 #include "BleChessConnection.h"
 
 namespace

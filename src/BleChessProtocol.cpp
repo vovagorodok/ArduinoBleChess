@@ -1,13 +1,13 @@
-#include "CecpProtocol.h"
+#include "BleChessProtocol.h"
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
 
-CecpProtocol::CecpProtocol() :
+BleChessProtocol::BleChessProtocol() :
     onAckMethod(&BleChessPeripheral::onFenAck)
 {}
 
-void CecpProtocol::onCommand(const BleChessString& cmd)
+void BleChessProtocol::onCommand(const BleChessString& cmd)
 {
     if (startsWith(cmd, "ok"))
     {
@@ -48,36 +48,36 @@ void CecpProtocol::onCommand(const BleChessString& cmd)
     }
 }
 
-void CecpProtocol::sendFen(const BleChessString& fen)
+void BleChessProtocol::sendFen(const BleChessString& fen)
 {
     onAckMethod = &BleChessPeripheral::onFenAck;
     send("fen " + fen);
 }
 
-void CecpProtocol::sendMove(const BleChessString& mv)
+void BleChessProtocol::sendMove(const BleChessString& mv)
 {
     onAckMethod = &BleChessPeripheral::onMoveAck;
     send("move " + mv);
 }
 
-void CecpProtocol::sendAck(bool ack)
+void BleChessProtocol::sendAck(bool ack)
 {
     send(ack ? "ok" : "nok");
 }
 
-void CecpProtocol::sendMsg(const BleChessString& msg)
+void BleChessProtocol::sendMsg(const BleChessString& msg)
 {
     send("msg " + msg);
 }
 
-void CecpProtocol::send(BleChessString str)
+void BleChessProtocol::send(BleChessString str)
 {
     ArduinoBleChess.send(str);
 }
 
-BleChessString CecpProtocol::getCmdParams(const BleChessString& cmd)
+BleChessString BleChessProtocol::getCmdParams(const BleChessString& cmd)
 {
     return substring(cmd, indexOf(cmd, ' ') + 1);
 }
 
-CecpProtocol chessProtocol{};
+BleChessProtocol chessProtocol{};

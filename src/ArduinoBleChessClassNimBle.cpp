@@ -2,7 +2,7 @@
 #ifdef USE_NIM_BLE_ARDUINO_LIB
 #include "ArduinoBleChessClassNimBle.h"
 #include "BleChessUuids.h"
-#include "CecpProtocol.h"
+#include "BleChessProtocol.h"
 #include "BleChessConnection.h"
 
 bool ArduinoBleChessClass::begin(const std::string& deviceName,

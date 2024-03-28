@@ -1,7 +1,7 @@
 #include "BleChessConnection.h"
 #include "BleChessPeripheral.h"
 #include "BleChessOfflineCentral.h"
-#include "CecpProtocol.h"
+#include "BleChessProtocol.h"
 
 namespace
 {
