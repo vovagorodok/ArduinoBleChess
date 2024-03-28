@@ -9,10 +9,6 @@ public:
     Serial.println(fen.c_str());
     sendAck(true);
   }
-  void onFenAck(bool ack) override {
-    Serial.print("fen ");
-    Serial.println(ack ? "accepted" : "rejected");
-  }
   void onMove(const BleChessString& mv) override {
     Serial.print("move: ");
     Serial.println(mv.c_str());
