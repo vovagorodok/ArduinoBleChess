@@ -12,7 +12,7 @@ BleChessString getCmdParams(const BleChessString& cmd)
 }
 
 BleChessProtocol::BleChessProtocol() :
-    onAckMethod(&BleChessPeripheral::onFenAck)
+    onAckMethod(&BleChessPeripheral::onAck)
 {}
 
 void BleChessProtocol::onCommand(const BleChessString& cmd)
@@ -75,6 +75,7 @@ void BleChessProtocol::sendAck(bool ack)
 
 void BleChessProtocol::sendMsg(const BleChessString& msg)
 {
+    onAckMethod = &BleChessPeripheral::onAck;
     send("msg " + msg);
 }
 

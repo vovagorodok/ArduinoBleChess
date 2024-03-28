@@ -13,6 +13,8 @@ public:
     virtual void onMoveAck(bool ack);
     virtual void onPromote(const BleChessString& prom);
 
+    virtual void onAck(bool ack);
+
     virtual ~BleChessPeripheral() = default;
 
 protected:
