@@ -3,7 +3,7 @@
 #include "BleChessOfflineCentral.h"
 #include <ArduinoBLE.h>
 
-class CecpProtocol;
+class BleChessProtocol;
 
 class ArduinoBleChessClass
 {
@@ -21,7 +21,7 @@ public:
     void onDisconnect();
 
 private:
-    friend CecpProtocol;
+    friend BleChessProtocol;
     void send(const String& str);
 };
 

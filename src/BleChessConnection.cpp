@@ -1,7 +1,7 @@
 #include "BleChessConnection.h"
 #include "BleChessPeripheral.h"
 #include "BleChessOfflineCentral.h"
-#include "CecpProtocol.h"
+#include "BleChessProtocol.h"
 
 namespace
 {
@@ -26,16 +26,28 @@ void BleChessConnection::onDisconnected()
     registeredCentral->onOnlineCentralDisconnected();
 }
 
-void BleChessConnection::peripheralMove(const BleChessString& mv)
+void BleChessConnection::sendFen(const BleChessString& fen)
 {
-    chessProtocol.onPeripheralMove(mv);
-    offlineCentral->onPeripheralMove(mv);
+    chessProtocol.sendFen(fen);
+    offlineCentral->onFen(fen);
 }
 
-void BleChessConnection::telluser(const BleChessString& text)
+void BleChessConnection::sendMove(const BleChessString& mv)
 {
-    chessProtocol.telluser(text);
-    offlineCentral->onTelluser(text);
+    chessProtocol.sendMove(mv);
+    offlineCentral->onMove(mv);
+}
+
+void BleChessConnection::sendAck(bool ack)
+{
+    chessProtocol.sendAck(ack);
+    offlineCentral->onAck(ack);
+}
+
+void BleChessConnection::sendMsg(const BleChessString& msg)
+{
+    chessProtocol.sendMsg(msg);
+    offlineCentral->onMsg(msg);
 }
 
 void BleChessConnection::connectOfflineCentral()

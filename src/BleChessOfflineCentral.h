@@ -7,8 +7,10 @@ class BleChessOfflineCentral
 public:
     virtual void onOnlineCentralConnected() {}
     virtual void onOnlineCentralDisconnected() {}
-    virtual void onPeripheralMove(const BleChessString& mv) {}
-    virtual void onTelluser(const BleChessString& text) {}
+    virtual void onFen(const BleChessString& fen) {}
+    virtual void onMove(const BleChessString& mv) {}
+    virtual void onAck(bool ack) {}
+    virtual void onMsg(const BleChessString& msg) {}
     virtual ~BleChessOfflineCentral() = default;
 
 protected:

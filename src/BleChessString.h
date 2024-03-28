@@ -1,4 +1,5 @@
 #pragma once
+#include "BleChessDefines.h"
 
 #ifdef USE_NIM_BLE_ARDUINO_LIB
 #include <string>
@@ -14,7 +15,7 @@ using BleChessString = String;
 
 #ifdef USE_NIM_BLE_ARDUINO_LIB
 #if __cpp_lib_starts_ends_with
-#error "std::string::starts_with() already implemented"
+#warning "std::string::starts_with() already implemented"
 #endif
 #endif
 

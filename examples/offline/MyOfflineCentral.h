@@ -8,7 +8,7 @@ class MyOfflineCentral : public BleChessOfflineCentral
 public:
   void begin() {
     connect();
-    peripheral().onNewRound(STARTING_FEN);
+    peripheral().onFen(STARTING_FEN);
   }
   void onOnlineCentralConnected() override {
     Serial.println("online central connected, disconnect offline central");
@@ -18,11 +18,11 @@ public:
     Serial.println("online central disconnected, connect offline central");
     connect();
   }
-  void onPeripheralMove(const BleChessString& mv) override {
-    Serial.println("peripheral move accepted, asking for next move");
-    peripheral().askPeripheralMakeMove();
+  void onMove(const BleChessString& mv) override {
+    Serial.println("peripheral move accepted");
+    peripheral().onMoveAck(true);
   }
-  void onTelluser(const BleChessString& text) override {
-    Serial.println(text.c_str());
+  void onMsg(const BleChessString& msg) override {
+    Serial.println(msg.c_str());
   }
 };
