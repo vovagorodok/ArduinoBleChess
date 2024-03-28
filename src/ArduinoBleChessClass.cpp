@@ -17,7 +17,7 @@ BLEStringCharacteristic txCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_TX, BLERe
 void onWrite(BLEDevice central, BLECharacteristic characteristic)
 {
     auto rxValue = rxCharacteristic.value();
-    chessProtocol.onMessage(rxValue);
+    chessProtocol.onCommand(rxValue);
 }
 
 void onConnectCallback(BLEDevice central)

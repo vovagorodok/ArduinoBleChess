@@ -2,80 +2,72 @@
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
-#ifdef USE_NIM_BLE_ARDUINO_LIB
-#include <regex>
-#endif
 
-namespace
-{
-#ifdef USE_NIM_BLE_ARDUINO_LIB
-static const std::regex uci("[a-h,A-H][1-8][a-h,A-H][1-8][nbrqNBRQ]{0,1}");
-#endif
-}
+CecpProtocol::CecpProtocol() :
+    onAckMethod(&BleChessPeripheral::onFenAck)
+{}
 
-void CecpProtocol::onMessage(const BleChessString& cmd)
+void CecpProtocol::onCommand(const BleChessString& cmd)
 {
-    if (startsWith(cmd, "protover"))
+    if (startsWith(cmd, "ok"))
     {
-        send("feature setboard=1");
+        (bleChessConnection.peripheralForOnline().*onAckMethod)(true);
     }
-    else if (startsWith(cmd, "new"))
+    else if (startsWith(cmd, "nok"))
     {
-        isForceMode = false;
-        askPeripheralStopMove();
+        (bleChessConnection.peripheralForOnline().*onAckMethod)(false);
     }
-    else if (startsWith(cmd, "setboard"))
+    else if (startsWith(cmd, "move"))
+    {
+        auto mv = getCmdParams(cmd);
+        bleChessConnection.peripheralForOnline().onMove(mv);
+    }
+    else if (startsWith(cmd, "fen"))
     {
         auto fen = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onNewRound(fen);
+        bleChessConnection.peripheralForOnline().onFen(fen);
     }
-    else if (startsWith(cmd, "go"))
+    else if (startsWith(cmd, "promote"))
     {
-        isForceMode = false;
-        askPeripheralMakeMove();
+        auto prom = getCmdParams(cmd);
+        bleChessConnection.peripheralForOnline().onPromote(prom);
     }
-    else if (startsWith(cmd, "force"))
+    else if (startsWith(cmd, "feature"))
     {
-        isForceMode = true;
-        askPeripheralStopMove();
+        auto feature = getCmdParams(cmd);
+        bleChessConnection.peripheralForOnline().onFeature(feature);
     }
-    else if (startsWith(cmd, "Illegal move (without promotion)"))
+    else if (startsWith(cmd, "variant"))
     {
-        isForcedPromotion = true;
+        auto variant = getCmdParams(cmd);
+        bleChessConnection.peripheralForOnline().onVariant(variant);
     }
-    else if (startsWith(cmd, "Illegal move"))
+    else
     {
-        bleChessConnection.peripheralForOnline().onPeripheralMoveRejected(getIllegalMove(cmd));
-    }
-#ifdef USE_NIM_BLE_ARDUINO_LIB
-    else if (startsWith(cmd, "xboard") || startsWith(cmd, "accepted"))
-    {
-    }
-    else if (std::regex_match(cmd, uci))
-#else
-    else if (!startsWith(cmd, "xboard") && !startsWith(cmd, "accepted"))
-#endif
-    {
-        if (isForcedPromotion)
-            bleChessConnection.peripheralForOnline().onPeripheralMovePromoted(cmd);
-        else
-            bleChessConnection.peripheralForOnline().onCentralMove(cmd);
-
-        if (not isForceMode)
-            askPeripheralMakeMove();
-
-        isForcedPromotion = false;
+        sendAck(false);
     }
 }
 
-void CecpProtocol::onPeripheralMove(const BleChessString& mv)
+void CecpProtocol::sendFen(const BleChessString& fen)
 {
+    onAckMethod = &BleChessPeripheral::onFenAck;
+    send("fen " + fen);
+}
+
+void CecpProtocol::sendMove(const BleChessString& mv)
+{
+    onAckMethod = &BleChessPeripheral::onMoveAck;
     send("move " + mv);
 }
 
-void CecpProtocol::telluser(const BleChessString& text)
+void CecpProtocol::sendAck(bool ack)
 {
-    send("telluser " + text);
+    send(ack ? "ok" : "nok");
+}
+
+void CecpProtocol::sendMsg(const BleChessString& msg)
+{
+    send("msg " + msg);
 }
 
 void CecpProtocol::send(BleChessString str)
@@ -86,21 +78,6 @@ void CecpProtocol::send(BleChessString str)
 BleChessString CecpProtocol::getCmdParams(const BleChessString& cmd)
 {
     return substring(cmd, indexOf(cmd, ' ') + 1);
-}
-
-BleChessString CecpProtocol::getIllegalMove(const BleChessString& cmd)
-{
-    return substring(cmd, indexOf(cmd, ": ") + 2);
-}
-
-void CecpProtocol::askPeripheralMakeMove()
-{
-    bleChessConnection.peripheralForOnline().askPeripheralMakeMove();
-}
-
-void CecpProtocol::askPeripheralStopMove()
-{
-    bleChessConnection.peripheralForOnline().askPeripheralStopMove();
 }
 
 CecpProtocol chessProtocol{};
