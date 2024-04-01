@@ -75,6 +75,7 @@ void BleChessProtocol::sendMove(const BleChessString& mv)
 
 void BleChessProtocol::sendAck(bool ack)
 {
+    onAckMethod = &BleChessPeripheral::onAck;
     send(ack ? "ok" : "nok");
 }
 
