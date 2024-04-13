@@ -18,7 +18,7 @@ BleChessProtocol::BleChessProtocol() :
 void BleChessProtocol::onCommand(const BleChessString& cmd)
 {
     #ifdef BLE_CHESS_DEBUG_LOGS
-    Serial.print("ble chess receive: ");
+    Serial.print("DBG: ble chess receive: ");
     Serial.println(cmd.c_str());
     #endif
     if (startsWith(cmd, "ok"))
@@ -92,7 +92,7 @@ void BleChessProtocol::sendMsg(const BleChessString& msg)
 void BleChessProtocol::send(BleChessString str)
 {
     #ifdef BLE_CHESS_DEBUG_LOGS
-    Serial.print("ble chess send: ");
+    Serial.print("DBG: ble chess send: ");
     Serial.println(str.c_str());
     #endif
     ArduinoBleChess.send(str);
