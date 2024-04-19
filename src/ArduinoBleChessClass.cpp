@@ -75,7 +75,9 @@ bool ArduinoBleChessClass::begin(BleChessPeripheral& peripheral,
 
 void ArduinoBleChessClass::send(const String& str)
 {
-    txCharacteristic.setValue(str);
+    const auto ret = txCharacteristic.setValue(str);
+    Serial.print("CODE: ");
+    Serial.println(ret);
 }
 
 void ArduinoBleChessClass::onConnect()
