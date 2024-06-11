@@ -3,7 +3,7 @@
 #include "BleChessOfflineCentral.h"
 #include <NimBLEDevice.h>
 
-class CecpProtocol;
+class BleChessProtocol;
 
 class ArduinoBleChessClass: public BLECharacteristicCallbacks,
                             public BLEServerCallbacks
@@ -22,7 +22,7 @@ public:
     void onDisconnect();
 
 private:
-    friend CecpProtocol;
+    friend BleChessProtocol;
     void onConnect(BLEServer* srv) override;
     void onDisconnect(BLEServer* srv) override;
     void send(const std::string& str);

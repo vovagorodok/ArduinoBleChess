@@ -2,7 +2,7 @@
 #ifdef USE_ARDUINO_BLE_LIB
 #include "ArduinoBleChessClass.h"
 #include "BleChessUuids.h"
-#include "CecpProtocol.h"
+#include "BleChessProtocol.h"
 #include "BleChessConnection.h"
 
 namespace
@@ -17,7 +17,7 @@ BLEStringCharacteristic txCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_TX, BLERe
 void onWrite(BLEDevice central, BLECharacteristic characteristic)
 {
     auto rxValue = rxCharacteristic.value();
-    chessProtocol.onMessage(rxValue);
+    chessProtocol.onCentralCommand(rxValue);
 }
 
 void onConnectCallback(BLEDevice central)

@@ -4,34 +4,31 @@
 class MyPeripheral : public BleChessPeripheral
 {
 public:
-  void onNewRound(const BleChessString& fen) override {
-    Serial.print("new round: ");
+  void onCentralFen(const BleChessString& fen) override {
+    Serial.print("fen: ");
     Serial.println(fen.c_str());
-  }
-  void askPeripheralMakeMove() override {
-    Serial.println("please move: ");
-  }
-  void askPeripheralStopMove() override {
-    Serial.println("stop move: ");
+    sendPeripheralAck(true);
   }
   void onCentralMove(const BleChessString& mv) override {
-    Serial.print("moved from phone: ");
+    Serial.print("move: ");
     Serial.println(mv.c_str());
+    sendPeripheralAck(true);
   }
-  void onPeripheralMoveRejected(const BleChessString& mv) override {
-    Serial.print("move rejected: ");
-    Serial.println(mv.c_str());
+  void onPeripheralMoveAck(bool ack) override {
+    Serial.print("move ");
+    Serial.println(ack ? "accepted" : "rejected");
   }
-  void onPeripheralMovePromoted(const BleChessString& mv) override {
-    Serial.print("promoted on phone screen: ");
-    Serial.println(mv.c_str());
+  void onPeripheralMovePromoted(const BleChessString& prom) override {
+    Serial.print("promote: ");
+    Serial.println(prom.c_str());
+    sendPeripheralAck(true);
   }
   void checkPeripheralMove() {
     if (Serial.available()) {
       BleChessString move(Serial.readString().c_str());
-      Serial.print("peripheral move: ");
+      Serial.print("send move: ");
       Serial.println(move.c_str());
-      peripheralMove(move);
+      sendPeripheralMove(move);
     }
   }
 };

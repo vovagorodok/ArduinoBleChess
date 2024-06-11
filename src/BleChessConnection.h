@@ -12,8 +12,10 @@ public:
     void onConnected();
     void onDisconnected();
 
-    void peripheralMove(const BleChessString& mv);
-    void telluser(const BleChessString& text);
+    void sendPeripheralFen(const BleChessString& fen);
+    void sendPeripheralMove(const BleChessString& mv);
+    void sendPeripheralAck(bool ack);
+    void sendPeripheralMsg(const BleChessString& msg);
 
     void connectOfflineCentral();
     void disconnectOfflineCentral();

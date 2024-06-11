@@ -4,15 +4,24 @@
 class BleChessPeripheral
 {
 public:
-    virtual void onNewRound(const BleChessString& fen) {}
-    virtual void askPeripheralMakeMove() {}
-    virtual void askPeripheralStopMove() {}
-    virtual void onCentralMove(const BleChessString& mv) {}
-    virtual void onPeripheralMoveRejected(const BleChessString& mv) {}
-    virtual void onPeripheralMovePromoted(const BleChessString& mv) {}
+    virtual void onCentralFeature(const BleChessString& feature);
+    virtual void onCentralVariant(const BleChessString& variant);
+
+    virtual void onCentralFen(const BleChessString& fen);
+    virtual void onCentralMove(const BleChessString& mv);
+    virtual void onCentralAck(bool ack);
+    virtual void onPeripheralFenAck(bool ack);
+    virtual void onPeripheralMoveAck(bool ack);
+    virtual void onPeripheralMovePromoted(const BleChessString& prom);
+
+    virtual void onCentralLastMove(const BleChessString& mv);
+
     virtual ~BleChessPeripheral() = default;
 
 protected:
-    void peripheralMove(const BleChessString& mv);
-    void telluser(const BleChessString& text);
+    void sendPeripheralFen(const BleChessString& fen);
+    void sendPeripheralMove(const BleChessString& mv);
+    void sendPeripheralAck(bool ack);
+
+    void sendPeripheralMsg(const BleChessString& msg);
 };
