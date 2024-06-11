@@ -8,12 +8,12 @@ class BleChessProtocol
 public:
     BleChessProtocol();
 
-    void onCommand(const BleChessString& cmd);
+    void onCentralCommand(const BleChessString& cmd);
 
-    void sendFen(const BleChessString& fen);
-    void sendMove(const BleChessString& mv);
-    void sendAck(bool ack);
-    void sendMsg(const BleChessString& msg);
+    void sendPeripheralFen(const BleChessString& fen);
+    void sendPeripheralMove(const BleChessString& mv);
+    void sendPeripheralAck(bool ack);
+    void sendPeripheralMsg(const BleChessString& msg);
 
 private:
     void send(BleChessString str);

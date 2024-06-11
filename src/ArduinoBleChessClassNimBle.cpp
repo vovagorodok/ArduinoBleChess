@@ -83,7 +83,7 @@ void ArduinoBleChessClass::onDisconnect(BLEServer* srv)
 void ArduinoBleChessClass::onWrite(BLECharacteristic* characteristic)
 {
     std::string rxValue = characteristic->getValue();
-    chessProtocol.onCommand(rxValue);
+    chessProtocol.onCentralCommand(rxValue);
 }
 
 void ArduinoBleChessClass::send(const std::string& str)

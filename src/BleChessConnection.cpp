@@ -26,28 +26,28 @@ void BleChessConnection::onDisconnected()
     registeredCentral->onOnlineCentralDisconnected();
 }
 
-void BleChessConnection::sendFen(const BleChessString& fen)
+void BleChessConnection::sendPeripheralFen(const BleChessString& fen)
 {
-    chessProtocol.sendFen(fen);
-    offlineCentral->onFen(fen);
+    chessProtocol.sendPeripheralFen(fen);
+    offlineCentral->onPeripheralFen(fen);
 }
 
-void BleChessConnection::sendMove(const BleChessString& mv)
+void BleChessConnection::sendPeripheralMove(const BleChessString& mv)
 {
-    chessProtocol.sendMove(mv);
-    offlineCentral->onMove(mv);
+    chessProtocol.sendPeripheralMove(mv);
+    offlineCentral->onPeripheralMove(mv);
 }
 
-void BleChessConnection::sendAck(bool ack)
+void BleChessConnection::sendPeripheralAck(bool ack)
 {
-    chessProtocol.sendAck(ack);
-    offlineCentral->onAck(ack);
+    chessProtocol.sendPeripheralAck(ack);
+    offlineCentral->onPeripheralAck(ack);
 }
 
-void BleChessConnection::sendMsg(const BleChessString& msg)
+void BleChessConnection::sendPeripheralMsg(const BleChessString& msg)
 {
-    chessProtocol.sendMsg(msg);
-    offlineCentral->onMsg(msg);
+    chessProtocol.sendPeripheralMsg(msg);
+    offlineCentral->onPeripheralMsg(msg);
 }
 
 void BleChessConnection::connectOfflineCentral()

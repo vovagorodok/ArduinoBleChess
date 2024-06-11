@@ -1,61 +1,61 @@
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
 
-void BleChessPeripheral::onFeature(const BleChessString& feature)
+void BleChessPeripheral::onCentralFeature(const BleChessString& feature)
 {
-    sendAck(false);
+    sendPeripheralAck(false);
 }
 
-void BleChessPeripheral::onVariant(const BleChessString& variant)
+void BleChessPeripheral::onCentralVariant(const BleChessString& variant)
 {
-    sendAck(variant == "standard");
+    sendPeripheralAck(variant == "standard");
 }
 
-void BleChessPeripheral::onFen(const BleChessString& fen)
+void BleChessPeripheral::onCentralFen(const BleChessString& fen)
 {
-    sendAck(false);
+    sendPeripheralAck(false);
 }
 
-void BleChessPeripheral::onFenAck(bool ack)
+void BleChessPeripheral::onCentralMove(const BleChessString& mv)
+{
+    sendPeripheralAck(false);
+}
+
+void BleChessPeripheral::onCentralAck(bool ack)
 {}
 
-void BleChessPeripheral::onMove(const BleChessString& mv)
-{
-    sendAck(false);
-}
-
-void BleChessPeripheral::onMoveAck(bool ack)
+void BleChessPeripheral::onPeripheralFenAck(bool ack)
 {}
 
-void BleChessPeripheral::onPromote(const BleChessString& prom)
-{
-    sendAck(false);
-}
-
-void BleChessPeripheral::onAck(bool ack)
+void BleChessPeripheral::onPeripheralMoveAck(bool ack)
 {}
 
-void BleChessPeripheral::onLastMove(const BleChessString& mv)
+void BleChessPeripheral::onPeripheralMovePromoted(const BleChessString& prom)
 {
-    sendAck(false);
+    sendPeripheralAck(false);
 }
 
-void BleChessPeripheral::sendFen(const BleChessString& fen)
+void BleChessPeripheral::onCentralLastMove(const BleChessString& mv)
 {
-    bleChessConnection.sendFen(fen);
+    sendPeripheralAck(false);
 }
 
-void BleChessPeripheral::sendMove(const BleChessString& mv)
+void BleChessPeripheral::sendPeripheralFen(const BleChessString& fen)
 {
-    bleChessConnection.sendMove(mv);
+    bleChessConnection.sendPeripheralFen(fen);
 }
 
-void BleChessPeripheral::sendAck(bool ack)
+void BleChessPeripheral::sendPeripheralMove(const BleChessString& mv)
 {
-    bleChessConnection.sendAck(ack);
+    bleChessConnection.sendPeripheralMove(mv);
 }
 
-void BleChessPeripheral::sendMsg(const BleChessString& msg)
+void BleChessPeripheral::sendPeripheralAck(bool ack)
 {
-    bleChessConnection.sendMsg(msg);
+    bleChessConnection.sendPeripheralAck(ack);
+}
+
+void BleChessPeripheral::sendPeripheralMsg(const BleChessString& msg)
+{
+    bleChessConnection.sendPeripheralMsg(msg);
 }

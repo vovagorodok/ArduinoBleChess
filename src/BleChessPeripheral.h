@@ -4,24 +4,24 @@
 class BleChessPeripheral
 {
 public:
-    virtual void onFeature(const BleChessString& feature);
-    virtual void onVariant(const BleChessString& variant);
+    virtual void onCentralFeature(const BleChessString& feature);
+    virtual void onCentralVariant(const BleChessString& variant);
 
-    virtual void onFen(const BleChessString& fen);
-    virtual void onFenAck(bool ack);
-    virtual void onMove(const BleChessString& mv);
-    virtual void onMoveAck(bool ack);
-    virtual void onPromote(const BleChessString& prom);
+    virtual void onCentralFen(const BleChessString& fen);
+    virtual void onCentralMove(const BleChessString& mv);
+    virtual void onCentralAck(bool ack);
+    virtual void onPeripheralFenAck(bool ack);
+    virtual void onPeripheralMoveAck(bool ack);
+    virtual void onPeripheralMovePromoted(const BleChessString& prom);
 
-    virtual void onAck(bool ack);
-    virtual void onLastMove(const BleChessString& mv);
+    virtual void onCentralLastMove(const BleChessString& mv);
 
     virtual ~BleChessPeripheral() = default;
 
 protected:
-    void sendFen(const BleChessString& fen);
-    void sendMove(const BleChessString& mv);
-    void sendAck(bool ack);
+    void sendPeripheralFen(const BleChessString& fen);
+    void sendPeripheralMove(const BleChessString& mv);
+    void sendPeripheralAck(bool ack);
 
-    void sendMsg(const BleChessString& msg);
+    void sendPeripheralMsg(const BleChessString& msg);
 };
