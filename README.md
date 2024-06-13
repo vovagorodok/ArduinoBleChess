@@ -8,7 +8,7 @@ Currently work in progress with:
 - Chess.com: https://www.chess.com/play/apps
 
 ## Configuration
-By default `ArduinoBLE` is used. For `NimBLE-Arduino` some changes are reguired.\
+By default `ArduinoBLE` is used. For `NimBLE-Arduino` some changes are reguired.  
 For PlatformIO. Add to `platformio.ini`:
 ```
 build_flags = 
