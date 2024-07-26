@@ -8,7 +8,7 @@ Currently work in progress with:
 - Chess.com: https://www.chess.com/play/apps
 
 Initially supported:
-- Blichess: https://github.com/vovagorodok/blichess
+- Blichess: https://github.com/vovagorodok/blichess?tab=readme-ov-file#download
 
 ## Configuration
 By default `ArduinoBLE` is used. For `NimBLE-Arduino` some changes are reguired.  
