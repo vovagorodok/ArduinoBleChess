@@ -7,6 +7,9 @@ Currently work in progress with:
 - WhitePawn: https://khadimfall.com/p/white-pawn
 - Chess.com: https://www.chess.com/play/apps
 
+Initially supported:
+- Blichess: https://github.com/vovagorodok/blichess
+
 ## Configuration
 By default `ArduinoBLE` is used. For `NimBLE-Arduino` some changes are reguired.  
 For PlatformIO. Add to `platformio.ini`:
