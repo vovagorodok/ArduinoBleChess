@@ -2,6 +2,7 @@
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
+#include "BleChessData.h"
 
 namespace
 {
@@ -22,107 +23,107 @@ void BleChessProtocol::onCentralCommand(const BleChessString& cmd)
     Serial.print("DBG: ble chess receive: ");
     Serial.println(cmd.c_str());
     #endif
-    if (startsWith(cmd, "ok"))
+    if (startsWith(cmd, BleChessCommand::Ok))
     {
         (bleChessConnection.peripheralForOnline().*onAckMethod)(true);
         onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
         onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
     }
-    else if (startsWith(cmd, "nok"))
+    else if (startsWith(cmd, BleChessCommand::Nok))
     {
         (bleChessConnection.peripheralForOnline().*onAckMethod)(false);
         onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
         onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
     }
-    else if (startsWith(cmd, "move"))
+    else if (startsWith(cmd, BleChessCommand::Move))
     {
         bleChessConnection.peripheralForOnline().onCentralMove(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "begin"))
+    else if (startsWith(cmd, BleChessCommand::Begin))
     {
         onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
         onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
         bleChessConnection.peripheralForOnline().onCentralBegin(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "set_variant"))
+    else if (startsWith(cmd, BleChessCommand::SetVariant))
     {
         bleChessConnection.peripheralForOnline().onCentralSetVariant(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "check"))
+    else if (startsWith(cmd, BleChessCommand::Check))
     {
         bleChessConnection.peripheralForOnline().onCentralCheck(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "end"))
+    else if (startsWith(cmd, BleChessCommand::End))
     {
         bleChessConnection.peripheralForOnline().onCentralEnd(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "promote"))
+    else if (startsWith(cmd, BleChessCommand::Promote))
     {
         (bleChessConnection.peripheralForOnline().*onPromotedMethod)(getCmdParams(cmd));
         onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
         onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
     }
-    else if (startsWith(cmd, "feature"))
+    else if (startsWith(cmd, BleChessCommand::Feature))
     {
         bleChessConnection.peripheralForOnline().onCentralFeature(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "variant"))
+    else if (startsWith(cmd, BleChessCommand::Variant))
     {
         bleChessConnection.peripheralForOnline().onCentralVariant(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "get_state"))
+    else if (startsWith(cmd, BleChessCommand::GetState))
     {
         bleChessConnection.peripheralForOnline().onCentralGetState();
     }
-    else if (startsWith(cmd, "set_state"))
+    else if (startsWith(cmd, BleChessCommand::SetState))
     {
         bleChessConnection.peripheralForOnline().onCentralSetState();
     }
-    else if (startsWith(cmd, "state"))
+    else if (startsWith(cmd, BleChessCommand::State))
     {
         bleChessConnection.peripheralForOnline().onCentralState(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "last_move"))
+    else if (startsWith(cmd, BleChessCommand::LastMove))
     {
         bleChessConnection.peripheralForOnline().onCentralLastMove(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "undo"))
+    else if (startsWith(cmd, BleChessCommand::Undo))
     {
         bleChessConnection.peripheralForOnline().onCentralUndo(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "msg"))
+    else if (startsWith(cmd, BleChessCommand::Msg))
     {
         bleChessConnection.peripheralForOnline().onCentralMsg(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "resign"))
+    else if (startsWith(cmd, BleChessCommand::Resign))
     {
         bleChessConnection.peripheralForOnline().onCentralResign();
     }
-    else if (startsWith(cmd, "draw_offer"))
+    else if (startsWith(cmd, BleChessCommand::DrawOffer))
     {
         bleChessConnection.peripheralForOnline().onCentralDrawOffer();
     }
-    else if (startsWith(cmd, "side"))
+    else if (startsWith(cmd, BleChessCommand::Side))
     {
         bleChessConnection.peripheralForOnline().onCentralSide(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "time"))
+    else if (startsWith(cmd, BleChessCommand::Time))
     {
         bleChessConnection.peripheralForOnline().onCentralTime(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "score"))
+    else if (startsWith(cmd, BleChessCommand::Score))
     {
         bleChessConnection.peripheralForOnline().onCentralScore(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "options_begin"))
+    else if (startsWith(cmd, BleChessCommand::OptionsBegin))
     {
         bleChessConnection.peripheralForOnline().onCentralOptionsBegin();
     }
-    else if (startsWith(cmd, "options_reset"))
+    else if (startsWith(cmd, BleChessCommand::OptionsReset))
     {
         bleChessConnection.peripheralForOnline().onCentralOptionsReset();
     }
-    else if (startsWith(cmd, "option"))
+    else if (startsWith(cmd, BleChessCommand::SetOption))
     {
         bleChessConnection.peripheralForOnline().onCentralSetOption(getCmdParams(cmd));
     }
@@ -134,82 +135,82 @@ void BleChessProtocol::onCentralCommand(const BleChessString& cmd)
 
 void BleChessProtocol::sendPeripheralState(const BleChessString& fen)
 {
-    send(join("state", fen));
+    send(join(BleChessCommand::State, fen));
 }
 
 void BleChessProtocol::sendPeripheralSync(const BleChessString& fen)
 {
-    send(join("sync", fen));
+    send(join(BleChessCommand::Sync, fen));
 }
 
 void BleChessProtocol::sendPeripheralUnsync(const BleChessString& fen)
 {
-    send(join("unsync", fen));
+    send(join(BleChessCommand::Unsync, fen));
 }
 
 void BleChessProtocol::sendPeripheralMove(const BleChessString& mv)
 {
     onAckMethod = &BleChessPeripheral::onPeripheralMoveAck;
     onPromotedMethod = &BleChessPeripheral::onPeripheralMovePromoted;
-    send(join("move", mv));
+    send(join(BleChessCommand::Move, mv));
 }
 
 void BleChessProtocol::sendPeripheralAck(bool ack)
 {
-    send(ack ? "ok" : "nok");
+    send(ack ? BleChessCommand::Ok : BleChessCommand::Nok);
 }
 
 void BleChessProtocol::sendPeripheralErr(const BleChessString& err)
 {
-    send(join("err", err));
+    send(join(BleChessCommand::Err, err));
 }
 
 void BleChessProtocol::sendPeripheralUnsyncSetible(const BleChessString& fen)
 {
-    send(join("unsync_setible", fen));
+    send(join(BleChessCommand::UnsyncSetible, fen));
 }
 
 void BleChessProtocol::sendPeripheralUndo(const BleChessString& mv)
 {
     onAckMethod = &BleChessPeripheral::onPeripheralUndoAck;
     onPromotedMethod = &BleChessPeripheral::onPeripheralUndoPromoted;
-    send(join("undo", mv));
+    send(join(BleChessCommand::Undo, mv));
 }
 
 void BleChessProtocol::sendPeripheralMoved()
 {
-    send("moved");
+    send(BleChessCommand::Moved);
 }
 
 void BleChessProtocol::sendPeripheralMsg(const BleChessString& msg)
 {
-    send(join("msg", msg));
+    send(join(BleChessCommand::Msg, msg));
 }
 
 void BleChessProtocol::sendPeripheralResign()
 {
-    send("resign");
+    send(BleChessCommand::Resign);
 }
 
 void BleChessProtocol::sendPeripheralDrawOffer()
 {
     onAckMethod = &BleChessPeripheral::onPeripheralDrawOfferAck;
-    send("draw_offer");
+    send(BleChessCommand::DrawOffer);
 }
 
 void BleChessProtocol::sendPeripheralOptionsEnd()
 {
-    send("options_end");
+    send(BleChessCommand::OptionsEnd);
 }
 
 void BleChessProtocol::sendPeripheralOption(const BleChessString& option)
 {
-    send(join("option", option));
+    send(join(BleChessCommand::Option, option));
 }
 
 void BleChessProtocol::sendPeripheralSetOption(const BleChessString& option)
 {
-    send(join("set_option", option));
+    send(join(BleChessCommand::SetOption, option));
 }
 
 void BleChessProtocol::send(BleChessString str)
