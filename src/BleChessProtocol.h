@@ -10,16 +10,29 @@ public:
 
     void onCentralCommand(const BleChessString& cmd);
 
-    void sendPeripheralFen(const BleChessString& fen);
+    void sendPeripheralState(const BleChessString& fen);
+    void sendPeripheralSync(const BleChessString& fen);
+    void sendPeripheralUnsync(const BleChessString& fen);
     void sendPeripheralMove(const BleChessString& mv);
     void sendPeripheralAck(bool ack);
+    void sendPeripheralErr(const BleChessString& err);
+    void sendPeripheralUnsyncSetible(const BleChessString& fen);
+    void sendPeripheralUndo(const BleChessString& mv);
+    void sendPeripheralMoved();
     void sendPeripheralMsg(const BleChessString& msg);
+    void sendPeripheralResign();
+    void sendPeripheralDrawOffer();
+    void sendPeripheralOptionsEnd();
+    void sendPeripheralOption(const BleChessString& option);
+    void sendPeripheralSetOption(const BleChessString& option);
 
 private:
     void send(BleChessString str);
 
     typedef void(BleChessPeripheral::*AckMethod)(bool);
+    typedef void(BleChessPeripheral::*PromotedMethod)(const BleChessString&);
     AckMethod onAckMethod;
+    PromotedMethod onPromotedMethod;
 };
 
 extern BleChessProtocol chessProtocol;
