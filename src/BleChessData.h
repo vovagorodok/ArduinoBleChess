@@ -73,3 +73,11 @@ struct BleChessCommand {
     constexpr static const char* OptionsReset = "options_reset";
     constexpr static const char* SetOption = "set_option";
 };
+
+struct BleChessOptionType {
+    constexpr static const char* Bool = "bool";
+    constexpr static const char* Enum = "enum";
+    constexpr static const char* Str = "str";
+    constexpr static const char* Int = "int";
+    constexpr static const char* Float = "float";
+};
