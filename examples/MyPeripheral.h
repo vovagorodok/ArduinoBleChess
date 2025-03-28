@@ -17,9 +17,17 @@ public:
     Serial.print("move ");
     Serial.println(ack ? "accepted" : "rejected");
   }
+  void onCentralCheck(const BleChessString& kingPos) override {
+    Serial.print("check: ");
+    Serial.println(kingPos.c_str());
+  }
   void onPeripheralMovePromoted(const BleChessString& prom) override {
     Serial.print("promote: ");
     Serial.println(prom.c_str());
+  }
+  void onCentralEnd(const BleChessString& reason) override {
+    Serial.print("end: ");
+    Serial.println(reason.c_str());
   }
   void checkPeripheralMove() {
     if (Serial.available()) {
