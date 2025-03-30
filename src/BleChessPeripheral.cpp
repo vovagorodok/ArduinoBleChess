@@ -79,11 +79,6 @@ void BleChessPeripheral::onCentralMsg(const BleChessString& msg)
     onCentralUnexpectdCommand(join(BleChessCommand::Msg, msg));
 }
 
-void BleChessPeripheral::onCentralResign()
-{
-    onCentralUnexpectdCommand(BleChessCommand::Resign);
-}
-
 void BleChessPeripheral::onCentralDrawOffer()
 {
     onCentralUnexpectdCommand(BleChessCommand::DrawOffer);

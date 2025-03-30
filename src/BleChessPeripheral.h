@@ -32,8 +32,6 @@ public:
     virtual void onPeripheralUndoPromoted(const BleChessString& prom);
     // Feature msg
     virtual void onCentralMsg(const BleChessString& msg);
-    // Feature resign
-    virtual void onCentralResign();
     // Feature draw_offer
     virtual void onCentralDrawOffer();
     virtual void onPeripheralDrawOfferAck(bool ack);

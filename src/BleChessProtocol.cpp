@@ -95,10 +95,6 @@ void BleChessProtocol::onCentralCommand(const BleChessString& cmd)
     {
         bleChessConnection.peripheralForOnline().onCentralMsg(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, BleChessCommand::Resign))
-    {
-        bleChessConnection.peripheralForOnline().onCentralResign();
-    }
     else if (startsWith(cmd, BleChessCommand::DrawOffer))
     {
         bleChessConnection.peripheralForOnline().onCentralDrawOffer();
