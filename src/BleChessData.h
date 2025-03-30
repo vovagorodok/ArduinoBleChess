@@ -26,6 +26,7 @@ struct BleChessVariant {
     constexpr static const char* Horde = "horde";
     constexpr static const char* RacingKings = "racing_kings";
     constexpr static const char* CrazyHouse = "crazy_house";
+    constexpr static const char* Unsupported = "unsupported";
 };
 
 struct BleChessEndReason {
