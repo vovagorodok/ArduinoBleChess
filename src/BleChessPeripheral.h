@@ -10,7 +10,6 @@ public:
     virtual void onCentralSetVariant(const BleChessString& variant);
     virtual void onCentralBegin(const BleChessString& fen);
     virtual void onCentralMove(const BleChessString& mv);
-    virtual void onCentralCheck(const BleChessString& kingPos);
     virtual void onCentralEnd(const BleChessString& reason);
 
     virtual void onPeripheralMoveAck(bool ack);
@@ -26,6 +25,8 @@ public:
     virtual void onCentralState(const BleChessString& fen);
     // Feature last_move
     virtual void onCentralLastMove(const BleChessString& mv);
+    // Feature check
+    virtual void onCentralCheck(const BleChessString& kingPos);
     // Feature undo
     virtual void onCentralUndo(const BleChessString& mv);
     virtual void onPeripheralUndoAck(bool ack);

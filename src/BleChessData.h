@@ -5,6 +5,7 @@ struct BleChessFeature {
     constexpr static const char* SetState = "set_state";
     constexpr static const char* StateStream = "state_stream";
     constexpr static const char* LastMove = "last_move";
+    constexpr static const char* Check = "check";
     constexpr static const char* Undo = "undo";
     constexpr static const char* Moved = "moved";
     constexpr static const char* Msg = "msg";
@@ -58,7 +59,6 @@ struct BleChessCommand {
     constexpr static const char* Sync = "sync";
     constexpr static const char* Unsync = "unsync";
     constexpr static const char* Move = "move";
-    constexpr static const char* Check = "check";
     constexpr static const char* End = "end";
     constexpr static const char* Promote = "promote";
     constexpr static const char* Err = "err";
@@ -66,6 +66,7 @@ struct BleChessCommand {
     constexpr static const char* SetState = BleChessFeature::SetState;
     constexpr static const char* UnsyncSetible = "unsync_setible";
     constexpr static const char* LastMove = BleChessFeature::LastMove;
+    constexpr static const char* Check = BleChessFeature::Check;
     constexpr static const char* Undo = BleChessFeature::Undo;
     constexpr static const char* Moved = BleChessFeature::Moved;
     constexpr static const char* Msg = BleChessFeature::Msg;

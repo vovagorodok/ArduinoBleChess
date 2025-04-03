@@ -21,9 +21,6 @@ void BleChessPeripheral::onCentralBegin(const BleChessString& fen)
 void BleChessPeripheral::onCentralMove(const BleChessString& mv)
 {}
 
-void BleChessPeripheral::onCentralCheck(const BleChessString& kingPos)
-{}
-
 void BleChessPeripheral::onCentralEnd(const BleChessString& reason)
 {}
 
@@ -57,6 +54,11 @@ void BleChessPeripheral::onCentralState(const BleChessString& fen)
 void BleChessPeripheral::onCentralLastMove(const BleChessString& mv)
 {
     onCentralUnexpectdCommand(join(BleChessCommand::LastMove, mv));
+}
+
+void BleChessPeripheral::onCentralCheck(const BleChessString& kingPos)
+{
+    onCentralUnexpectdCommand(join(BleChessCommand::Check, kingPos));
 }
 
 void BleChessPeripheral::onCentralUndo(const BleChessString& mv)

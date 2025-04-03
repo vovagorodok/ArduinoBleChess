@@ -21,10 +21,6 @@ public:
     Serial.print("promote: ");
     Serial.println(prom.c_str());
   }
-  void onCentralCheck(const BleChessString& kingPos) override {
-    Serial.print("check: ");
-    Serial.println(kingPos.c_str());
-  }
   void onCentralEnd(const BleChessString& reason) override {
     Serial.print("end: ");
     Serial.println(reason.c_str());
