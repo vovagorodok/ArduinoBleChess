@@ -33,7 +33,6 @@ struct BleChessVariant {
 struct BleChessEndReason {
     constexpr static const char* Undefined = "undefined";
     constexpr static const char* Checkmate = "checkmate";
-    constexpr static const char* Stalemate = "stalemate";
     constexpr static const char* Draw = "draw";
     constexpr static const char* Timeout = "timeout";
     constexpr static const char* Resign = "resign";
@@ -41,7 +40,8 @@ struct BleChessEndReason {
 };
 
 struct BleChessDrawReason {
-    constexpr static const char* DrawOffer = BleChessFeature::DrawOffer;    
+    constexpr static const char* DrawOffer = BleChessFeature::DrawOffer;
+    constexpr static const char* Stalemate = "stalemate";
     constexpr static const char* ThreefoldRepetition = "threefold_repetition";
     constexpr static const char* FiftyMove = "fifty_move";
     constexpr static const char* InsufficientMaterial = "insufficient_material";
