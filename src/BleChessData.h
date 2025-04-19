@@ -15,6 +15,8 @@ struct BleChessFeature {
     constexpr static const char* Time = "time";
     constexpr static const char* Score = "score";
     constexpr static const char* Option = "option";
+    constexpr static const char* DrawReason = "draw_reason";
+    constexpr static const char* VariantReason = "variant_reason";
 };
 
 struct BleChessVariant {
@@ -46,6 +48,11 @@ struct BleChessDrawReason {
     constexpr static const char* FiftyMove = "fifty_move";
     constexpr static const char* InsufficientMaterial = "insufficient_material";
     constexpr static const char* DeadPosition = "dead_position";
+};
+
+struct BleChessVariantReason {
+    constexpr static const char* ThreeCheck = BleChessVariant::ThreeCheck;
+    constexpr static const char* KingOfTheHill = BleChessVariant::KingOfTheHill;
 };
 
 struct BleChessCommand {
