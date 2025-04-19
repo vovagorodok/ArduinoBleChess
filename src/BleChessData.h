@@ -82,6 +82,12 @@ struct BleChessCommand {
     constexpr static const char* SetOption = "set_option";
 };
 
+struct BleChessSide {
+    constexpr static const char* White = "w";
+    constexpr static const char* Black = "b";
+    constexpr static const char* Both = "?";
+};
+
 struct BleChessOptionType {
     constexpr static const char* Bool = "bool";
     constexpr static const char* Enum = "enum";
