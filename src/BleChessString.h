@@ -64,3 +64,8 @@ inline int indexOf(const BleChessString& str, const BleChessString& match)
     return str.indexOf(match);
 #endif
 }
+
+inline BleChessString join(const BleChessString& str1, const BleChessString& str2)
+{
+    return str1 + ' ' + str2;
+}

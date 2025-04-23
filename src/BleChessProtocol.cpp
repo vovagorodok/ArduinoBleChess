@@ -2,6 +2,7 @@
 #include "ArduinoBleChess.h"
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
+#include "BleChessData.h"
 
 namespace
 {
@@ -12,7 +13,8 @@ BleChessString getCmdParams(const BleChessString& cmd)
 }
 
 BleChessProtocol::BleChessProtocol() :
-    onAckMethod(&BleChessPeripheral::onCentralAck)
+    onAckMethod(&BleChessPeripheral::onCentralUnexpectdAck),
+    onPromotedMethod(&BleChessPeripheral::onCentralUnexpectdCommand)
 {}
 
 void BleChessProtocol::onCentralCommand(const BleChessString& cmd)
@@ -21,72 +23,190 @@ void BleChessProtocol::onCentralCommand(const BleChessString& cmd)
     Serial.print("DBG: ble chess receive: ");
     Serial.println(cmd.c_str());
     #endif
-    if (startsWith(cmd, "ok"))
+    if (startsWith(cmd, BleChessCommand::Ok))
     {
         (bleChessConnection.peripheralForOnline().*onAckMethod)(true);
+        onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
+        onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
     }
-    else if (startsWith(cmd, "nok"))
+    else if (startsWith(cmd, BleChessCommand::Nok))
     {
         (bleChessConnection.peripheralForOnline().*onAckMethod)(false);
+        onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
+        onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
     }
-    else if (startsWith(cmd, "move"))
+    else if (startsWith(cmd, BleChessCommand::Move))
     {
-        auto mv = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onCentralMove(mv);
+        bleChessConnection.peripheralForOnline().onCentralMove(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "fen"))
+    else if (startsWith(cmd, BleChessCommand::Begin))
     {
-        auto fen = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onCentralFen(fen);
+        onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
+        onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
+        bleChessConnection.peripheralForOnline().onCentralBegin(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "promote"))
+    else if (startsWith(cmd, BleChessCommand::SetVariant))
     {
-        auto prom = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onPeripheralMovePromoted(prom);
+        bleChessConnection.peripheralForOnline().onCentralSetVariant(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "feature"))
+    else if (startsWith(cmd, BleChessCommand::Check))
     {
-        auto feature = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onCentralFeature(feature);
+        bleChessConnection.peripheralForOnline().onCentralCheck(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "variant"))
+    else if (startsWith(cmd, BleChessCommand::End))
     {
-        auto variant = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onCentralVariant(variant);
+        bleChessConnection.peripheralForOnline().onCentralEnd(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, "last_move"))
+    else if (startsWith(cmd, BleChessCommand::Promote))
     {
-        auto lastMove = getCmdParams(cmd);
-        bleChessConnection.peripheralForOnline().onCentralLastMove(lastMove);
+        (bleChessConnection.peripheralForOnline().*onPromotedMethod)(getCmdParams(cmd));
+        onAckMethod = &BleChessPeripheral::onCentralUnexpectdAck;
+        onPromotedMethod = &BleChessPeripheral::onCentralUnexpectdCommand;
+    }
+    else if (startsWith(cmd, BleChessCommand::Feature))
+    {
+        bleChessConnection.peripheralForOnline().onCentralFeature(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::Variant))
+    {
+        bleChessConnection.peripheralForOnline().onCentralVariant(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::GetState))
+    {
+        bleChessConnection.peripheralForOnline().onCentralGetState();
+    }
+    else if (startsWith(cmd, BleChessCommand::SetState))
+    {
+        bleChessConnection.peripheralForOnline().onCentralSetState();
+    }
+    else if (startsWith(cmd, BleChessCommand::State))
+    {
+        bleChessConnection.peripheralForOnline().onCentralState(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::LastMove))
+    {
+        bleChessConnection.peripheralForOnline().onCentralLastMove(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::Undo))
+    {
+        bleChessConnection.peripheralForOnline().onCentralUndo(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::Msg))
+    {
+        bleChessConnection.peripheralForOnline().onCentralMsg(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::DrawOffer))
+    {
+        bleChessConnection.peripheralForOnline().onCentralDrawOffer();
+    }
+    else if (startsWith(cmd, BleChessCommand::Side))
+    {
+        bleChessConnection.peripheralForOnline().onCentralSide(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::Time))
+    {
+        bleChessConnection.peripheralForOnline().onCentralTime(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::Score))
+    {
+        bleChessConnection.peripheralForOnline().onCentralScore(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::OptionsBegin))
+    {
+        bleChessConnection.peripheralForOnline().onCentralOptionsBegin();
+    }
+    else if (startsWith(cmd, BleChessCommand::OptionsReset))
+    {
+        bleChessConnection.peripheralForOnline().onCentralOptionsReset();
+    }
+    else if (startsWith(cmd, BleChessCommand::SetOption))
+    {
+        bleChessConnection.peripheralForOnline().onCentralSetOption(getCmdParams(cmd));
     }
     else
     {
-        sendPeripheralAck(false);
+        bleChessConnection.peripheralForOnline().onCentralUnexpectdCommand(cmd);
     }
 }
 
-void BleChessProtocol::sendPeripheralFen(const BleChessString& fen)
+void BleChessProtocol::sendPeripheralState(const BleChessString& fen)
 {
-    onAckMethod = &BleChessPeripheral::onPeripheralFenAck;
-    send("fen " + fen);
+    send(join(BleChessCommand::State, fen));
+}
+
+void BleChessProtocol::sendPeripheralSync(const BleChessString& fen)
+{
+    send(join(BleChessCommand::Sync, fen));
+}
+
+void BleChessProtocol::sendPeripheralUnsync(const BleChessString& fen)
+{
+    send(join(BleChessCommand::Unsync, fen));
 }
 
 void BleChessProtocol::sendPeripheralMove(const BleChessString& mv)
 {
     onAckMethod = &BleChessPeripheral::onPeripheralMoveAck;
-    send("move " + mv);
+    onPromotedMethod = &BleChessPeripheral::onPeripheralMovePromoted;
+    send(join(BleChessCommand::Move, mv));
 }
 
 void BleChessProtocol::sendPeripheralAck(bool ack)
 {
-    onAckMethod = &BleChessPeripheral::onCentralAck;
-    send(ack ? "ok" : "nok");
+    send(ack ? BleChessCommand::Ok : BleChessCommand::Nok);
+}
+
+void BleChessProtocol::sendPeripheralErr(const BleChessString& err)
+{
+    send(join(BleChessCommand::Err, err));
+}
+
+void BleChessProtocol::sendPeripheralUnsyncSetible(const BleChessString& fen)
+{
+    send(join(BleChessCommand::UnsyncSetible, fen));
+}
+
+void BleChessProtocol::sendPeripheralUndo(const BleChessString& mv)
+{
+    onAckMethod = &BleChessPeripheral::onPeripheralUndoAck;
+    onPromotedMethod = &BleChessPeripheral::onPeripheralUndoPromoted;
+    send(join(BleChessCommand::Undo, mv));
+}
+
+void BleChessProtocol::sendPeripheralMoved()
+{
+    send(BleChessCommand::Moved);
 }
 
 void BleChessProtocol::sendPeripheralMsg(const BleChessString& msg)
 {
-    onAckMethod = &BleChessPeripheral::onCentralAck;
-    send("msg " + msg);
+    send(join(BleChessCommand::Msg, msg));
+}
+
+void BleChessProtocol::sendPeripheralResign()
+{
+    send(BleChessCommand::Resign);
+}
+
+void BleChessProtocol::sendPeripheralDrawOffer()
+{
+    onAckMethod = &BleChessPeripheral::onPeripheralDrawOfferAck;
+    send(BleChessCommand::DrawOffer);
+}
+
+void BleChessProtocol::sendPeripheralOptionsEnd()
+{
+    send(BleChessCommand::OptionsEnd);
+}
+
+void BleChessProtocol::sendPeripheralOption(const BleChessString& option)
+{
+    send(join(BleChessCommand::Option, option));
+}
+
+void BleChessProtocol::sendPeripheralSetOption(const BleChessString& option)
+{
+    send(join(BleChessCommand::SetOption, option));
 }
 
 void BleChessProtocol::send(BleChessString str)
