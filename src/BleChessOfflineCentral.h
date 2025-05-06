@@ -10,7 +10,7 @@ public:
     virtual void onPeripheralMove(const BleChessString& mv) {}
     virtual void onPeripheralAck(bool ack) {}
 
-    virtual void onPeripheralUndo(const BleChessString& mv) {}
+    virtual void onPeripheralUndoOffer() {}
     virtual void onPeripheralDrawOffer() {}
 
     virtual ~BleChessOfflineCentral() = default;

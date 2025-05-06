@@ -63,12 +63,6 @@ void BleChessConnection::sendPeripheralUnsyncSetible(const BleChessString& fen)
     chessProtocol.sendPeripheralUnsyncSetible(fen);
 }
 
-void BleChessConnection::sendPeripheralUndo(const BleChessString& mv)
-{
-    chessProtocol.sendPeripheralUndo(mv);
-    offlineCentral->onPeripheralUndo(mv);
-}
-
 void BleChessConnection::sendPeripheralMoved()
 {
     chessProtocol.sendPeripheralMoved();
@@ -82,6 +76,12 @@ void BleChessConnection::sendPeripheralMsg(const BleChessString& msg)
 void BleChessConnection::sendPeripheralResign()
 {
     chessProtocol.sendPeripheralResign();
+}
+
+void BleChessConnection::sendPeripheralUndoOffer()
+{
+    chessProtocol.sendPeripheralUndoOffer();
+    offlineCentral->onPeripheralUndoOffer();
 }
 
 void BleChessConnection::sendPeripheralDrawOffer()

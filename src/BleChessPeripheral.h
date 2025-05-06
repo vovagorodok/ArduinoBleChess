@@ -27,12 +27,13 @@ public:
     virtual void onCentralLastMove(const BleChessString& mv);
     // Feature check
     virtual void onCentralCheck(const BleChessString& kingPos);
-    // Feature undo
-    virtual void onCentralUndo(const BleChessString& mv);
-    virtual void onPeripheralUndoAck(bool ack);
-    virtual void onPeripheralUndoPromoted(const BleChessString& prom);
     // Feature msg
     virtual void onCentralMsg(const BleChessString& msg);
+    // Feature undo
+    virtual void onCentralUndo(const BleChessString& fen);
+    // Feature undo_offer
+    virtual void onCentralUndoOffer();
+    virtual void onPeripheralUndoOfferAck(bool ack);
     // Feature draw_offer
     virtual void onCentralDrawOffer();
     virtual void onPeripheralDrawOfferAck(bool ack);
@@ -60,14 +61,14 @@ protected:
 
     // Feature set_state
     void sendPeripheralUnsyncSetible(const BleChessString& fen);
-    // Feature undo
-    void sendPeripheralUndo(const BleChessString& mv);
     // Feature moved
     void sendPeripheralMoved();
     // Feature msg
     void sendPeripheralMsg(const BleChessString& msg);
     // Feature resign
     void sendPeripheralResign();
+    // Feature undo_offer
+    void sendPeripheralUndoOffer();
     // Feature draw_offer
     void sendPeripheralDrawOffer();
     // Feature option

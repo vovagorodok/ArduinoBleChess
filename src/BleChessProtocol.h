@@ -17,10 +17,10 @@ public:
     void sendPeripheralAck(bool ack);
     void sendPeripheralErr(const BleChessString& err);
     void sendPeripheralUnsyncSetible(const BleChessString& fen);
-    void sendPeripheralUndo(const BleChessString& mv);
     void sendPeripheralMoved();
     void sendPeripheralMsg(const BleChessString& msg);
     void sendPeripheralResign();
+    void sendPeripheralUndoOffer();
     void sendPeripheralDrawOffer();
     void sendPeripheralOptionsEnd();
     void sendPeripheralOption(const BleChessString& option);

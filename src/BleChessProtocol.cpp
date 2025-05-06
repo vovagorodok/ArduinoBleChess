@@ -87,13 +87,17 @@ void BleChessProtocol::onCentralCommand(const BleChessString& cmd)
     {
         bleChessConnection.peripheralForOnline().onCentralLastMove(getCmdParams(cmd));
     }
-    else if (startsWith(cmd, BleChessCommand::Undo))
-    {
-        bleChessConnection.peripheralForOnline().onCentralUndo(getCmdParams(cmd));
-    }
     else if (startsWith(cmd, BleChessCommand::Msg))
     {
         bleChessConnection.peripheralForOnline().onCentralMsg(getCmdParams(cmd));
+    }
+    else if (startsWith(cmd, BleChessCommand::UndoOffer))
+    {
+        bleChessConnection.peripheralForOnline().onCentralUndoOffer();
+    }
+    else if (startsWith(cmd, BleChessCommand::Undo))
+    {
+        bleChessConnection.peripheralForOnline().onCentralUndo(getCmdParams(cmd));
     }
     else if (startsWith(cmd, BleChessCommand::DrawOffer))
     {
@@ -166,13 +170,6 @@ void BleChessProtocol::sendPeripheralUnsyncSetible(const BleChessString& fen)
     send(join(BleChessCommand::UnsyncSetible, fen));
 }
 
-void BleChessProtocol::sendPeripheralUndo(const BleChessString& mv)
-{
-    onAckMethod = &BleChessPeripheral::onPeripheralUndoAck;
-    onPromotedMethod = &BleChessPeripheral::onPeripheralUndoPromoted;
-    send(join(BleChessCommand::Undo, mv));
-}
-
 void BleChessProtocol::sendPeripheralMoved()
 {
     send(BleChessCommand::Moved);
@@ -186,6 +183,12 @@ void BleChessProtocol::sendPeripheralMsg(const BleChessString& msg)
 void BleChessProtocol::sendPeripheralResign()
 {
     send(BleChessCommand::Resign);
+}
+
+void BleChessProtocol::sendPeripheralUndoOffer()
+{
+    onAckMethod = &BleChessPeripheral::onPeripheralUndoOfferAck;
+    send(BleChessCommand::UndoOffer);
 }
 
 void BleChessProtocol::sendPeripheralDrawOffer()

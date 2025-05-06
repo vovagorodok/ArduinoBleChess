@@ -10,6 +10,7 @@ struct BleChessFeature {
     constexpr static const char* Moved = "moved";
     constexpr static const char* Msg = "msg";
     constexpr static const char* Resign = "resign";
+    constexpr static const char* UndoOffer = "undo_offer";
     constexpr static const char* DrawOffer = "draw_offer";
     constexpr static const char* Side = "side";
     constexpr static const char* Time = "time";
@@ -69,6 +70,7 @@ struct BleChessCommand {
     constexpr static const char* End = "end";
     constexpr static const char* Promote = "promote";
     constexpr static const char* Err = "err";
+    constexpr static const char* Drop = "drop";
     constexpr static const char* GetState = BleChessFeature::GetState;
     constexpr static const char* SetState = BleChessFeature::SetState;
     constexpr static const char* UnsyncSetible = "unsync_setible";
@@ -78,6 +80,7 @@ struct BleChessCommand {
     constexpr static const char* Moved = BleChessFeature::Moved;
     constexpr static const char* Msg = BleChessFeature::Msg;
     constexpr static const char* Resign = BleChessFeature::Resign;
+    constexpr static const char* UndoOffer = BleChessFeature::UndoOffer;
     constexpr static const char* DrawOffer = BleChessFeature::DrawOffer;
     constexpr static const char* Side = BleChessFeature::Side;
     constexpr static const char* Time = BleChessFeature::Time;

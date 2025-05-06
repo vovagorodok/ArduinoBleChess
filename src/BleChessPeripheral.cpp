@@ -61,24 +61,24 @@ void BleChessPeripheral::onCentralCheck(const BleChessString& kingPos)
     onCentralUnexpectdCommand(join(BleChessCommand::Check, kingPos));
 }
 
-void BleChessPeripheral::onCentralUndo(const BleChessString& mv)
-{
-    onCentralUnexpectdCommand(join(BleChessCommand::Undo, mv));
-}
-
-void BleChessPeripheral::onPeripheralUndoAck(bool ack)
-{
-    onCentralUnexpectdAck(ack);
-}
-
-void BleChessPeripheral::onPeripheralUndoPromoted(const BleChessString& prom)
-{
-    onCentralUnexpectdCommand(join(BleChessCommand::Promote, prom));
-}
-
 void BleChessPeripheral::onCentralMsg(const BleChessString& msg)
 {
     onCentralUnexpectdCommand(join(BleChessCommand::Msg, msg));
+}
+
+void BleChessPeripheral::onCentralUndo(const BleChessString& fen)
+{
+    onCentralUnexpectdCommand(join(BleChessCommand::Undo, fen));
+}
+
+void BleChessPeripheral::onCentralUndoOffer()
+{
+    onCentralUnexpectdCommand(BleChessCommand::UndoOffer);
+}
+
+void BleChessPeripheral::onPeripheralUndoOfferAck(bool ack)
+{
+    onCentralUnexpectdAck(ack);
 }
 
 void BleChessPeripheral::onCentralDrawOffer()
@@ -156,11 +156,6 @@ void BleChessPeripheral::sendPeripheralUnsyncSetible(const BleChessString& fen)
     bleChessConnection.sendPeripheralUnsyncSetible(fen);
 }
 
-void BleChessPeripheral::sendPeripheralUndo(const BleChessString& mv)
-{
-    bleChessConnection.sendPeripheralUndo(mv);
-}
-
 void BleChessPeripheral::sendPeripheralMoved()
 {
     bleChessConnection.sendPeripheralMoved();
@@ -174,6 +169,11 @@ void BleChessPeripheral::sendPeripheralMsg(const BleChessString& msg)
 void BleChessPeripheral::sendPeripheralResign()
 {
     bleChessConnection.sendPeripheralResign();
+}
+
+void BleChessPeripheral::sendPeripheralUndoOffer()
+{
+    bleChessConnection.sendPeripheralUndoOffer();
 }
 
 void BleChessPeripheral::sendPeripheralDrawOffer()
