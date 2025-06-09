@@ -48,6 +48,11 @@ public:
     virtual void onCentralOptionsReset();
     virtual void onCentralSetOption(const BleChessString& option);
 
+    virtual void onOnlineCentralConnected();
+    virtual void onOnlineCentralDisconnected();
+    virtual void onOfflineCentralConnected();
+    virtual void onOfflineCentralDisconnected();
+
     virtual ~BleChessPeripheral() = default;
 
 protected:

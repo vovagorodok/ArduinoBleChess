@@ -195,3 +195,15 @@ void BleChessPeripheral::sendPeripheralSetOption(const BleChessString& option)
 {
     bleChessConnection.sendPeripheralSetOption(option);
 }
+
+void BleChessPeripheral::onOnlineCentralConnected()
+{}
+
+void BleChessPeripheral::onOnlineCentralDisconnected()
+{}
+
+void BleChessPeripheral::onOfflineCentralConnected()
+{}
+
+void BleChessPeripheral::onOfflineCentralDisconnected()
+{}

@@ -18,11 +18,13 @@ BleChessConnection::BleChessConnection() :
 
 void BleChessConnection::onConnected()
 {
+    registeredPeripheral->onOnlineCentralConnected();
     registeredCentral->onOnlineCentralConnected();
 }
 
 void BleChessConnection::onDisconnected()
 {
+    registeredPeripheral->onOnlineCentralDisconnected();
     registeredCentral->onOnlineCentralDisconnected();
 }
 
@@ -109,12 +111,14 @@ void BleChessConnection::connectOfflineCentral()
 {
     offlineCentral = registeredCentral;
     offlinePeripheral = registeredPeripheral;
+    registeredPeripheral->onOfflineCentralConnected();
 }
 
 void BleChessConnection::disconnectOfflineCentral()
 {
     offlineCentral = &dummyOfflineCentral;
     offlinePeripheral = &dummyPeripheral;
+    registeredPeripheral->onOfflineCentralDisconnected();
 }
 
 BleChessPeripheral& BleChessConnection::peripheralForOffline()
