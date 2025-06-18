@@ -105,3 +105,8 @@ struct BleChessOptionType {
     constexpr static const char* Int = "int";
     constexpr static const char* Float = "float";
 };
+
+struct BleChessBoolOptionValue {
+    constexpr static const char* False = "false";
+    constexpr static const char* True = "true";
+};
