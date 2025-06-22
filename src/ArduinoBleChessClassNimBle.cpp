@@ -68,6 +68,7 @@ void ArduinoBleChessClass::onConnect()
 void ArduinoBleChessClass::onDisconnect()
 {
     bleChessConnection.onDisconnected();
+    mutex.unlock();
 }
 
 void ArduinoBleChessClass::onConnect(BLEServer* srv)
@@ -86,8 +87,16 @@ void ArduinoBleChessClass::onWrite(BLECharacteristic* characteristic)
     chessProtocol.onCentralCommand(rxValue);
 }
 
+void ArduinoBleChessClass::onStatus(BLECharacteristic* pCharacteristic,
+                                    BLECharacteristicCallbacks::Status s,
+                                    int code)
+{
+    mutex.unlock();
+}
+
 void ArduinoBleChessClass::send(const std::string& str)
 {
+    mutex.lock();
     txCharacteristic->setValue(str);
     txCharacteristic->notify();
 }

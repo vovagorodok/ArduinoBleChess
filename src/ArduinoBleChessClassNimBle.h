@@ -2,6 +2,7 @@
 #include "BleChessPeripheral.h"
 #include "BleChessOfflineCentral.h"
 #include <NimBLEDevice.h>
+#include <mutex>
 
 class BleChessProtocol;
 
@@ -25,9 +26,13 @@ private:
     friend BleChessProtocol;
     void onConnect(BLEServer* srv) override;
     void onDisconnect(BLEServer* srv) override;
-    void send(const std::string& str);
     void onWrite(BLECharacteristic* characteristic) override;
+    void onStatus(BLECharacteristic* pCharacteristic,
+                  BLECharacteristicCallbacks::Status s,
+                  int code) override;
+    void send(const std::string& str);
     BLECharacteristic* txCharacteristic;
+    std::mutex mutex;
 };
 
 extern ArduinoBleChessClass ArduinoBleChess;
