@@ -78,6 +78,7 @@ protected:
     void sendPeripheralDrawOffer();
     // Feature option
     void sendPeripheralOptionsEnd();
+    void sendPeripheralOptionsReset();
     void sendPeripheralOption(const BleChessString& option);
     void sendPeripheralSetOption(const BleChessString& option);
 };

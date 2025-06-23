@@ -25,6 +25,7 @@ public:
     void sendPeripheralUndoOffer();
     void sendPeripheralDrawOffer();
     void sendPeripheralOptionsEnd();
+    void sendPeripheralOptionsReset();
     void sendPeripheralOption(const BleChessString& option);
     void sendPeripheralSetOption(const BleChessString& option);
 

@@ -202,6 +202,11 @@ void BleChessProtocol::sendPeripheralOptionsEnd()
     send(BleChessCommand::OptionsEnd);
 }
 
+void BleChessProtocol::sendPeripheralOptionsReset()
+{
+    send(BleChessCommand::OptionsReset);
+}
+
 void BleChessProtocol::sendPeripheralOption(const BleChessString& option)
 {
     send(join(BleChessCommand::Option, option));

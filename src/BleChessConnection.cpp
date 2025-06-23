@@ -97,6 +97,11 @@ void BleChessConnection::sendPeripheralOptionsEnd()
     chessProtocol.sendPeripheralOptionsEnd();
 }
 
+void BleChessConnection::sendPeripheralOptionsReset()
+{
+    chessProtocol.sendPeripheralOptionsReset();
+}
+
 void BleChessConnection::sendPeripheralOption(const BleChessString& option)
 {
     chessProtocol.sendPeripheralOption(option);
