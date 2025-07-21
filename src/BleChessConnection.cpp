@@ -60,9 +60,9 @@ void BleChessConnection::sendPeripheralErr(const BleChessString& err)
     chessProtocol.sendPeripheralErr(err);
 }
 
-void BleChessConnection::sendPeripheralUnsyncSetible(const BleChessString& fen)
+void BleChessConnection::sendPeripheralUnsyncSettable(const BleChessString& fen)
 {
-    chessProtocol.sendPeripheralUnsyncSetible(fen);
+    chessProtocol.sendPeripheralUnsyncSettable(fen);
 }
 
 void BleChessConnection::sendPeripheralMoved()

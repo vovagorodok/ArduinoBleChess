@@ -165,9 +165,9 @@ void BleChessProtocol::sendPeripheralErr(const BleChessString& err)
     send(join(BleChessCommand::Err, err));
 }
 
-void BleChessProtocol::sendPeripheralUnsyncSetible(const BleChessString& fen)
+void BleChessProtocol::sendPeripheralUnsyncSettable(const BleChessString& fen)
 {
-    send(join(BleChessCommand::UnsyncSetible, fen));
+    send(join(BleChessCommand::UnsyncSettable, fen));
 }
 
 void BleChessProtocol::sendPeripheralMoved()

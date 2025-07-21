@@ -16,7 +16,7 @@ public:
     void sendPeripheralMove(const BleChessString& mv);
     void sendPeripheralAck(bool ack);
     void sendPeripheralErr(const BleChessString& err);
-    void sendPeripheralUnsyncSetible(const BleChessString& fen);
+    void sendPeripheralUnsyncSettable(const BleChessString& fen);
     void sendPeripheralMoved();
     void sendPeripheralMsg(const BleChessString& msg);
     void sendPeripheralResign();

@@ -151,9 +151,9 @@ void BleChessPeripheral::sendPeripheralErr(const BleChessString& err)
     bleChessConnection.sendPeripheralErr(err);
 }
 
-void BleChessPeripheral::sendPeripheralUnsyncSetible(const BleChessString& fen)
+void BleChessPeripheral::sendPeripheralUnsyncSettable(const BleChessString& fen)
 {
-    bleChessConnection.sendPeripheralUnsyncSetible(fen);
+    bleChessConnection.sendPeripheralUnsyncSettable(fen);
 }
 
 void BleChessPeripheral::sendPeripheralMoved()

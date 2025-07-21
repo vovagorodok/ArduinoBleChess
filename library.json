@@ -1,6 +1,6 @@
 {
     "name": "ArduinoBleChess",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "description": "Bluetooth low energy (BLE) library for communication via CECP chess protocol",
     "keywords": "BLE, chess, bluetooth",
     "repository":

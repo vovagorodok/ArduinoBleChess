@@ -65,7 +65,7 @@ protected:
     void sendPeripheralErr(const BleChessString& err);
 
     // Feature set_state
-    void sendPeripheralUnsyncSetible(const BleChessString& fen);
+    void sendPeripheralUnsyncSettable(const BleChessString& fen);
     // Feature moved
     void sendPeripheralMoved();
     // Feature msg

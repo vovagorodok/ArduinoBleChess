@@ -73,7 +73,7 @@ struct BleChessCommand {
     constexpr static const char* Drop = "drop";
     constexpr static const char* GetState = BleChessFeature::GetState;
     constexpr static const char* SetState = BleChessFeature::SetState;
-    constexpr static const char* UnsyncSetible = "unsync_setible";
+    constexpr static const char* UnsyncSettable = "unsync_settable";
     constexpr static const char* LastMove = BleChessFeature::LastMove;
     constexpr static const char* Check = BleChessFeature::Check;
     constexpr static const char* Undo = BleChessFeature::Undo;
