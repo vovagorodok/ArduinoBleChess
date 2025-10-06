@@ -18,14 +18,14 @@ BleChessConnection::BleChessConnection() :
 
 void BleChessConnection::onConnected()
 {
-    registeredPeripheral->onOnlineCentralConnected();
-    registeredCentral->onOnlineCentralConnected();
+    registeredPeripheral->handleOnlineCentralConnected();
+    registeredCentral->handleOnlineCentralConnected();
 }
 
 void BleChessConnection::onDisconnected()
 {
-    registeredPeripheral->onOnlineCentralDisconnected();
-    registeredCentral->onOnlineCentralDisconnected();
+    registeredPeripheral->handleOnlineCentralDisconnected();
+    registeredCentral->handleOnlineCentralDisconnected();
 }
 
 void BleChessConnection::sendPeripheralState(const BleChessString& fen)
@@ -46,13 +46,13 @@ void BleChessConnection::sendPeripheralUnsync(const BleChessString& fen)
 void BleChessConnection::sendPeripheralMove(const BleChessString& mv)
 {
     chessProtocol.sendPeripheralMove(mv);
-    offlineCentral->onPeripheralMove(mv);
+    offlineCentral->handlePeripheralMove(mv);
 }
 
 void BleChessConnection::sendPeripheralAck(bool ack)
 {
     chessProtocol.sendPeripheralAck(ack);
-    offlineCentral->onPeripheralAck(ack);
+    offlineCentral->handlePeripheralAck(ack);
 }
 
 void BleChessConnection::sendPeripheralErr(const BleChessString& err)
@@ -83,13 +83,13 @@ void BleChessConnection::sendPeripheralResign()
 void BleChessConnection::sendPeripheralUndoOffer()
 {
     chessProtocol.sendPeripheralUndoOffer();
-    offlineCentral->onPeripheralUndoOffer();
+    offlineCentral->handlePeripheralUndoOffer();
 }
 
 void BleChessConnection::sendPeripheralDrawOffer()
 {
     chessProtocol.sendPeripheralDrawOffer();
-    offlineCentral->onPeripheralDrawOffer();
+    offlineCentral->handlePeripheralDrawOffer();
 }
 
 void BleChessConnection::sendPeripheralOptionsEnd()
@@ -116,14 +116,14 @@ void BleChessConnection::connectOfflineCentral()
 {
     offlineCentral = registeredCentral;
     offlinePeripheral = registeredPeripheral;
-    registeredPeripheral->onOfflineCentralConnected();
+    registeredPeripheral->handleOfflineCentralConnected();
 }
 
 void BleChessConnection::disconnectOfflineCentral()
 {
     offlineCentral = &dummyOfflineCentral;
     offlinePeripheral = &dummyPeripheral;
-    registeredPeripheral->onOfflineCentralDisconnected();
+    registeredPeripheral->handleOfflineCentralDisconnected();
 }
 
 BleChessPeripheral& BleChessConnection::peripheralForOffline()

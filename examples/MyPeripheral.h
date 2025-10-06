@@ -4,24 +4,24 @@
 class MyPeripheral : public BleChessPeripheral
 {
 public:
-  void onCentralBegin(const BleChessString& fen) override {
+  void handleCentralBegin(const BleChessString& fen) override {
     Serial.print("begin: ");
     Serial.println(fen.c_str());
     sendPeripheralSync(fen);
   }
-  void onCentralMove(const BleChessString& mv) override {
+  void handleCentralMove(const BleChessString& mv) override {
     Serial.print("move: ");
     Serial.println(mv.c_str());
   }
-  void onPeripheralMoveAck(bool ack) override {
+  void handlePeripheralMoveAck(bool ack) override {
     Serial.print("move ");
     Serial.println(ack ? "accepted" : "rejected");
   }
-  void onPeripheralMovePromoted(const BleChessString& prom) override {
+  void handlePeripheralMovePromoted(const BleChessString& prom) override {
     Serial.print("promote: ");
     Serial.println(prom.c_str());
   }
-  void onCentralEnd(const BleChessString& reason) override {
+  void handleCentralEnd(const BleChessString& reason) override {
     Serial.print("end: ");
     Serial.println(reason.c_str());
   }
