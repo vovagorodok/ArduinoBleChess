@@ -8,7 +8,7 @@ class BleChessProtocol
 public:
     BleChessProtocol();
 
-    void onCentralCommand(const BleChessString& cmd);
+    void handleCentralCommand(const BleChessString& cmd);
 
     void sendPeripheralState(const BleChessString& fen);
     void sendPeripheralSync(const BleChessString& fen);
@@ -32,8 +32,8 @@ private:
 
     typedef void(BleChessPeripheral::*AckMethod)(bool);
     typedef void(BleChessPeripheral::*PromotedMethod)(const BleChessString&);
-    AckMethod onAckMethod;
-    PromotedMethod onPromotedMethod;
+    AckMethod handleAckMethod;
+    PromotedMethod handlePromotedMethod;
 };
 
 extern BleChessProtocol chessProtocol;

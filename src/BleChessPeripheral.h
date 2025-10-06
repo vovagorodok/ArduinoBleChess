@@ -4,54 +4,54 @@
 class BleChessPeripheral
 {
 public:
-    virtual void onCentralFeature(const BleChessString& feature);
-    virtual void onCentralVariant(const BleChessString& variant);
+    virtual void handleCentralFeature(const BleChessString& feature);
+    virtual void handleCentralVariant(const BleChessString& variant);
 
-    virtual void onCentralSetVariant(const BleChessString& variant);
-    virtual void onCentralBegin(const BleChessString& fen);
-    virtual void onCentralMove(const BleChessString& mv);
-    virtual void onCentralEnd(const BleChessString& reason);
+    virtual void handleCentralSetVariant(const BleChessString& variant);
+    virtual void handleCentralBegin(const BleChessString& fen);
+    virtual void handleCentralMove(const BleChessString& mv);
+    virtual void handleCentralEnd(const BleChessString& reason);
 
-    virtual void onPeripheralMoveAck(bool ack);
-    virtual void onPeripheralMovePromoted(const BleChessString& prom);
-    virtual void onCentralUnexpectdCommand(const BleChessString& cmd);
-    virtual void onCentralUnexpectdAck(bool ack);
+    virtual void handlePeripheralMoveAck(bool ack);
+    virtual void handlePeripheralMovePromoted(const BleChessString& prom);
+    virtual void handleCentralUnexpectdCommand(const BleChessString& cmd);
+    virtual void handleCentralUnexpectdAck(bool ack);
 
     // Feature get_state
-    virtual void onCentralGetState();
+    virtual void handleCentralGetState();
     // Feature set_state
-    virtual void onCentralSetState();
+    virtual void handleCentralSetState();
     // Feature state_stream
-    virtual void onCentralState(const BleChessString& fen);
+    virtual void handleCentralState(const BleChessString& fen);
     // Feature last_move
-    virtual void onCentralLastMove(const BleChessString& mv);
+    virtual void handleCentralLastMove(const BleChessString& mv);
     // Feature check
-    virtual void onCentralCheck(const BleChessString& kingPos);
+    virtual void handleCentralCheck(const BleChessString& kingPos);
     // Feature msg
-    virtual void onCentralMsg(const BleChessString& msg);
+    virtual void handleCentralMsg(const BleChessString& msg);
     // Feature undo
-    virtual void onCentralUndo(const BleChessString& fen);
+    virtual void handleCentralUndo(const BleChessString& fen);
     // Feature undo_offer
-    virtual void onCentralUndoOffer();
-    virtual void onPeripheralUndoOfferAck(bool ack);
+    virtual void handleCentralUndoOffer();
+    virtual void handlePeripheralUndoOfferAck(bool ack);
     // Feature draw_offer
-    virtual void onCentralDrawOffer();
-    virtual void onPeripheralDrawOfferAck(bool ack);
+    virtual void handleCentralDrawOffer();
+    virtual void handlePeripheralDrawOfferAck(bool ack);
     // Feature side
-    virtual void onCentralSide(const BleChessString& side);
+    virtual void handleCentralSide(const BleChessString& side);
     // Feature time
-    virtual void onCentralTime(const BleChessString& time);
+    virtual void handleCentralTime(const BleChessString& time);
     // Feature score
-    virtual void onCentralScore(const BleChessString& score);
+    virtual void handleCentralScore(const BleChessString& score);
     // Feature option
-    virtual void onCentralOptionsBegin();
-    virtual void onCentralOptionsReset();
-    virtual void onCentralSetOption(const BleChessString& option);
+    virtual void handleCentralOptionsBegin();
+    virtual void handleCentralOptionsReset();
+    virtual void handleCentralSetOption(const BleChessString& option);
 
-    virtual void onOnlineCentralConnected();
-    virtual void onOnlineCentralDisconnected();
-    virtual void onOfflineCentralConnected();
-    virtual void onOfflineCentralDisconnected();
+    virtual void handleOnlineCentralConnected();
+    virtual void handleOnlineCentralDisconnected();
+    virtual void handleOfflineCentralConnected();
+    virtual void handleOfflineCentralDisconnected();
 
     virtual ~BleChessPeripheral() = default;
 
