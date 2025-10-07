@@ -14,7 +14,8 @@ BleChessStringView getCmdParams(BleChessStringViewInternal cmd)
     return cmd.substr(found + 1);
 }
 
-inline BleChessString join(BleChessStringView cmd, const BleChessString& params) {
+inline BleChessString join(BleChessStringView cmd, const BleChessString& params)
+{
     BleChessString result;
 #ifdef USE_NIM_BLE_ARDUINO_LIB
     result.reserve(cmd.size() + 1 + params.size());
