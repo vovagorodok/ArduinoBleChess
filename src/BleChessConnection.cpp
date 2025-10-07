@@ -9,7 +9,7 @@ static BleChessPeripheral dummyPeripheral{};
 static BleChessOfflineCentral dummyOfflineCentral{};
 }
 
-BleChessConnection::BleChessConnection() :
+BleChessConnection::BleChessConnection():
     registeredPeripheral(&dummyPeripheral),
     registeredCentral(&dummyOfflineCentral),
     offlinePeripheral(&dummyPeripheral),
