@@ -34,7 +34,9 @@ void BleChessPeripheral::handleCentralUnexpectdCommand(BleChessStringView cmd)
 {}
 
 void BleChessPeripheral::handleCentralUnexpectdCommand(BleChessStringView cmd, BleChessStringView params)
-{}
+{
+    handleCentralUnexpectdCommand(cmd);
+}
 
 void BleChessPeripheral::handleCentralUnexpectdAck(bool ack)
 {}
