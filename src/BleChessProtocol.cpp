@@ -6,7 +6,7 @@
 
 namespace
 {
-BleChessStringView getCmdParams(BleChessStringViewInternal cmd)
+BleChessStringView getParams(BleChessStringViewInternal cmd)
 {
     auto found = cmd.find(' ');
     if (found == BleChessStringViewInternal::npos)
@@ -55,39 +55,39 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::Move))
     {
-        bleChessConnection.peripheralForOnline().handleCentralMove(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralMove(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Begin))
     {
         handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
         handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
-        bleChessConnection.peripheralForOnline().handleCentralBegin(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralBegin(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::SetVariant))
     {
-        bleChessConnection.peripheralForOnline().handleCentralSetVariant(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralSetVariant(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Check))
     {
-        bleChessConnection.peripheralForOnline().handleCentralCheck(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralCheck(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::End))
     {
-        bleChessConnection.peripheralForOnline().handleCentralEnd(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralEnd(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Promote))
     {
-        (bleChessConnection.peripheralForOnline().*handlePromotedMethod)(getCmdParams(cmd));
+        (bleChessConnection.peripheralForOnline().*handlePromotedMethod)(getParams(cmd));
         handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
         handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
     }
     else if (cmd.starts_with(BleChessCommand::Feature))
     {
-        bleChessConnection.peripheralForOnline().handleCentralFeature(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralFeature(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Variant))
     {
-        bleChessConnection.peripheralForOnline().handleCentralVariant(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralVariant(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::GetState))
     {
@@ -99,15 +99,15 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::State))
     {
-        bleChessConnection.peripheralForOnline().handleCentralState(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralState(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::LastMove))
     {
-        bleChessConnection.peripheralForOnline().handleCentralLastMove(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralLastMove(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Msg))
     {
-        bleChessConnection.peripheralForOnline().handleCentralMsg(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralMsg(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::UndoOffer))
     {
@@ -115,7 +115,7 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::Undo))
     {
-        bleChessConnection.peripheralForOnline().handleCentralUndo(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralUndo(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::DrawOffer))
     {
@@ -123,15 +123,15 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::Side))
     {
-        bleChessConnection.peripheralForOnline().handleCentralSide(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralSide(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Time))
     {
-        bleChessConnection.peripheralForOnline().handleCentralTime(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralTime(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::Score))
     {
-        bleChessConnection.peripheralForOnline().handleCentralScore(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralScore(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::OptionsBegin))
     {
@@ -143,7 +143,7 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::SetOption))
     {
-        bleChessConnection.peripheralForOnline().handleCentralSetOption(getCmdParams(cmd));
+        bleChessConnection.peripheralForOnline().handleCentralSetOption(getParams(cmd));
     }
     else
     {
