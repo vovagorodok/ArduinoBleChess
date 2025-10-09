@@ -7,7 +7,7 @@ class BleChessOfflineCentral
 public:
     virtual void handleOnlineCentralConnected() {}
     virtual void handleOnlineCentralDisconnected() {}
-    virtual void handlePeripheralMove(const BleChessString& mv) {}
+    virtual void handlePeripheralMove(BleChessStringView mv) {}
     virtual void handlePeripheralAck(bool ack) {}
 
     virtual void handlePeripheralUndoOffer() {}

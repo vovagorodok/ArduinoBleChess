@@ -18,7 +18,7 @@ public:
     Serial.println("online central disconnected, connect offline central");
     connect();
   }
-  void handlePeripheralMove(const BleChessString& mv) override {
+  void handlePeripheralMove(BleChessStringView mv) override {
     Serial.println("peripheral move accepted");
     peripheral().handlePeripheralMoveAck(true);
   }

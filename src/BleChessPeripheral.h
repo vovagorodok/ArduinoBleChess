@@ -4,17 +4,19 @@
 class BleChessPeripheral
 {
 public:
-    virtual void handleCentralFeature(const BleChessString& feature);
-    virtual void handleCentralVariant(const BleChessString& variant);
+    virtual void handleCentralFeature(BleChessStringView feature);
+    virtual void handleCentralVariant(BleChessStringView variant);
 
-    virtual void handleCentralSetVariant(const BleChessString& variant);
-    virtual void handleCentralBegin(const BleChessString& fen);
-    virtual void handleCentralMove(const BleChessString& mv);
-    virtual void handleCentralEnd(const BleChessString& reason);
+    virtual void handleCentralSetVariant(BleChessStringView variant);
+    virtual void handleCentralBegin(BleChessStringView fen);
+    virtual void handleCentralMove(BleChessStringView mv);
+    virtual void handleCentralEnd(BleChessStringView reason);
 
     virtual void handlePeripheralMoveAck(bool ack);
-    virtual void handlePeripheralMovePromoted(const BleChessString& prom);
-    virtual void handleCentralUnexpectdCommand(const BleChessString& cmd);
+    virtual void handlePeripheralMovePromoted(BleChessStringView prom);
+
+    virtual void handleCentralUnexpectdCommand(BleChessStringView cmd);
+    virtual void handleCentralUnexpectdCommand(BleChessStringView cmd, BleChessStringView params);
     virtual void handleCentralUnexpectdAck(bool ack);
 
     // Feature get_state
@@ -22,15 +24,15 @@ public:
     // Feature set_state
     virtual void handleCentralSetState();
     // Feature state_stream
-    virtual void handleCentralState(const BleChessString& fen);
+    virtual void handleCentralState(BleChessStringView fen);
     // Feature last_move
-    virtual void handleCentralLastMove(const BleChessString& mv);
+    virtual void handleCentralLastMove(BleChessStringView mv);
     // Feature check
-    virtual void handleCentralCheck(const BleChessString& kingPos);
+    virtual void handleCentralCheck(BleChessStringView kingPos);
     // Feature msg
-    virtual void handleCentralMsg(const BleChessString& msg);
+    virtual void handleCentralMsg(BleChessStringView msg);
     // Feature undo
-    virtual void handleCentralUndo(const BleChessString& fen);
+    virtual void handleCentralUndo(BleChessStringView fen);
     // Feature undo_offer
     virtual void handleCentralUndoOffer();
     virtual void handlePeripheralUndoOfferAck(bool ack);
@@ -38,15 +40,15 @@ public:
     virtual void handleCentralDrawOffer();
     virtual void handlePeripheralDrawOfferAck(bool ack);
     // Feature side
-    virtual void handleCentralSide(const BleChessString& side);
+    virtual void handleCentralSide(BleChessStringView side);
     // Feature time
-    virtual void handleCentralTime(const BleChessString& time);
+    virtual void handleCentralTime(BleChessStringView time);
     // Feature score
-    virtual void handleCentralScore(const BleChessString& score);
+    virtual void handleCentralScore(BleChessStringView score);
     // Feature option
     virtual void handleCentralOptionsBegin();
     virtual void handleCentralOptionsReset();
-    virtual void handleCentralSetOption(const BleChessString& option);
+    virtual void handleCentralSetOption(BleChessStringView option);
 
     virtual void handleOnlineCentralConnected();
     virtual void handleOnlineCentralDisconnected();
