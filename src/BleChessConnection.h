@@ -38,10 +38,10 @@ public:
     void registerOfflineCentral(BleChessOfflineCentral& central);
 
 private:
-    BleChessPeripheral* registeredPeripheral;
-    BleChessOfflineCentral* registeredCentral;
-    BleChessPeripheral* offlinePeripheral;
-    BleChessOfflineCentral* offlineCentral;
+    BleChessPeripheral* _registeredPeripheral;
+    BleChessOfflineCentral* _registeredCentral;
+    BleChessPeripheral* _offlinePeripheral;
+    BleChessOfflineCentral* _offlineCentral;
 };
 
 extern BleChessConnection bleChessConnection;

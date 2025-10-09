@@ -3,9 +3,12 @@
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
 #include "BleChessData.h"
+#include "BleChessLogger.h"
 
 namespace
 {
+#define TAG "Protocol"
+
 BleChessStringView getParams(BleChessStringViewInternal cmd)
 {
     auto found = cmd.find(' ');
@@ -17,12 +20,12 @@ BleChessStringView getParams(BleChessStringViewInternal cmd)
 inline BleChessString join(BleChessStringView cmd, const BleChessString& params)
 {
     BleChessString result;
-#ifdef USE_NIM_BLE_ARDUINO_LIB
-    result.reserve(cmd.size() + 1 + params.size());
-    result.append(cmd.data(), cmd.size());
-#else
+#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
     result.reserve(cmd.size() + 1 + params.length());
     result.concat(cmd.data(), cmd.size());
+#else
+    result.reserve(cmd.size() + 1 + params.size());
+    result.append(cmd.data(), cmd.size());
 #endif
     result += ' ';
     result += params;
@@ -31,27 +34,25 @@ inline BleChessString join(BleChessStringView cmd, const BleChessString& params)
 }
 
 BleChessProtocol::BleChessProtocol():
-    handleAckMethod(&BleChessPeripheral::handleCentralUnexpectdAck),
-    handlePromotedMethod(&BleChessPeripheral::handleCentralUnexpectdCommand)
+    _handleAckMethod(&BleChessPeripheral::handleCentralUnexpectdAck),
+    _handlePromotedMethod(&BleChessPeripheral::handleCentralUnexpectdCommand)
 {}
 
 void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
 {
-    #ifdef BLE_CHESS_DEBUG_LOGS
-    Serial.print("DBG: ble chess receive: ");
-    Serial.println(cmd.data());
-    #endif
+    BLE_CHESS_LOG(TAG, "Receive: %s", cmd.data());
+
     if (cmd.starts_with(BleChessCommand::Ok))
     {
-        (bleChessConnection.peripheralForOnline().*handleAckMethod)(true);
-        handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
-        handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
+        (bleChessConnection.peripheralForOnline().*_handleAckMethod)(true);
+        _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
+        _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
     }
     else if (cmd.starts_with(BleChessCommand::Nok))
     {
-        (bleChessConnection.peripheralForOnline().*handleAckMethod)(false);
-        handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
-        handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
+        (bleChessConnection.peripheralForOnline().*_handleAckMethod)(false);
+        _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
+        _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
     }
     else if (cmd.starts_with(BleChessCommand::Move))
     {
@@ -59,8 +60,8 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::Begin))
     {
-        handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
-        handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
+        _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
+        _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
         bleChessConnection.peripheralForOnline().handleCentralBegin(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::SetVariant))
@@ -77,9 +78,9 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     }
     else if (cmd.starts_with(BleChessCommand::Promote))
     {
-        (bleChessConnection.peripheralForOnline().*handlePromotedMethod)(getParams(cmd));
-        handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
-        handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
+        (bleChessConnection.peripheralForOnline().*_handlePromotedMethod)(getParams(cmd));
+        _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
+        _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
     }
     else if (cmd.starts_with(BleChessCommand::Feature))
     {
@@ -168,8 +169,8 @@ void BleChessProtocol::sendPeripheralUnsync(const BleChessString& fen)
 
 void BleChessProtocol::sendPeripheralMove(const BleChessString& mv)
 {
-    handleAckMethod = &BleChessPeripheral::handlePeripheralMoveAck;
-    handlePromotedMethod = &BleChessPeripheral::handlePeripheralMovePromoted;
+    _handleAckMethod = &BleChessPeripheral::handlePeripheralMoveAck;
+    _handlePromotedMethod = &BleChessPeripheral::handlePeripheralMovePromoted;
     send(join(BleChessCommand::Move, mv));
 }
 
@@ -205,13 +206,13 @@ void BleChessProtocol::sendPeripheralResign()
 
 void BleChessProtocol::sendPeripheralUndoOffer()
 {
-    handleAckMethod = &BleChessPeripheral::handlePeripheralUndoOfferAck;
+    _handleAckMethod = &BleChessPeripheral::handlePeripheralUndoOfferAck;
     send(BleChessCommand::UndoOffer);
 }
 
 void BleChessProtocol::sendPeripheralDrawOffer()
 {
-    handleAckMethod = &BleChessPeripheral::handlePeripheralDrawOfferAck;
+    _handleAckMethod = &BleChessPeripheral::handlePeripheralDrawOfferAck;
     send(BleChessCommand::DrawOffer);
 }
 
@@ -237,10 +238,8 @@ void BleChessProtocol::sendPeripheralSetOption(const BleChessString& option)
 
 void BleChessProtocol::send(BleChessString str)
 {
-    #ifdef BLE_CHESS_DEBUG_LOGS
-    Serial.print("DBG: ble chess send: ");
-    Serial.println(str.c_str());
-    #endif
+    BLE_CHESS_LOG(TAG, "Send: %s", str.c_str());
+
     ArduinoBleChess.send(str);
 }
 

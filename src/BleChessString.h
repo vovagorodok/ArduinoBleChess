@@ -1,9 +1,9 @@
 #pragma once
 #include "BleChessDefines.h"
-#ifdef USE_NIM_BLE_ARDUINO_LIB
-#include <string>
-#else
+#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
 #include <Arduino.h>
+#else
+#include <string>
 #endif
 #include <ostream>
 
@@ -24,19 +24,23 @@ public:
     BLE_CHESS_CONSTEXPR BleChessStringViewImpl(const char* str):
         _data(str), _size(_strlen(str)) {}
 
-#ifdef USE_NIM_BLE_ARDUINO_LIB
+#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
+    inline BleChessStringViewImpl(const String& str):
+        _data(str.c_str()), _size(str.length()) {}
+#else
 #if __cpp_lib_string_view
     constexpr BleChessStringViewImpl(std::string_view sv):
         _data(sv.data()), _size(sv.size()) {}
 #endif
     inline BleChessStringViewImpl(const std::string& str):
         _data(str.data()), _size(str.size()) {}
-#else
-    inline BleChessStringViewImpl(const String& str):
-        _data(str.c_str()), _size(str.length()) {}
 #endif
 
-#ifdef USE_NIM_BLE_ARDUINO_LIB
+#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
+    inline operator String() const {
+        return String(_data, _size);
+    }
+#else
 #if __cpp_lib_string_view
     constexpr operator std::string_view() const {
         return std::string_view(_data, _size);
@@ -44,10 +48,6 @@ public:
 #endif
     inline operator std::string() const {
         return std::string(_data, _size);
-    }
-#else
-    inline operator String() const {
-        return String(_data, _size);
     }
 #endif
 
@@ -122,20 +122,20 @@ inline std::ostream& operator<<(std::ostream& os, BleChessStringViewImpl sv) {
     return os.write(sv.data(), sv.size());
 }
 
-#if defined(USE_NIM_BLE_ARDUINO_LIB) && defined(__cpp_lib_string_view) && defined(__cpp_lib_starts_ends_with)
-using BleChessStringViewInternal = std::string_view;
-#else
+#if defined(BLE_CHESS_BLE_LIB_ARDUINO_BLE) || !defined(__cpp_lib_string_view) || !defined(__cpp_lib_starts_ends_with)
 using BleChessStringViewInternal = BleChessStringViewImpl;
+#else
+using BleChessStringViewInternal = std::string_view;
 #endif
 
-#if defined(USE_NIM_BLE_ARDUINO_LIB) && defined(__cpp_lib_string_view)
-using BleChessStringView = std::string_view;
-#else
+#if defined(BLE_CHESS_BLE_LIB_ARDUINO_BLE) || !defined(__cpp_lib_string_view)
 using BleChessStringView = BleChessStringViewImpl;
+#else
+using BleChessStringView = std::string_view;
 #endif
 
-#ifdef USE_NIM_BLE_ARDUINO_LIB
-using BleChessString = std::string;
-#else
+#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
 using BleChessString = String;
+#else
+using BleChessString = std::string;
 #endif
