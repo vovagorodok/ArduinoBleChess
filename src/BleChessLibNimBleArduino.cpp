@@ -14,7 +14,7 @@ bool BleChessLib::begin(const std::string& deviceName,
 
     auto* advertising = server->getAdvertising();
     advertising->addServiceUUID(BLE_CHESS_SERVICE_UUID);
-#ifdef BLE_OTA_BLE_LIB_NIM_BLE_ARDUINO_V1
+#ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
     advertising->setScanResponse(true);
     advertising->setMinPreferred(0x06); // functions that help with iPhone connections issue
     advertising->setMaxPreferred(0x12);

@@ -2,7 +2,7 @@
 #include <ArduinoBleChess.h>
 #include "../MyPeripheral.h"
 
-#ifdef BLE_OTA_LOGS
+#ifdef BLE_CHESS_LOGS
 #ifndef ARDUINO_ARCH_ESP32
 extern "C" {
 int _write(int fd, char *ptr, int len) {
