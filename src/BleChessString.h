@@ -75,6 +75,14 @@ public:
     BLE_CHESS_CONSTEXPR bool operator==(BleChessStringViewImpl sw) const {
         return _size == sw._size and _compare(_data, sw._data, sw._size);
     }
+    BLE_CHESS_CONSTEXPR bool operator==(const char* str) const {
+        return operator==(BleChessStringViewImpl(str));
+    }
+#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
+    BLE_CHESS_CONSTEXPR bool operator==(const String& str) const {
+        return operator==(BleChessStringViewImpl(str));
+    }
+#endif
 
     BLE_CHESS_CONSTEXPR size_t find(char ch) const {
         auto found = _find(_data, _size, ch);
