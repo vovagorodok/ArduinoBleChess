@@ -7,18 +7,5 @@ Currently work in progress with:
 - WhitePawn: https://khadimfall.com/p/white-pawn
 - Chess.com: https://www.chess.com/play/apps
 
-Initially supported:
-- Blichess: https://github.com/vovagorodok/blichess?tab=readme-ov-file#blichess
-
-## Configuration
-By default `ArduinoBLE` is used. For `NimBLE-Arduino` some changes are reguired.  
-For PlatformIO. Add to `platformio.ini`:
-```
-build_flags = 
-	-D USE_NIM_BLE_ARDUINO_LIB
-```
-
-For Arduino IDE. At boards package installation folder create `platform.local.txt`:
-```
-compiler.cpp.extra_flags=-D USE_NIM_BLE_ARDUINO_LIB
-```
+Supported:
+- Blichess: https://github.com/vovagorodok/blichess?tab=readme-ov-file#download

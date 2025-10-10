@@ -10,14 +10,12 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
 
-  if (!ArduinoBleChess.begin("Arduino Ble Chess", peripheral, offlineCentral))
-    Serial.println("ble initialization error");
-
+  ArduinoBleChess.begin("Arduino Ble Chess", peripheral, offlineCentral);
   offlineCentral.begin();
 }
 
 void loop() {
-#ifndef USE_NIM_BLE_ARDUINO_LIB
+#ifdef BLE_CHESS_LIB_ARDUINO_BLE
   BLE.poll();
 #endif
   peripheral.checkPeripheralMove();

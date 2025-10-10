@@ -32,8 +32,8 @@ private:
 
     typedef void(BleChessPeripheral::*AckMethod)(bool);
     typedef void(BleChessPeripheral::*PromotedMethod)(BleChessStringView);
-    AckMethod handleAckMethod;
-    PromotedMethod handlePromotedMethod;
+    AckMethod _handleAckMethod;
+    PromotedMethod _handlePromotedMethod;
 };
 
 extern BleChessProtocol chessProtocol;
