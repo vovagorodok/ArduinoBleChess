@@ -1,10 +1,7 @@
 #pragma once
 #include "BleChessDefines.h"
-#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
 #include <Arduino.h>
-#else
 #include <string>
-#endif
 #include <ostream>
 
 #if __cplusplus >= 201703L
@@ -23,24 +20,15 @@ public:
         _data(str), _size(size) {}
     BLE_CHESS_CONSTEXPR BleChessStringViewImpl(const char* str):
         _data(str), _size(_strlen(str)) {}
-
-#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
-    inline BleChessStringViewImpl(const String& str):
-        _data(str.c_str()), _size(str.length()) {}
-#else
 #if __cpp_lib_string_view
     constexpr BleChessStringViewImpl(std::string_view sv):
         _data(sv.data()), _size(sv.size()) {}
 #endif
     inline BleChessStringViewImpl(const std::string& str):
         _data(str.data()), _size(str.size()) {}
-#endif
+    inline BleChessStringViewImpl(const String& str):
+        _data(str.c_str()), _size(str.length()) {}
 
-#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
-    inline operator String() const {
-        return String(_data, _size);
-    }
-#else
 #if __cpp_lib_string_view
     constexpr operator std::string_view() const {
         return std::string_view(_data, _size);
@@ -49,7 +37,9 @@ public:
     inline operator std::string() const {
         return std::string(_data, _size);
     }
-#endif
+    inline operator String() const {
+        return String(_data, _size);
+    }
 
     constexpr const char* data() const { return _data; }
     constexpr size_t size() const { return _size; }
@@ -78,11 +68,12 @@ public:
     BLE_CHESS_CONSTEXPR bool operator==(const char* str) const {
         return operator==(BleChessStringViewImpl(str));
     }
-#ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
-    BLE_CHESS_CONSTEXPR bool operator==(const String& str) const {
+    inline bool operator==(const std::string& str) const {
         return operator==(BleChessStringViewImpl(str));
     }
-#endif
+    inline bool operator==(const String& str) const {
+        return operator==(BleChessStringViewImpl(str));
+    }
 
     BLE_CHESS_CONSTEXPR size_t find(char ch) const {
         auto found = _find(_data, _size, ch);
