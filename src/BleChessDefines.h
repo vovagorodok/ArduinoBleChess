@@ -37,6 +37,7 @@
     #include <ArduinoBLE.h>
     #define BLE_CHESS_BLE_LIB_ARDUINO_BLE
     #define BLE_CHESS_LIB_ARDUINO_BLE
+    #define BLE_CHESS_BLE_LIB_PREDEFINED
 #endif
 
 #ifndef BLE_CHESS_BLE_LIB_PREDEFINED
