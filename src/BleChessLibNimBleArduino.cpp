@@ -39,7 +39,7 @@ bool BleChessLib::begin(BLEServer* server,
         BLE_CHESS_CHARACTERISTIC_UUID_TX,
         NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
     );
-    this->_txCharacteristic = txCharacteristic;
+    _txCharacteristic = txCharacteristic;
 
     return service->start();
 }

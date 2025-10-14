@@ -36,7 +36,7 @@ void BleChessLib::begin(BLEServer* server,
         BLE_CHESS_CHARACTERISTIC_UUID_TX,
         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
     );
-    this->_txCharacteristic = txCharacteristic;
+    _txCharacteristic = txCharacteristic;
 
     service->start();
 }
