@@ -2,10 +2,10 @@
 
 constexpr const char* BleChessFeature::GetState;
 constexpr const char* BleChessFeature::SetState;
+constexpr const char* BleChessFeature::ShiftState;
 constexpr const char* BleChessFeature::StateStream;
 constexpr const char* BleChessFeature::LastMove;
 constexpr const char* BleChessFeature::Check;
-constexpr const char* BleChessFeature::Undo;
 constexpr const char* BleChessFeature::Moved;
 constexpr const char* BleChessFeature::Msg;
 constexpr const char* BleChessFeature::Resign;
@@ -62,10 +62,10 @@ constexpr const char* BleChessCommand::Err;
 constexpr const char* BleChessCommand::Drop;
 constexpr const char* BleChessCommand::GetState;
 constexpr const char* BleChessCommand::SetState;
+constexpr const char* BleChessCommand::ShiftState;
 constexpr const char* BleChessCommand::UnsyncSettable;
 constexpr const char* BleChessCommand::LastMove;
 constexpr const char* BleChessCommand::Check;
-constexpr const char* BleChessCommand::Undo;
 constexpr const char* BleChessCommand::Moved;
 constexpr const char* BleChessCommand::Msg;
 constexpr const char* BleChessCommand::Resign;

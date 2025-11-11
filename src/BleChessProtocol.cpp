@@ -98,6 +98,10 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     {
         bleChessConnection.peripheralForOnline().handleCentralSetState();
     }
+    else if (cmd.starts_with(BleChessCommand::ShiftState))
+    {
+        bleChessConnection.peripheralForOnline().handleCentralShiftState(getParams(cmd));
+    }
     else if (cmd.starts_with(BleChessCommand::State))
     {
         bleChessConnection.peripheralForOnline().handleCentralState(getParams(cmd));
@@ -113,10 +117,6 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     else if (cmd.starts_with(BleChessCommand::UndoOffer))
     {
         bleChessConnection.peripheralForOnline().handleCentralUndoOffer();
-    }
-    else if (cmd.starts_with(BleChessCommand::Undo))
-    {
-        bleChessConnection.peripheralForOnline().handleCentralUndo(getParams(cmd));
     }
     else if (cmd.starts_with(BleChessCommand::DrawOffer))
     {

@@ -51,6 +51,11 @@ void BleChessPeripheral::handleCentralSetState()
     handleCentralUnexpectdCommand(BleChessCommand::SetState);
 }
 
+void BleChessPeripheral::handleCentralShiftState(BleChessStringView fen)
+{
+    handleCentralUnexpectdCommand(BleChessCommand::ShiftState, fen);
+}
+
 void BleChessPeripheral::handleCentralState(BleChessStringView fen)
 {
     handleCentralUnexpectdCommand(BleChessCommand::State, fen);
@@ -69,11 +74,6 @@ void BleChessPeripheral::handleCentralCheck(BleChessStringView kingPos)
 void BleChessPeripheral::handleCentralMsg(BleChessStringView msg)
 {
     handleCentralUnexpectdCommand(BleChessCommand::Msg, msg);
-}
-
-void BleChessPeripheral::handleCentralUndo(BleChessStringView fen)
-{
-    handleCentralUnexpectdCommand(BleChessCommand::Undo, fen);
 }
 
 void BleChessPeripheral::handleCentralUndoOffer()
