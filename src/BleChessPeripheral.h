@@ -31,8 +31,9 @@ public:
     virtual void handleCentralCheck(BleChessStringView kingPos);
     // Feature msg
     virtual void handleCentralMsg(BleChessStringView msg);
-    // Feature undo
+    // Feature undo_redo
     virtual void handleCentralUndo(BleChessStringView fen);
+    virtual void handleCentralRedo(BleChessStringView fen);
     // Feature undo_offer
     virtual void handleCentralUndoOffer();
     virtual void handlePeripheralUndoOfferAck(bool ack);

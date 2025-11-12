@@ -118,6 +118,10 @@ void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
     {
         bleChessConnection.peripheralForOnline().handleCentralUndo(getParams(cmd));
     }
+    else if (cmd.starts_with(BleChessCommand::Redo))
+    {
+        bleChessConnection.peripheralForOnline().handleCentralRedo(getParams(cmd));
+    }
     else if (cmd.starts_with(BleChessCommand::DrawOffer))
     {
         bleChessConnection.peripheralForOnline().handleCentralDrawOffer();

@@ -76,6 +76,11 @@ void BleChessPeripheral::handleCentralUndo(BleChessStringView fen)
     handleCentralUnexpectdCommand(BleChessCommand::Undo, fen);
 }
 
+void BleChessPeripheral::handleCentralRedo(BleChessStringView fen)
+{
+    handleCentralUnexpectdCommand(BleChessCommand::Redo, fen);
+}
+
 void BleChessPeripheral::handleCentralUndoOffer()
 {
     handleCentralUnexpectdCommand(BleChessCommand::UndoOffer);
