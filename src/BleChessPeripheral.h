@@ -23,8 +23,6 @@ public:
     virtual void handleCentralGetState();
     // Feature set_state
     virtual void handleCentralSetState();
-    // Feature shift_state
-    virtual void handleCentralShiftState(BleChessStringView fen);
     // Feature state_stream
     virtual void handleCentralState(BleChessStringView fen);
     // Feature last_move
@@ -33,6 +31,8 @@ public:
     virtual void handleCentralCheck(BleChessStringView kingPos);
     // Feature msg
     virtual void handleCentralMsg(BleChessStringView msg);
+    // Feature undo
+    virtual void handleCentralUndo(BleChessStringView fen);
     // Feature undo_offer
     virtual void handleCentralUndoOffer();
     virtual void handlePeripheralUndoOfferAck(bool ack);
