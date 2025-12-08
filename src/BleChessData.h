@@ -3,7 +3,7 @@
 struct BleChessFeature {
     constexpr static const char* GetState = "get_state";
     constexpr static const char* SetState = "set_state";
-    constexpr static const char* StateStream = "state_stream";
+    constexpr static const char* SubmoveState = "submove_state";
     constexpr static const char* LastMove = "last_move";
     constexpr static const char* Check = "check";
     constexpr static const char* UndoRedo = "undo_redo";

@@ -2,7 +2,7 @@
 
 constexpr const char* BleChessFeature::GetState;
 constexpr const char* BleChessFeature::SetState;
-constexpr const char* BleChessFeature::StateStream;
+constexpr const char* BleChessFeature::SubmoveState;
 constexpr const char* BleChessFeature::LastMove;
 constexpr const char* BleChessFeature::Check;
 constexpr const char* BleChessFeature::UndoRedo;

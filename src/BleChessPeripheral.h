@@ -23,7 +23,7 @@ public:
     virtual void handleCentralGetState();
     // Feature set_state
     virtual void handleCentralSetState();
-    // Feature state_stream
+    // Feature submove_state
     virtual void handleCentralState(BleChessStringView fen);
     // Feature last_move
     virtual void handleCentralLastMove(BleChessStringView mv);
