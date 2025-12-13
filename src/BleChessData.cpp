@@ -27,6 +27,14 @@ constexpr const char* BleChessVariant::AntiChess;
 constexpr const char* BleChessVariant::Horde;
 constexpr const char* BleChessVariant::RacingKings;
 constexpr const char* BleChessVariant::CrazyHouse;
+constexpr const char* BleChessVariant::DraughtsStandard;
+constexpr const char* BleChessVariant::DraughtsRussian;
+constexpr const char* BleChessVariant::DraughtsBrazilian;
+constexpr const char* BleChessVariant::DraughtsEnglish;
+constexpr const char* BleChessVariant::AntiDraughts;
+constexpr const char* BleChessVariant::DraughtsBreakthrough;
+constexpr const char* BleChessVariant::DraughtsFrisian;
+constexpr const char* BleChessVariant::DraughtsFrysk;
 constexpr const char* BleChessVariant::Unsupported;
 
 constexpr const char* BleChessEndReason::Undefined;

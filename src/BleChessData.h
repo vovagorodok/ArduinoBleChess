@@ -30,6 +30,14 @@ struct BleChessVariant {
     constexpr static const char* Horde = "horde";
     constexpr static const char* RacingKings = "racing_kings";
     constexpr static const char* CrazyHouse = "crazy_house";
+    constexpr static const char* DraughtsStandard = "draughts_standard";
+    constexpr static const char* DraughtsRussian = "draughts_russian";
+    constexpr static const char* DraughtsBrazilian = "draughts_brazilian";
+    constexpr static const char* DraughtsEnglish = "draughts_english";
+    constexpr static const char* AntiDraughts = "anti_draughts";
+    constexpr static const char* DraughtsBreakthrough = "draughts_breakthrough";
+    constexpr static const char* DraughtsFrisian = "draughts_frisian";
+    constexpr static const char* DraughtsFrysk = "draughts_frysk";
     constexpr static const char* Unsupported = "unsupported";
 };
 
