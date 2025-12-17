@@ -9,3 +9,4 @@ Currently work in progress with:
 
 Supported:
 - Blichess: https://github.com/vovagorodok/blichess?tab=readme-ov-file#download
+- Blidraughts: https://github.com/vovagorodok/blidraughts?tab=readme-ov-file#download
