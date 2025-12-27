@@ -59,29 +59,29 @@ public:
     virtual ~BleChessPeripheral() = default;
 
 protected:
-    void sendPeripheralState(const BleChessString& fen);
-    void sendPeripheralSync(const BleChessString& fen);
-    void sendPeripheralUnsync(const BleChessString& fen);
-    void sendPeripheralMove(const BleChessString& mv);
-    void sendPeripheralAck(bool ack);
+    BLE_CHESS_VIRTUAL void sendPeripheralState(const BleChessString& fen);
+    BLE_CHESS_VIRTUAL void sendPeripheralSync(const BleChessString& fen);
+    BLE_CHESS_VIRTUAL void sendPeripheralUnsync(const BleChessString& fen);
+    BLE_CHESS_VIRTUAL void sendPeripheralMove(const BleChessString& mv);
+    BLE_CHESS_VIRTUAL void sendPeripheralAck(bool ack);
 
-    void sendPeripheralErr(const BleChessString& err);
+    BLE_CHESS_VIRTUAL void sendPeripheralErr(const BleChessString& err);
 
     // Feature set_state
-    void sendPeripheralUnsyncSettable(const BleChessString& fen);
+    BLE_CHESS_VIRTUAL void sendPeripheralUnsyncSettable(const BleChessString& fen);
     // Feature moved
-    void sendPeripheralMoved();
+    BLE_CHESS_VIRTUAL void sendPeripheralMoved();
     // Feature msg
-    void sendPeripheralMsg(const BleChessString& msg);
+    BLE_CHESS_VIRTUAL void sendPeripheralMsg(const BleChessString& msg);
     // Feature resign
-    void sendPeripheralResign();
+    BLE_CHESS_VIRTUAL void sendPeripheralResign();
     // Feature undo_offer
-    void sendPeripheralUndoOffer();
+    BLE_CHESS_VIRTUAL void sendPeripheralUndoOffer();
     // Feature draw_offer
-    void sendPeripheralDrawOffer();
+    BLE_CHESS_VIRTUAL void sendPeripheralDrawOffer();
     // Feature option
-    void sendPeripheralOptionsEnd();
-    void sendPeripheralOptionsReset();
-    void sendPeripheralOption(const BleChessString& option);
-    void sendPeripheralSetOption(const BleChessString& option);
+    BLE_CHESS_VIRTUAL void sendPeripheralOptionsEnd();
+    BLE_CHESS_VIRTUAL void sendPeripheralOptionsReset();
+    BLE_CHESS_VIRTUAL void sendPeripheralOption(const BleChessString& option);
+    BLE_CHESS_VIRTUAL void sendPeripheralSetOption(const BleChessString& option);
 };

@@ -49,17 +49,26 @@
         #include <NimBLEDevice.h>
         #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO
         #define BLE_CHESS_LIB_NIM_BLE_ARDUINO
-    #if !defined(CONFIG_NIMBLE_MAX_CONNECTIONS) && \
-        !defined(CONFIG_NIMBLE_CPP_DEBUG_ASSERT_ENABLED)
-        #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-    #else
-        #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V2
-    #endif
+        #if !defined(CONFIG_NIMBLE_MAX_CONNECTIONS) && \
+            !defined(CONFIG_NIMBLE_CPP_DEBUG_ASSERT_ENABLED)
+            #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
+        #else
+            #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V2
+        #endif
     #elif defined(ARDUINO_ARCH_ESP32)
         #include <BLEDevice.h>
         #define BLE_CHESS_BLE_LIB_ESP32
         #define BLE_CHESS_LIB_ESP32
+    #elif !defined(ARDUINO)
+        #define BLE_CHESS_BLE_LIB_FAKE
+        #define BLE_CHESS_LIB_FAKE
     #else
         #error "Unsupported BLE library. Consider ArduinoBLE or NimBLE-Arduino."
     #endif
+#endif
+
+#ifdef BLE_CHESS_BLE_LIB_FAKE
+#define BLE_CHESS_VIRTUAL virtual
+#else
+#define BLE_CHESS_VIRTUAL
 #endif

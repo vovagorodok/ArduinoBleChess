@@ -1,6 +1,6 @@
 #pragma once
 #include "BleChessDefines.h"
-#include <Arduino.h>
+#include "BleChessDefinesArduino.h"
 #include <string>
 #include <ostream>
 
@@ -26,8 +26,10 @@ public:
 #endif
     inline BleChessStringViewImpl(const std::string& str):
         _data(str.data()), _size(str.size()) {}
+#ifdef ARDUINO
     inline BleChessStringViewImpl(const String& str):
         _data(str.c_str()), _size(str.length()) {}
+#endif
 
 #if __cpp_lib_string_view
     constexpr operator std::string_view() const {
@@ -37,9 +39,11 @@ public:
     inline operator std::string() const {
         return std::string(_data, _size);
     }
+#ifdef ARDUINO
     inline operator String() const {
         return String(_data, _size);
     }
+#endif
 
     constexpr const char* data() const { return _data; }
     constexpr size_t size() const { return _size; }
@@ -71,9 +75,11 @@ public:
     inline bool operator==(const std::string& str) const {
         return operator==(BleChessStringViewImpl(str));
     }
+#ifdef ARDUINO
     inline bool operator==(const String& str) const {
         return operator==(BleChessStringViewImpl(str));
     }
+#endif
 
     BLE_CHESS_CONSTEXPR size_t find(char ch) const {
         auto found = _find(_data, _size, ch);

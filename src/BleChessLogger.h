@@ -1,5 +1,5 @@
 #pragma once
-#include <Arduino.h>
+#include "BleChessDefinesArduino.h"
 
 #ifdef BLE_CHESS_LOGS
     #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266)

@@ -6,6 +6,8 @@
 #include "BleChessLibNimBleArduino.h"
 #elif defined(BLE_CHESS_BLE_LIB_ESP32)
 #include "BleChessLibESP32.h"
+#elif defined(BLE_CHESS_BLE_LIB_FAKE)
+#include "BleChessLibFake.h"
 #else
 #error "Unsupported BLE library."
 #endif
