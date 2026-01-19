@@ -19,7 +19,7 @@ protected:
     BLE_CHESS_VIRTUAL void connect();
     BLE_CHESS_VIRTUAL void disconnect();
     BLE_CHESS_VIRTUAL bool isConnected() const;
-    BLE_CHESS_VIRTUAL BleChessPeripheral& peripheral();
+    BLE_CHESS_VIRTUAL BleChessPeripheral& getPeripheral();
 
 private:
     bool connected = false;

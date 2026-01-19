@@ -126,12 +126,12 @@ void BleChessConnection::disconnectOfflineCentral()
     _registeredPeripheral->handleOfflineCentralDisconnected();
 }
 
-BleChessPeripheral& BleChessConnection::peripheralForOffline()
+BleChessPeripheral& BleChessConnection::getPeripheralForOffline()
 {
     return *_offlinePeripheral;
 }
 
-BleChessPeripheral& BleChessConnection::peripheralForOnline()
+BleChessPeripheral& BleChessConnection::getPeripheralForOnline()
 {
     return *_registeredPeripheral;
 }

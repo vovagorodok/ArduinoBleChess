@@ -19,7 +19,7 @@ bool BleChessOfflineCentral::isConnected() const
     return connected;
 }
 
-BleChessPeripheral& BleChessOfflineCentral::peripheral()
+BleChessPeripheral& BleChessOfflineCentral::getPeripheral()
 {
-    return bleChessConnection.peripheralForOffline();
+    return bleChessConnection.getPeripheralForOffline();
 }

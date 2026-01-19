@@ -31,8 +31,8 @@ public:
 
     void connectOfflineCentral();
     void disconnectOfflineCentral();
-    BleChessPeripheral& peripheralForOffline();
-    BleChessPeripheral& peripheralForOnline();
+    BleChessPeripheral& getPeripheralForOffline();
+    BleChessPeripheral& getPeripheralForOnline();
 
     void registerPeripheral(BleChessPeripheral& peripheral);
     void registerOfflineCentral(BleChessOfflineCentral& central);
