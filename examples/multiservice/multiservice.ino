@@ -33,6 +33,16 @@ public:
 LedCharacteristicCallbacks ledCallbacks;
 #endif
 
+#ifdef BLE_CHESS_BLE_LIB_ESP32
+class LedCharacteristicCallbacks: public BLECharacteristicCallbacks {
+public:
+  void onWrite(BLECharacteristic* characteristic) override {
+    digitalWrite(LED_BUILTIN, *characteristic->getData());
+  }
+};
+LedCharacteristicCallbacks ledCallbacks;
+#endif
+
 MyPeripheral peripheral{};
 
 void setup() {
@@ -61,6 +71,21 @@ void setup() {
     NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::WRITE
   );
   ledCharacteristic->setValue(false);
+  ledCharacteristic->setCallbacks(&ledCallbacks);
+  ledService->start();
+  ArduinoBleChess.begin(server, peripheral);
+  advertiseBle(server, NAME, BLE_CHESS_SERVICE_UUID, LED_SERVICE_UUID);
+#endif
+
+#ifdef BLE_CHESS_BLE_LIB_ESP32
+  auto server = initBle(NAME);
+  auto ledService = server->createService(LED_SERVICE_UUID);
+  auto ledCharacteristic = ledService->createCharacteristic(
+    LED_CHARACTERISTIC_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
+  );
+  uint8_t value = 0;
+  ledCharacteristic->setValue(&value, sizeof(value));
   ledCharacteristic->setCallbacks(&ledCallbacks);
   ledService->start();
   ArduinoBleChess.begin(server, peripheral);
