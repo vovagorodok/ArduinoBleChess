@@ -12,20 +12,20 @@ BLEService service(BLE_CHESS_SERVICE_UUID);
 BLEStringCharacteristic rxCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_RX, BLEWrite, MAX_STR_SIZE);
 BLEStringCharacteristic txCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_TX, BLERead | BLENotify, MAX_STR_SIZE);
 
-void onWrite(BLEDevice central, BLECharacteristic characteristic)
-{
-    auto rxValue = rxCharacteristic.value();
-    chessProtocol.handleCentralCommand(rxValue);
-}
-
-void onConnectCallback(BLEDevice central)
+void onSubscribe(BLEDevice central, BLECharacteristic characteristic)
 {
     ArduinoBleChess.onConnect();
 }
 
-void onDisconnectCallback(BLEDevice central)
+void onUnsubscribe(BLEDevice central, BLECharacteristic characteristic)
 {
     ArduinoBleChess.onDisconnect();
+}
+
+void onWrite(BLEDevice central, BLECharacteristic characteristic)
+{
+    auto rxValue = rxCharacteristic.value();
+    chessProtocol.handleCentralCommand(rxValue);
 }
 }
 
@@ -50,8 +50,8 @@ bool BleChessLib::begin(BleChessPeripheral& peripheral)
     service.addCharacteristic(rxCharacteristic);
     service.addCharacteristic(txCharacteristic);
     rxCharacteristic.setEventHandler(BLEWritten, onWrite);
-    BLE.setEventHandler(BLEConnected, onConnectCallback);
-    BLE.setEventHandler(BLEDisconnected, onDisconnectCallback);
+    txCharacteristic.setEventHandler(BLESubscribed, onSubscribe);
+    txCharacteristic.setEventHandler(BLEUnsubscribed, onUnsubscribe);
     BLE.addService(service);
     return BLE.setAdvertisedService(service);
 }

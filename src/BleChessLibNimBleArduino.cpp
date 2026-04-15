@@ -26,7 +26,6 @@ bool BleChessLib::begin(BLEServer* server,
                         BleChessPeripheral& peripheral)
 {
     bleChessConnection.registerPeripheral(peripheral);
-    server->setCallbacks(this);
     auto* service = server->createService(BLE_CHESS_SERVICE_UUID);
 
     auto* rxCharacteristic = service->createCharacteristic(
@@ -39,6 +38,7 @@ bool BleChessLib::begin(BLEServer* server,
         BLE_CHESS_CHARACTERISTIC_UUID_TX,
         NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
     );
+    txCharacteristic->setCallbacks(this);
     _txCharacteristic = txCharacteristic;
 
     return service->start();
@@ -71,21 +71,12 @@ void BleChessLib::onDisconnect()
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-void BleChessLib::onConnect(BLEServer* srv)
+void BleChessLib::onSubscribe(BLECharacteristic* characteristic, ble_gap_conn_desc* desc, uint16_t subValue)
 #else
-void BleChessLib::onConnect(BLEServer* srv, BLEConnInfo& connInfo)
+void BleChessLib::onSubscribe(BLECharacteristic* characteristic, BLEConnInfo& connInfo, uint16_t subValue)
 #endif
 {
-    onConnect();
-}
-
-#ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-void BleChessLib::onDisconnect(BLEServer* srv)
-#else
-void BleChessLib::onDisconnect(BLEServer* srv, BLEConnInfo& connInfo, int reason)
-#endif
-{
-    onDisconnect();
+    subValue ? onConnect() : onDisconnect();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1

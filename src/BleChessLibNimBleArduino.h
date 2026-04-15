@@ -8,8 +8,7 @@
 
 class BleChessProtocol;
 
-class BleChessLib: public BLECharacteristicCallbacks,
-                   public BLEServerCallbacks
+class BleChessLib: public BLECharacteristicCallbacks
 {
 public:
     bool begin(const std::string& deviceName,
@@ -29,12 +28,10 @@ public:
 private:
     friend BleChessProtocol;
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-    void onConnect(BLEServer* srv) override;
-    void onDisconnect(BLEServer* srv) override;
+    void onSubscribe(BLECharacteristic* characteristic, ble_gap_conn_desc* desc, uint16_t subValue) override;
     void onWrite(BLECharacteristic* characteristic) override;
 #else
-    void onConnect(BLEServer* srv, BLEConnInfo& connInfo) override;
-    void onDisconnect(BLEServer* srv, BLEConnInfo& connInfo, int reason) override;
+    void onSubscribe(BLECharacteristic* characteristic, BLEConnInfo& connInfo, uint16_t subValue) override;
     void onWrite(BLECharacteristic* characteristic, BLEConnInfo& connInfo) override;
 #endif
     void send(const std::string& str);
