@@ -2,6 +2,12 @@
 #ifdef BLE_CHESS_BLE_LIB_ESP32
 #include "BleChessProtocol.h"
 #include "BleChessConnection.h"
+#include "BleChessDummyConnect.h"
+
+BleChessLib::BleChessLib():
+    _txCharacteristic(),
+    _connectCallbacks(&bleChessDummyConnect)
+{}
 
 void BleChessLib::begin(const std::string& deviceName,
                         BleChessPeripheral& peripheral)
@@ -59,12 +65,19 @@ void BleChessLib::begin(BLEServer* server,
 
 void BleChessLib::onConnect()
 {
+    _connectCallbacks->handleConnect();
     bleChessConnection.onConnected();
 }
 
 void BleChessLib::onDisconnect()
 {
+    _connectCallbacks->handleDisconnect();
     bleChessConnection.onDisconnected();
+}
+
+void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb)
+{
+    _connectCallbacks = &cb;
 }
 
 void BleChessLib::onConnect(BLEServer* srv)

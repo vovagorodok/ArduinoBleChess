@@ -54,6 +54,9 @@ bool BleChessLib::begin(BleChessServerFake* server,
 void BleChessLib::send(const BleChessString& str)
 {}
 
+void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb)
+{}
+
 void BleChessLib::onConnect()
 {}
 

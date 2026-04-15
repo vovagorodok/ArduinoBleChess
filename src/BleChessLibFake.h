@@ -5,6 +5,7 @@
 #include "BleChessData.h"
 #include "BleChessPeripheral.h"
 #include "BleChessOfflineCentral.h"
+#include "BleChessConnectCallbacks.h"
 
 using BleChessServerFake = int;
 
@@ -32,6 +33,7 @@ public:
                BleChessPeripheral& peripheral,
                BleChessOfflineCentral& offlineCentral);
 
+    void setConnectCallbacks(BleChessConnectCallbacks&);
     void onConnect();
     void onDisconnect();
 

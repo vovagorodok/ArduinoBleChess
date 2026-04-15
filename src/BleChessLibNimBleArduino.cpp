@@ -2,6 +2,12 @@
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO
 #include "BleChessProtocol.h"
 #include "BleChessConnection.h"
+#include "BleChessDummyConnect.h"
+
+BleChessLib::BleChessLib():
+    _txCharacteristic(),
+    _connectCallbacks(&bleChessDummyConnect)
+{}
 
 bool BleChessLib::begin(const std::string& deviceName,
                         BleChessPeripheral& peripheral)
@@ -26,6 +32,7 @@ bool BleChessLib::begin(BLEServer* server,
                         BleChessPeripheral& peripheral)
 {
     bleChessConnection.registerPeripheral(peripheral);
+    server->setCallbacks(this);
     auto* service = server->createService(BLE_CHESS_SERVICE_UUID);
 
     auto* rxCharacteristic = service->createCharacteristic(
@@ -60,14 +67,37 @@ bool BleChessLib::begin(BLEServer* server,
     return begin(server, peripheral);
 }
 
+void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb)
+{
+    _connectCallbacks = &cb;
+}
+
 void BleChessLib::onConnect()
 {
-    bleChessConnection.onConnected();
+    _connectCallbacks->handleConnect();
 }
 
 void BleChessLib::onDisconnect()
 {
-    bleChessConnection.onDisconnected();
+    _connectCallbacks->handleDisconnect();
+}
+
+#ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
+void BleChessLib::onConnect(BLEServer* srv)
+#else
+void BleChessLib::onConnect(BLEServer* srv, BLEConnInfo& connInfo)
+#endif
+{
+    onConnect();
+}
+
+#ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
+void BleChessLib::onDisconnect(BLEServer* srv)
+#else
+void BleChessLib::onDisconnect(BLEServer* srv, BLEConnInfo& connInfo, int reason)
+#endif
+{
+    onDisconnect();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
@@ -76,7 +106,9 @@ void BleChessLib::onSubscribe(BLECharacteristic* characteristic, ble_gap_conn_de
 void BleChessLib::onSubscribe(BLECharacteristic* characteristic, BLEConnInfo& connInfo, uint16_t subValue)
 #endif
 {
-    subValue ? onConnect() : onDisconnect();
+    subValue ?
+        bleChessConnection.onConnected() :
+        bleChessConnection.onDisconnected();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
