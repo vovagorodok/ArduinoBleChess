@@ -40,7 +40,11 @@ bool BleChessLib::begin(BLEServer* server, BleChessPeripheral& peripheral) {
     txCharacteristic->setCallbacks(this);
     _txCharacteristic = txCharacteristic;
 
+#ifdef BLE_SERIAL_BLE_LIB_NIM_BLE_ARDUINO_V1
     return service->start();
+#else
+    return true;
+#endif
 }
 
 bool BleChessLib::begin(const std::string& deviceName, BleChessPeripheral& peripheral,
