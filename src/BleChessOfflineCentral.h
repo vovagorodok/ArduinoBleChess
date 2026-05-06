@@ -2,9 +2,8 @@
 #include "BleChessString.h"
 #include "BleChessPeripheral.h"
 
-class BleChessOfflineCentral
-{
-public:
+class BleChessOfflineCentral {
+ public:
     virtual void handleOnlineCentralConnected() {}
     virtual void handleOnlineCentralDisconnected() {}
     virtual void handlePeripheralMove(BleChessStringView mv) {}
@@ -15,12 +14,12 @@ public:
 
     virtual ~BleChessOfflineCentral() = default;
 
-protected:
+ protected:
     BLE_CHESS_VIRTUAL void connect();
     BLE_CHESS_VIRTUAL void disconnect();
     BLE_CHESS_VIRTUAL bool isConnected() const;
     BLE_CHESS_VIRTUAL BleChessPeripheral& getPeripheral();
 
-private:
+ private:
     bool connected = false;
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+// clang-format off: Used IndentPPDirectives with BeforeHash
 #if defined(BLE_CHESS_LIB_ARDUINO_BLE) || defined(BLE_CHESS_BLE_LIB_ARDUINO_BLE)
     #include <ArduinoBLE.h>
     #ifndef BLE_CHESS_BLE_LIB_ARDUINO_BLE
@@ -10,7 +11,7 @@
     #endif
     #define BLE_CHESS_BLE_LIB_PREDEFINED
 #elif defined(BLE_CHESS_LIB_NIM_BLE_ARDUINO) || defined(BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO) || \
-      defined(BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1) || defined(BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V2)
+    defined(BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1) || defined(BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V2)
     #include <NimBLEDevice.h>
     #ifndef BLE_CHESS_LIB_NIM_BLE_ARDUINO
         #define BLE_CHESS_LIB_NIM_BLE_ARDUINO
@@ -49,8 +50,7 @@
         #include <NimBLEDevice.h>
         #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO
         #define BLE_CHESS_LIB_NIM_BLE_ARDUINO
-        #if !defined(CONFIG_NIMBLE_MAX_CONNECTIONS) && \
-            !defined(CONFIG_NIMBLE_CPP_DEBUG_ASSERT_ENABLED)
+        #if !defined(CONFIG_NIMBLE_MAX_CONNECTIONS) && !defined(CONFIG_NIMBLE_CPP_DEBUG_ASSERT_ENABLED)
             #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
         #else
             #define BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V2
@@ -68,7 +68,8 @@
 #endif
 
 #ifdef BLE_CHESS_BLE_LIB_FAKE
-#define BLE_CHESS_VIRTUAL virtual
+    #define BLE_CHESS_VIRTUAL virtual
 #else
-#define BLE_CHESS_VIRTUAL
+    #define BLE_CHESS_VIRTUAL
 #endif
+// clang-format on

@@ -7,16 +7,17 @@ MyPeripheral peripheral{};
 MyOfflineCentral offlineCentral{};
 
 void setup() {
-  Serial.begin(115200);
-  while (!Serial);
+    Serial.begin(115200);
+    while (!Serial)
+        ;
 
-  ArduinoBleChess.begin("Arduino Ble Chess", peripheral, offlineCentral);
-  offlineCentral.begin();
+    ArduinoBleChess.begin("Arduino Ble Chess", peripheral, offlineCentral);
+    offlineCentral.begin();
 }
 
 void loop() {
 #ifdef BLE_CHESS_LIB_ARDUINO_BLE
-  BLE.poll();
+    BLE.poll();
 #endif
-  peripheral.checkPeripheralMove();
+    peripheral.checkPeripheralMove();
 }

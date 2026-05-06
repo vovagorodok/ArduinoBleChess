@@ -1,8 +1,7 @@
 #pragma once
 
-class BleChessConnectCallbacks
-{
-public:
+class BleChessConnectCallbacks {
+ public:
     virtual void handleConnect() {}
     virtual void handleDisconnect() {}
 

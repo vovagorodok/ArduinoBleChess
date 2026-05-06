@@ -4,19 +4,18 @@
 #include "BleChessConnection.h"
 #include "BleChessDummyConnect.h"
 
-BleChessLib::BleChessLib():
+BleChessLib::BleChessLib() :
     _txCharacteristic(),
-    _connectCallbacks(&bleChessDummyConnect)
-{}
+    _connectCallbacks(&bleChessDummyConnect) {
+}
 
-bool BleChessLib::begin(const std::string& deviceName,
-                        BleChessPeripheral& peripheral)
-{
+bool BleChessLib::begin(const std::string& deviceName, BleChessPeripheral& peripheral) {
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
 
-    if(!begin(server, peripheral))
+    if (!begin(server, peripheral)) {
         return false;
+    }
 
     auto* advertising = server->getAdvertising();
     advertising->addServiceUUID(BLE_CHESS_SERVICE_UUID);
@@ -28,101 +27,79 @@ bool BleChessLib::begin(const std::string& deviceName,
     return advertising->start();
 }
 
-bool BleChessLib::begin(BLEServer* server,
-                        BleChessPeripheral& peripheral)
-{
+bool BleChessLib::begin(BLEServer* server, BleChessPeripheral& peripheral) {
     bleChessConnection.registerPeripheral(peripheral);
     server->setCallbacks(this);
     auto* service = server->createService(BLE_CHESS_SERVICE_UUID);
 
-    auto* rxCharacteristic = service->createCharacteristic(
-        BLE_CHESS_CHARACTERISTIC_UUID_RX,
-        NIMBLE_PROPERTY::WRITE
-    );
+    auto* rxCharacteristic = service->createCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_RX, NIMBLE_PROPERTY::WRITE);
     rxCharacteristic->setCallbacks(this);
 
-    auto* txCharacteristic = service->createCharacteristic(
-        BLE_CHESS_CHARACTERISTIC_UUID_TX,
-        NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY
-    );
+    auto* txCharacteristic = service->createCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_TX,
+                                                           NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY);
     txCharacteristic->setCallbacks(this);
     _txCharacteristic = txCharacteristic;
 
     return service->start();
 }
 
-bool BleChessLib::begin(const std::string& deviceName,
-                        BleChessPeripheral& peripheral,
-                        BleChessOfflineCentral& offlineCentral)
-{
+bool BleChessLib::begin(const std::string& deviceName, BleChessPeripheral& peripheral,
+                        BleChessOfflineCentral& offlineCentral) {
     bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(deviceName, peripheral);
 }
 
-bool BleChessLib::begin(BLEServer* server,
-                        BleChessPeripheral& peripheral,
-                        BleChessOfflineCentral& offlineCentral)
-{
+bool BleChessLib::begin(BLEServer* server, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral) {
     bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(server, peripheral);
 }
 
-void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb)
-{
+void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb) {
     _connectCallbacks = &cb;
 }
 
-void BleChessLib::onConnect()
-{
+void BleChessLib::onConnect() {
     _connectCallbacks->handleConnect();
 }
 
-void BleChessLib::onDisconnect()
-{
+void BleChessLib::onDisconnect() {
     _connectCallbacks->handleDisconnect();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-void BleChessLib::onConnect(BLEServer* srv)
+void BleChessLib::onConnect(BLEServer* srv) {
 #else
-void BleChessLib::onConnect(BLEServer* srv, BLEConnInfo& connInfo)
+void BleChessLib::onConnect(BLEServer* srv, BLEConnInfo& connInfo) {
 #endif
-{
     onConnect();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-void BleChessLib::onDisconnect(BLEServer* srv)
+void BleChessLib::onDisconnect(BLEServer* srv) {
 #else
-void BleChessLib::onDisconnect(BLEServer* srv, BLEConnInfo& connInfo, int reason)
+void BleChessLib::onDisconnect(BLEServer* srv, BLEConnInfo& connInfo, int reason) {
 #endif
-{
     onDisconnect();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-void BleChessLib::onSubscribe(BLECharacteristic* characteristic, ble_gap_conn_desc* desc, uint16_t subValue)
+void BleChessLib::onSubscribe(BLECharacteristic* characteristic, ble_gap_conn_desc* desc, uint16_t subValue) {
 #else
-void BleChessLib::onSubscribe(BLECharacteristic* characteristic, BLEConnInfo& connInfo, uint16_t subValue)
+void BleChessLib::onSubscribe(BLECharacteristic* characteristic, BLEConnInfo& connInfo, uint16_t subValue) {
 #endif
-{
-    subValue ?
-        bleChessConnection.onConnected() :
-        bleChessConnection.onDisconnected();
+    subValue ? bleChessConnection.onConnected() : bleChessConnection.onDisconnected();
 }
 
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
-void BleChessLib::onWrite(BLECharacteristic* characteristic)
+void BleChessLib::onWrite(BLECharacteristic* characteristic) {
 #else
-void BleChessLib::onWrite(BLECharacteristic* characteristic, BLEConnInfo& connInfo)
+void BleChessLib::onWrite(BLECharacteristic* characteristic, BLEConnInfo& connInfo) {
 #endif
-{
     std::string rxValue = characteristic->getValue();
     chessProtocol.handleCentralCommand(rxValue);
 }
 
-void BleChessLib::send(const std::string& str)
-{
+void BleChessLib::send(const std::string& str) {
     _txCharacteristic->setValue(str);
     _txCharacteristic->notify();
 }

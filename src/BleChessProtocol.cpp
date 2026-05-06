@@ -5,20 +5,18 @@
 #include "BleChessData.h"
 #include "BleChessLogger.h"
 
-namespace
-{
+namespace {
 #define TAG "Protocol"
 
-BleChessStringView getParams(BleChessStringViewInternal cmd)
-{
+BleChessStringView getParams(BleChessStringViewInternal cmd) {
     auto found = cmd.find(' ');
-    if (found == BleChessStringViewInternal::npos)
+    if (found == BleChessStringViewInternal::npos) {
         return BleChessStringView();
+    }
     return cmd.substr(found + 1);
 }
 
-inline BleChessString join(BleChessStringView cmd, const BleChessString& params)
-{
+inline BleChessString join(BleChessStringView cmd, const BleChessString& params) {
     BleChessString result;
 #ifdef BLE_CHESS_BLE_LIB_ARDUINO_BLE
     result.reserve(cmd.size() + 1 + params.length());
@@ -33,215 +31,146 @@ inline BleChessString join(BleChessStringView cmd, const BleChessString& params)
 }
 }
 
-BleChessProtocol::BleChessProtocol():
+BleChessProtocol::BleChessProtocol() :
     _handleAckMethod(&BleChessPeripheral::handleCentralUnexpectdAck),
-    _handlePromotedMethod(&BleChessPeripheral::handleCentralUnexpectdCommand)
-{}
+    _handlePromotedMethod(&BleChessPeripheral::handleCentralUnexpectdCommand) {
+}
 
-void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd)
-{
+void BleChessProtocol::handleCentralCommand(BleChessStringViewInternal cmd) {
     BLE_CHESS_LOG(TAG, "Receive: %s", cmd.data());
 
-    if (cmd.starts_with(BleChessCommand::Ok))
-    {
+    if (cmd.starts_with(BleChessCommand::Ok)) {
         (bleChessConnection.getPeripheralForOnline().*_handleAckMethod)(true);
         _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
         _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
-    }
-    else if (cmd.starts_with(BleChessCommand::Nok))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Nok)) {
         (bleChessConnection.getPeripheralForOnline().*_handleAckMethod)(false);
         _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
         _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
-    }
-    else if (cmd.starts_with(BleChessCommand::Move))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Move)) {
         bleChessConnection.getPeripheralForOnline().handleCentralMove(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Begin))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Begin)) {
         _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
         _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
         bleChessConnection.getPeripheralForOnline().handleCentralBegin(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::SetVariant))
-    {
+    } else if (cmd.starts_with(BleChessCommand::SetVariant)) {
         bleChessConnection.getPeripheralForOnline().handleCentralSetVariant(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Check))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Check)) {
         bleChessConnection.getPeripheralForOnline().handleCentralCheck(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::End))
-    {
+    } else if (cmd.starts_with(BleChessCommand::End)) {
         bleChessConnection.getPeripheralForOnline().handleCentralEnd(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Promote))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Promote)) {
         (bleChessConnection.getPeripheralForOnline().*_handlePromotedMethod)(getParams(cmd));
         _handleAckMethod = &BleChessPeripheral::handleCentralUnexpectdAck;
         _handlePromotedMethod = &BleChessPeripheral::handleCentralUnexpectdCommand;
-    }
-    else if (cmd.starts_with(BleChessCommand::Feature))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Feature)) {
         bleChessConnection.getPeripheralForOnline().handleCentralFeature(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Variant))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Variant)) {
         bleChessConnection.getPeripheralForOnline().handleCentralVariant(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::GetState))
-    {
+    } else if (cmd.starts_with(BleChessCommand::GetState)) {
         bleChessConnection.getPeripheralForOnline().handleCentralGetState();
-    }
-    else if (cmd.starts_with(BleChessCommand::SetState))
-    {
+    } else if (cmd.starts_with(BleChessCommand::SetState)) {
         bleChessConnection.getPeripheralForOnline().handleCentralSetState();
-    }
-    else if (cmd.starts_with(BleChessCommand::State))
-    {
+    } else if (cmd.starts_with(BleChessCommand::State)) {
         bleChessConnection.getPeripheralForOnline().handleCentralState(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::LastMove))
-    {
+    } else if (cmd.starts_with(BleChessCommand::LastMove)) {
         bleChessConnection.getPeripheralForOnline().handleCentralLastMove(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Msg))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Msg)) {
         bleChessConnection.getPeripheralForOnline().handleCentralMsg(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::UndoOffer))
-    {
+    } else if (cmd.starts_with(BleChessCommand::UndoOffer)) {
         bleChessConnection.getPeripheralForOnline().handleCentralUndoOffer();
-    }
-    else if (cmd.starts_with(BleChessCommand::Undo))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Undo)) {
         bleChessConnection.getPeripheralForOnline().handleCentralUndo(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Redo))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Redo)) {
         bleChessConnection.getPeripheralForOnline().handleCentralRedo(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::DrawOffer))
-    {
+    } else if (cmd.starts_with(BleChessCommand::DrawOffer)) {
         bleChessConnection.getPeripheralForOnline().handleCentralDrawOffer();
-    }
-    else if (cmd.starts_with(BleChessCommand::Side))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Side)) {
         bleChessConnection.getPeripheralForOnline().handleCentralSide(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Time))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Time)) {
         bleChessConnection.getPeripheralForOnline().handleCentralTime(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::Score))
-    {
+    } else if (cmd.starts_with(BleChessCommand::Score)) {
         bleChessConnection.getPeripheralForOnline().handleCentralScore(getParams(cmd));
-    }
-    else if (cmd.starts_with(BleChessCommand::OptionsBegin))
-    {
+    } else if (cmd.starts_with(BleChessCommand::OptionsBegin)) {
         bleChessConnection.getPeripheralForOnline().handleCentralOptionsBegin();
-    }
-    else if (cmd.starts_with(BleChessCommand::OptionsReset))
-    {
+    } else if (cmd.starts_with(BleChessCommand::OptionsReset)) {
         bleChessConnection.getPeripheralForOnline().handleCentralOptionsReset();
-    }
-    else if (cmd.starts_with(BleChessCommand::SetOption))
-    {
+    } else if (cmd.starts_with(BleChessCommand::SetOption)) {
         bleChessConnection.getPeripheralForOnline().handleCentralSetOption(getParams(cmd));
-    }
-    else
-    {
+    } else {
         bleChessConnection.getPeripheralForOnline().handleCentralUnexpectdCommand(cmd);
     }
 }
 
-void BleChessProtocol::sendPeripheralState(const BleChessString& fen)
-{
+void BleChessProtocol::sendPeripheralState(const BleChessString& fen) {
     send(join(BleChessCommand::State, fen));
 }
 
-void BleChessProtocol::sendPeripheralSync(const BleChessString& fen)
-{
+void BleChessProtocol::sendPeripheralSync(const BleChessString& fen) {
     send(join(BleChessCommand::Sync, fen));
 }
 
-void BleChessProtocol::sendPeripheralUnsync(const BleChessString& fen)
-{
+void BleChessProtocol::sendPeripheralUnsync(const BleChessString& fen) {
     send(join(BleChessCommand::Unsync, fen));
 }
 
-void BleChessProtocol::sendPeripheralMove(const BleChessString& mv)
-{
+void BleChessProtocol::sendPeripheralMove(const BleChessString& mv) {
     _handleAckMethod = &BleChessPeripheral::handlePeripheralMoveAck;
     _handlePromotedMethod = &BleChessPeripheral::handlePeripheralMovePromoted;
     send(join(BleChessCommand::Move, mv));
 }
 
-void BleChessProtocol::sendPeripheralAck(bool ack)
-{
+void BleChessProtocol::sendPeripheralAck(bool ack) {
     send(ack ? BleChessCommand::Ok : BleChessCommand::Nok);
 }
 
-void BleChessProtocol::sendPeripheralErr(const BleChessString& err)
-{
+void BleChessProtocol::sendPeripheralErr(const BleChessString& err) {
     send(join(BleChessCommand::Err, err));
 }
 
-void BleChessProtocol::sendPeripheralUnsyncSettable(const BleChessString& fen)
-{
+void BleChessProtocol::sendPeripheralUnsyncSettable(const BleChessString& fen) {
     send(join(BleChessCommand::UnsyncSettable, fen));
 }
 
-void BleChessProtocol::sendPeripheralMoved()
-{
+void BleChessProtocol::sendPeripheralMoved() {
     send(BleChessCommand::Moved);
 }
 
-void BleChessProtocol::sendPeripheralMsg(const BleChessString& msg)
-{
+void BleChessProtocol::sendPeripheralMsg(const BleChessString& msg) {
     send(join(BleChessCommand::Msg, msg));
 }
 
-void BleChessProtocol::sendPeripheralResign()
-{
+void BleChessProtocol::sendPeripheralResign() {
     send(BleChessCommand::Resign);
 }
 
-void BleChessProtocol::sendPeripheralUndoOffer()
-{
+void BleChessProtocol::sendPeripheralUndoOffer() {
     _handleAckMethod = &BleChessPeripheral::handlePeripheralUndoOfferAck;
     send(BleChessCommand::UndoOffer);
 }
 
-void BleChessProtocol::sendPeripheralDrawOffer()
-{
+void BleChessProtocol::sendPeripheralDrawOffer() {
     _handleAckMethod = &BleChessPeripheral::handlePeripheralDrawOfferAck;
     send(BleChessCommand::DrawOffer);
 }
 
-void BleChessProtocol::sendPeripheralOptionsEnd()
-{
+void BleChessProtocol::sendPeripheralOptionsEnd() {
     send(BleChessCommand::OptionsEnd);
 }
 
-void BleChessProtocol::sendPeripheralOptionsReset()
-{
+void BleChessProtocol::sendPeripheralOptionsReset() {
     send(BleChessCommand::OptionsReset);
 }
 
-void BleChessProtocol::sendPeripheralOption(const BleChessString& option)
-{
+void BleChessProtocol::sendPeripheralOption(const BleChessString& option) {
     send(join(BleChessCommand::Option, option));
 }
 
-void BleChessProtocol::sendPeripheralSetOption(const BleChessString& option)
-{
+void BleChessProtocol::sendPeripheralSetOption(const BleChessString& option) {
     send(join(BleChessCommand::SetOption, option));
 }
 
-void BleChessProtocol::send(BleChessString str)
-{
+void BleChessProtocol::send(BleChessString str) {
     BLE_CHESS_LOG(TAG, "Send: %s", str.c_str());
 
     ArduinoBleChess.send(str);

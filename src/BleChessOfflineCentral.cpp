@@ -2,24 +2,20 @@
 #include "BleChessPeripheral.h"
 #include "BleChessConnection.h"
 
-void BleChessOfflineCentral::connect()
-{
+void BleChessOfflineCentral::connect() {
     bleChessConnection.connectOfflineCentral();
     connected = true;
 }
 
-void BleChessOfflineCentral::disconnect()
-{
+void BleChessOfflineCentral::disconnect() {
     bleChessConnection.disconnectOfflineCentral();
     connected = false;
 }
 
-bool BleChessOfflineCentral::isConnected() const
-{
+bool BleChessOfflineCentral::isConnected() const {
     return connected;
 }
 
-BleChessPeripheral& BleChessOfflineCentral::getPeripheral()
-{
+BleChessPeripheral& BleChessOfflineCentral::getPeripheral() {
     return bleChessConnection.getPeripheralForOffline();
 }

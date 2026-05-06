@@ -9,28 +9,21 @@
 
 class BleChessProtocol;
 
-class BleChessLib: public BLECharacteristicCallbacks,
-                   public BLEServerCallbacks
-{
-public:
+class BleChessLib : public BLECharacteristicCallbacks,
+                    public BLEServerCallbacks {
+ public:
     BleChessLib();
 
-    bool begin(const std::string& deviceName,
-               BleChessPeripheral& peripheral);
-    bool begin(BLEServer* server,
-               BleChessPeripheral& peripheral);
-    bool begin(const std::string& deviceName,
-               BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
-    bool begin(BLEServer* server,
-               BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
+    bool begin(const std::string& deviceName, BleChessPeripheral& peripheral);
+    bool begin(BLEServer* server, BleChessPeripheral& peripheral);
+    bool begin(const std::string& deviceName, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
+    bool begin(BLEServer* server, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
 
     void setConnectCallbacks(BleChessConnectCallbacks&);
     void onConnect();
     void onDisconnect();
 
-private:
+ private:
     friend BleChessProtocol;
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
     void onConnect(BLEServer* srv) override;

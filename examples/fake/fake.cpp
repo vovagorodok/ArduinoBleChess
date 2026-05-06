@@ -4,7 +4,7 @@
 BleChessPeripheral peripheral{};
 
 int main() {
-  ArduinoBleChess.begin("Arduino Ble Chess", peripheral);
-  return 0;
+    ArduinoBleChess.begin("Arduino Ble Chess", peripheral);
+    return 0;
 }
 #endif

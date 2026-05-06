@@ -1,9 +1,8 @@
 #pragma once
 #include "BleChessString.h"
 
-class BleChessPeripheral
-{
-public:
+class BleChessPeripheral {
+ public:
     virtual void handleCentralFeature(BleChessStringView feature);
     virtual void handleCentralVariant(BleChessStringView variant);
 
@@ -58,7 +57,7 @@ public:
 
     virtual ~BleChessPeripheral() = default;
 
-protected:
+ protected:
     BLE_CHESS_VIRTUAL void sendPeripheralState(const BleChessString& fen);
     BLE_CHESS_VIRTUAL void sendPeripheralSync(const BleChessString& fen);
     BLE_CHESS_VIRTUAL void sendPeripheralUnsync(const BleChessString& fen);

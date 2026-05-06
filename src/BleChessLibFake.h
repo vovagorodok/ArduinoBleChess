@@ -11,33 +11,22 @@ using BleChessServerFake = int;
 
 class BleChessProtocol;
 
-class BleChessLib
-{
-public:
-    bool begin(const char* deviceName,
-               BleChessPeripheral& peripheral);
+class BleChessLib {
+ public:
+    bool begin(const char* deviceName, BleChessPeripheral& peripheral);
     bool begin(BleChessPeripheral& peripheral);
-    bool begin(const char* deviceName,
-               BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
-    bool begin(BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
-    bool begin(const std::string& deviceName,
-               BleChessPeripheral& peripheral);
-    bool begin(BleChessServerFake* server,
-               BleChessPeripheral& peripheral);
-    bool begin(const std::string& deviceName,
-               BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
-    bool begin(BleChessServerFake* server,
-               BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
+    bool begin(const char* deviceName, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
+    bool begin(BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
+    bool begin(const std::string& deviceName, BleChessPeripheral& peripheral);
+    bool begin(BleChessServerFake* server, BleChessPeripheral& peripheral);
+    bool begin(const std::string& deviceName, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
+    bool begin(BleChessServerFake* server, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
 
     void setConnectCallbacks(BleChessConnectCallbacks&);
     void onConnect();
     void onDisconnect();
 
-private:
+ private:
     friend BleChessProtocol;
     void send(const BleChessString& str);
 };

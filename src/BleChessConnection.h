@@ -4,9 +4,8 @@
 class BleChessPeripheral;
 class BleChessOfflineCentral;
 
-class BleChessConnection
-{
-public:
+class BleChessConnection {
+ public:
     BleChessConnection();
 
     void onConnected();
@@ -37,7 +36,7 @@ public:
     void registerPeripheral(BleChessPeripheral& peripheral);
     void registerOfflineCentral(BleChessOfflineCentral& central);
 
-private:
+ private:
     BleChessPeripheral* _registeredPeripheral;
     BleChessOfflineCentral* _registeredCentral;
     BleChessPeripheral* _offlinePeripheral;

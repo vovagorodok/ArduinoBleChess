@@ -4,14 +4,12 @@
 #include "BleChessConnection.h"
 #include "BleChessDummyConnect.h"
 
-BleChessLib::BleChessLib():
+BleChessLib::BleChessLib() :
     _txCharacteristic(),
-    _connectCallbacks(&bleChessDummyConnect)
-{}
+    _connectCallbacks(&bleChessDummyConnect) {
+}
 
-void BleChessLib::begin(const std::string& deviceName,
-                        BleChessPeripheral& peripheral)
-{
+void BleChessLib::begin(const std::string& deviceName, BleChessPeripheral& peripheral) {
     BLEDevice::init(deviceName);
     auto* server = BLEDevice::createServer();
 
@@ -25,79 +23,61 @@ void BleChessLib::begin(const std::string& deviceName,
     advertising->start();
 }
 
-void BleChessLib::begin(BLEServer* server,
-                        BleChessPeripheral& peripheral)
-{
+void BleChessLib::begin(BLEServer* server, BleChessPeripheral& peripheral) {
     bleChessConnection.registerPeripheral(peripheral);
     server->setCallbacks(this);
     auto* service = server->createService(BLE_CHESS_SERVICE_UUID);
 
-    auto* rxCharacteristic = service->createCharacteristic(
-        BLE_CHESS_CHARACTERISTIC_UUID_RX,
-        BLECharacteristic::PROPERTY_WRITE
-    );
+    auto* rxCharacteristic =
+        service->createCharacteristic(BLE_CHESS_CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
     rxCharacteristic->setCallbacks(this);
 
     auto* txCharacteristic = service->createCharacteristic(
-        BLE_CHESS_CHARACTERISTIC_UUID_TX,
-        BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
-    );
+        BLE_CHESS_CHARACTERISTIC_UUID_TX, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
     _txCharacteristic = txCharacteristic;
 
     service->start();
 }
 
-void BleChessLib::begin(const std::string& deviceName,
-                        BleChessPeripheral& peripheral,
-                        BleChessOfflineCentral& offlineCentral)
-{
+void BleChessLib::begin(const std::string& deviceName, BleChessPeripheral& peripheral,
+                        BleChessOfflineCentral& offlineCentral) {
     bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(deviceName, peripheral);
 }
 
-void BleChessLib::begin(BLEServer* server,
-                        BleChessPeripheral& peripheral,
-                        BleChessOfflineCentral& offlineCentral)
-{
+void BleChessLib::begin(BLEServer* server, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral) {
     bleChessConnection.registerOfflineCentral(offlineCentral);
     return begin(server, peripheral);
 }
 
-void BleChessLib::onConnect()
-{
+void BleChessLib::onConnect() {
     _connectCallbacks->handleConnect();
     bleChessConnection.onConnected();
 }
 
-void BleChessLib::onDisconnect()
-{
+void BleChessLib::onDisconnect() {
     _connectCallbacks->handleDisconnect();
     bleChessConnection.onDisconnected();
 }
 
-void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb)
-{
+void BleChessLib::setConnectCallbacks(BleChessConnectCallbacks& cb) {
     _connectCallbacks = &cb;
 }
 
-void BleChessLib::onConnect(BLEServer* srv)
-{
+void BleChessLib::onConnect(BLEServer* srv) {
     onConnect();
 }
 
-void BleChessLib::onDisconnect(BLEServer* srv)
-{
+void BleChessLib::onDisconnect(BLEServer* srv) {
     onDisconnect();
 }
 
-void BleChessLib::onWrite(BLECharacteristic* characteristic)
-{
+void BleChessLib::onWrite(BLECharacteristic* characteristic) {
     std::string rxValue = characteristic->getValue();
     chessProtocol.handleCentralCommand(rxValue);
 }
 
-void BleChessLib::send(const std::string& str)
-{
+void BleChessLib::send(const std::string& str) {
     _txCharacteristic->setValue(str);
     _txCharacteristic->notify();
 }

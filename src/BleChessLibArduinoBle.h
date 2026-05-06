@@ -9,25 +9,20 @@
 
 class BleChessProtocol;
 
-class BleChessLib
-{
-public:
+class BleChessLib {
+ public:
     BleChessLib();
 
-    bool begin(const char* deviceName,
-               BleChessPeripheral& peripheral);
+    bool begin(const char* deviceName, BleChessPeripheral& peripheral);
     bool begin(BleChessPeripheral& peripheral);
-    bool begin(const char* deviceName,
-               BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
-    bool begin(BleChessPeripheral& peripheral,
-               BleChessOfflineCentral& offlineCentral);
+    bool begin(const char* deviceName, BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
+    bool begin(BleChessPeripheral& peripheral, BleChessOfflineCentral& offlineCentral);
 
     void setConnectCallbacks(BleChessConnectCallbacks&);
     void onConnect();
     void onDisconnect();
 
-private:
+ private:
     friend BleChessProtocol;
     void send(const String& str);
 

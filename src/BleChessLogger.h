@@ -1,6 +1,7 @@
 #pragma once
 #include "BleChessDefinesArduino.h"
 
+// clang-format off: Used IndentPPDirectives with BeforeHash
 #ifdef BLE_CHESS_LOGS
     #if defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_ARCH_ESP8266)
         #define BLE_CHESS_PRINTF Serial.printf
@@ -14,3 +15,4 @@
     #define BLE_CHESS_LOG(fmt, ...) \
         do {} while (0)
 #endif
+// clang-format on

@@ -3,9 +3,8 @@
 
 class BleChessPeripheral;
 
-class BleChessProtocol
-{
-public:
+class BleChessProtocol {
+ public:
     BleChessProtocol();
 
     void handleCentralCommand(BleChessStringViewInternal cmd);
@@ -27,11 +26,11 @@ public:
     void sendPeripheralOption(const BleChessString& option);
     void sendPeripheralSetOption(const BleChessString& option);
 
-private:
+ private:
     void send(BleChessString str);
 
-    typedef void(BleChessPeripheral::*AckMethod)(bool);
-    typedef void(BleChessPeripheral::*PromotedMethod)(BleChessStringView);
+    typedef void (BleChessPeripheral::*AckMethod)(bool);
+    typedef void (BleChessPeripheral::*PromotedMethod)(BleChessStringView);
     AckMethod _handleAckMethod;
     PromotedMethod _handlePromotedMethod;
 };
