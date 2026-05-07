@@ -22,14 +22,14 @@ void onWrite(BLEDevice central, BLECharacteristic characteristic) {
 #ifdef BLE_CHESS_LIB_NIM_BLE_ARDUINO
 // clang-format off
 class LedCharacteristicCallbacks: public BLECharacteristicCallbacks {
-public:
+ public:
 #ifdef BLE_CHESS_BLE_LIB_NIM_BLE_ARDUINO_V1
     void onWrite(BLECharacteristic* characteristic) override {
 #else
     void onWrite(BLECharacteristic* characteristic, BLEConnInfo& connInfo) override {
 #endif
         digitalWrite(LED_BUILTIN, characteristic->getValue<bool>());
-  }
+    }
 };
 // clang-format on
 LedCharacteristicCallbacks ledCallbacks;
