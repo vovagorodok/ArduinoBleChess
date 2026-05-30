@@ -1,5 +1,5 @@
 # Arduino BLE Chess
-Library opens posibility to communicate with mobile chess apps via Bluetooth
+Library opens possibility to communicate with mobile chess apps via Bluetooth
 
 ## Supported mobile apps
 Currently work in progress with: 

@@ -14,9 +14,9 @@ class BleChessPeripheral {
     virtual void handlePeripheralMoveAck(bool ack);
     virtual void handlePeripheralMovePromoted(BleChessStringView prom);
 
-    virtual void handleCentralUnexpectdCommand(BleChessStringView cmd);
-    virtual void handleCentralUnexpectdCommand(BleChessStringView cmd, BleChessStringView params);
-    virtual void handleCentralUnexpectdAck(bool ack);
+    virtual void handleCentralUnexpectedCommand(BleChessStringView cmd);
+    virtual void handleCentralUnexpectedCommand(BleChessStringView cmd, BleChessStringView params);
+    virtual void handleCentralUnexpectedAck(bool ack);
 
     // Feature get_state
     virtual void handleCentralGetState();

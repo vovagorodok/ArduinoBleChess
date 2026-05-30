@@ -28,86 +28,86 @@ void BleChessPeripheral::handlePeripheralMoveAck(bool ack) {
 void BleChessPeripheral::handlePeripheralMovePromoted(BleChessStringView prom) {
 }
 
-void BleChessPeripheral::handleCentralUnexpectdCommand(BleChessStringView cmd) {
+void BleChessPeripheral::handleCentralUnexpectedCommand(BleChessStringView cmd) {
 }
 
-void BleChessPeripheral::handleCentralUnexpectdCommand(BleChessStringView cmd, BleChessStringView params) {
-    handleCentralUnexpectdCommand(cmd);
+void BleChessPeripheral::handleCentralUnexpectedCommand(BleChessStringView cmd, BleChessStringView params) {
+    handleCentralUnexpectedCommand(cmd);
 }
 
-void BleChessPeripheral::handleCentralUnexpectdAck(bool ack) {
+void BleChessPeripheral::handleCentralUnexpectedAck(bool ack) {
 }
 
 void BleChessPeripheral::handleCentralGetState() {
-    handleCentralUnexpectdCommand(BleChessCommand::GetState);
+    handleCentralUnexpectedCommand(BleChessCommand::GetState);
 }
 
 void BleChessPeripheral::handleCentralSetState() {
-    handleCentralUnexpectdCommand(BleChessCommand::SetState);
+    handleCentralUnexpectedCommand(BleChessCommand::SetState);
 }
 
 void BleChessPeripheral::handleCentralState(BleChessStringView fen) {
-    handleCentralUnexpectdCommand(BleChessCommand::State, fen);
+    handleCentralUnexpectedCommand(BleChessCommand::State, fen);
 }
 
 void BleChessPeripheral::handleCentralLastMove(BleChessStringView mv) {
-    handleCentralUnexpectdCommand(BleChessCommand::LastMove, mv);
+    handleCentralUnexpectedCommand(BleChessCommand::LastMove, mv);
 }
 
 void BleChessPeripheral::handleCentralCheck(BleChessStringView kingPos) {
-    handleCentralUnexpectdCommand(BleChessCommand::Check, kingPos);
+    handleCentralUnexpectedCommand(BleChessCommand::Check, kingPos);
 }
 
 void BleChessPeripheral::handleCentralMsg(BleChessStringView msg) {
-    handleCentralUnexpectdCommand(BleChessCommand::Msg, msg);
+    handleCentralUnexpectedCommand(BleChessCommand::Msg, msg);
 }
 
 void BleChessPeripheral::handleCentralUndo(BleChessStringView fen) {
-    handleCentralUnexpectdCommand(BleChessCommand::Undo, fen);
+    handleCentralUnexpectedCommand(BleChessCommand::Undo, fen);
 }
 
 void BleChessPeripheral::handleCentralRedo(BleChessStringView fen) {
-    handleCentralUnexpectdCommand(BleChessCommand::Redo, fen);
+    handleCentralUnexpectedCommand(BleChessCommand::Redo, fen);
 }
 
 void BleChessPeripheral::handleCentralUndoOffer() {
-    handleCentralUnexpectdCommand(BleChessCommand::UndoOffer);
+    handleCentralUnexpectedCommand(BleChessCommand::UndoOffer);
 }
 
 void BleChessPeripheral::handlePeripheralUndoOfferAck(bool ack) {
-    handleCentralUnexpectdAck(ack);
+    handleCentralUnexpectedAck(ack);
 }
 
 void BleChessPeripheral::handleCentralDrawOffer() {
-    handleCentralUnexpectdCommand(BleChessCommand::DrawOffer);
+    handleCentralUnexpectedCommand(BleChessCommand::DrawOffer);
 }
 
 void BleChessPeripheral::handlePeripheralDrawOfferAck(bool ack) {
-    handleCentralUnexpectdAck(ack);
+    handleCentralUnexpectedAck(ack);
 }
 
 void BleChessPeripheral::handleCentralSide(BleChessStringView side) {
-    handleCentralUnexpectdCommand(BleChessCommand::Side, side);
+    handleCentralUnexpectedCommand(BleChessCommand::Side, side);
 }
 
 void BleChessPeripheral::handleCentralTime(BleChessStringView time) {
-    handleCentralUnexpectdCommand(BleChessCommand::Time, time);
+    handleCentralUnexpectedCommand(BleChessCommand::Time, time);
 }
 
 void BleChessPeripheral::handleCentralScore(BleChessStringView score) {
-    handleCentralUnexpectdCommand(BleChessCommand::Score, score);
+    handleCentralUnexpectedCommand(BleChessCommand::Score, score);
 }
 
 void BleChessPeripheral::handleCentralOptionsBegin() {
-    handleCentralUnexpectdCommand(BleChessCommand::OptionsBegin);
+    handleCentralUnexpectedCommand(BleChessCommand::OptionsBegin);
 }
 
 void BleChessPeripheral::handleCentralOptionsReset() {
-    handleCentralUnexpectdCommand(BleChessCommand::OptionsReset);
+    handleCentralUnexpectedCommand(BleChessCommand::OptionsReset);
 }
 
 void BleChessPeripheral::handleCentralSetOption(BleChessStringView option) {
-    handleCentralUnexpectdCommand(BleChessCommand::SetOption, option);
+    handleCentralUnexpectedCommand(BleChessCommand::SetOption, option);
 }
 
 void BleChessPeripheral::sendPeripheralState(const BleChessString& fen) {
