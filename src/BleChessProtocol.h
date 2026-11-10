@@ -29,8 +29,8 @@ class BleChessProtocol {
  private:
     void send(BleChessString str);
 
-    typedef void (BleChessPeripheral::*AckMethod)(bool);
-    typedef void (BleChessPeripheral::*PromotedMethod)(BleChessStringView);
+    using AckMethod = void (BleChessPeripheral::*)(bool);
+    using PromotedMethod = void (BleChessPeripheral::*)(BleChessStringView);
     AckMethod _handleAckMethod;
     PromotedMethod _handlePromotedMethod;
 };
